@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chenflix | Mathematics & Engineering Resources</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-bg: #ffffff;
+            --secondary-bg: #f4f4f9;
+            --text-color: #212121;
+            --accent-color: #0056b3;
+            --focus-ring: #ffbf47;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            background-color: var(--primary-bg);
+        }
+
+        /* Skip Link for Keyboard Users */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--accent-color);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+        }
+        .skip-link:focus { top: 0; }
+
+        /* Modern 3-Column Layout */
+        .container {
+            display: grid;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 20px;
+            padding: 20px;
+            grid-template-columns: 1fr; /* Mobile default */
+        }
+
+        @media (min-width: 900px) {
+            .container {
+                grid-template-columns: 250px 1fr 250px;
+                align-items: start;
+            }
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: var(--secondary-bg);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        /* The Mascot Centerpiece */
+        .mascot-area {
+            text-align: center;
+            padding: 20px;
+        }
+        .mascot-area img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        /* Sidebar Sections */
+        .sidebar {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        /* Accessible Links and Buttons */
+        a {
+            color: var(--accent-color);
+            text-decoration: underline;
+            padding: 4px; /* Increases Target Size */
+        }
+        a:focus {
+            outline: 3px solid var(--focus-ring);
+            background-color: var(--focus-ring);
+            color: black;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header>
+        <h1>Chenflix</h1>
+        <p>Accessible Mathematics & Engineering Resources</p>
+    </header>
+
+    <main id="main-content" class="container">
+        
+        <nav class="sidebar" aria-label="Course Navigation">
+            <h2>Courses</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="#">MA 16100: Calculus I</a></li>
+                <li><a href="#">MA 26600: Diff Equations</a></li>
+                <li><a href="#">MA 36600: Ord. Diff Eq</a></li>
+            </ul>
+        </nav>
+
+        <section class="mascot-area">
+            <img src="YOUR_CAPYBARA_IMAGE_URL.jpg" 
+                 alt="A capybara holding a sign that says OSRR with the final R redacted, representing the site's mascot.">
+            <p>Welcome to the newly overhauled Chenflix. Everything here is built to be accessible to all students.</p>
+            <p>Example Math: When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\), given by:</p>
+            $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$
+        </section>
+
+        <aside class="sidebar">
+            <h2>Quick Links</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="https://www.reddit.com/">Subreddit</a></li>
+                <li><a href="#">Handwritten Notes Digitizer</a></li>
+                <li><a href="/archive"><strong>Pre-2026 Archive</strong></a></li>
+            </ul>
+        </aside>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Chenflix. All math rendered via MathJax.</p>
+    </footer>
+
+</body>
+</html>
