@@ -16,6 +16,9 @@
             --accent-color: #0056b3;
             --focus-ring: #ffbf47;
             --border-color: #dee2e6;
+            --code-bg: #f4f4f4;
+            --status-prog-bg: #fff3cd;
+            --status-prog-text: #856404;
         }
 
         body {
@@ -26,7 +29,20 @@
             background-color: var(--primary-bg);
         }
 
-        /* 1. VISUALLY HIDDEN - Keeps the text for screen readers only */
+        /* Skip Link & Hidden Header (WCAG Compliance) */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--accent-color);
+            color: white;
+            padding: 12px;
+            z-index: 1000;
+            border: none !important;
+            text-decoration: none;
+        }
+        .skip-link:focus { top: 0; outline: 3px solid var(--focus-ring); }
+
         .visually-hidden {
             position: absolute !important;
             width: 1px !important;
@@ -39,30 +55,26 @@
             border: 0 !important;
         }
 
-        /* 2. HEADER FIX - Forces the blue line and background to die */
         header {
             display: block !important;
             padding: 0 !important;
             margin: 0 !important;
-            border: none !important; /* The Nuclear Option for the blue line */
+            border: none !important;
             background: transparent !important;
-            height: 0; /* Ensures it doesn't take up vertical space */
+            height: 0;
         }
 
-        /* 3. LAYOUT & SPACING */
         .container {
             display: grid;
             max-width: 1250px;
-            margin: 40px auto; 
+            margin: 40px auto;
             gap: 30px;
             padding: 20px;
             grid-template-columns: 1fr;
         }
 
         @media (min-width: 900px) {
-            .container {
-                grid-template-columns: 280px 1fr 280px;
-            }
+            .container { grid-template-columns: 280px 1fr 280px; }
         }
 
         .sidebar {
@@ -73,15 +85,9 @@
             height: fit-content;
         }
 
-        .main-content {
-            padding: 0 10px;
-        }
+        .main-content { padding: 0 10px; }
 
-        .mascot-box {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
+        .mascot-box { text-align: center; margin-bottom: 2rem; }
         .mascot-box img {
             max-width: 100%;
             height: auto;
@@ -89,30 +95,38 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* Migration Table Styling */
-        .migration-status {
+        /* Tables & Badges */
+        .status-table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
             background: white;
         }
-
-        .migration-status th, .migration-status td {
+        .status-table th, .status-table td {
             padding: 12px;
             border: 1px solid var(--border-color);
             text-align: left;
         }
-
-        .migration-status th { background: #eee; }
+        .status-table th { background: #eee; }
 
         .status-badge {
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 0.85rem;
             font-weight: bold;
+            display: inline-block;
         }
         .status-live { background: #d4edda; color: #155724; }
+        .status-progress { background: var(--status-prog-bg); color: var(--status-prog-text); }
         .status-archive { background: #e2e3e5; color: #383d41; }
+
+        .cheat-sheet {
+            background: #fdf8f0;
+            border-left: 5px solid var(--accent-color);
+            padding: 15px;
+            margin-top: 30px;
+        }
+        code { background: var(--code-bg); padding: 2px 5px; border-radius: 3px; font-family: monospace; }
 
         footer {
             margin-top: 50px;
@@ -123,19 +137,6 @@
         }
 
         a { color: var(--accent-color); text-decoration: underline; }
-/* Update this specific block in your <style> section */
-.skip-link {
-    position: absolute;
-    top: -100px; /* Pushes it further away from the top edge */
-    left: 0;
-    background: var(--accent-color);
-    color: white;
-    padding: 8px;
-    z-index: 100;
-    border: none !important; /* THIS kills the blue line */
-    text-decoration: none !important; /* Ensures no underline shows up either */
-}
-        .skip-link:focus { top: 0; }
     </style>
 </head>
 <body>
@@ -143,8 +144,8 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <header class="visually-hidden">
-        <h1>Chenflix</h1>
-        <p>Accessible Math Resources</p>
+        <h1>Chenflix Portal</h1>
+        <p>Accessible Math Resources Maintenance Environment</p>
     </header>
 
     <div class="container">
@@ -152,8 +153,8 @@
         <nav class="sidebar" aria-label="Course Directory">
             <h2>Current Courses</h2>
             <ul style="list-style: none; padding: 0;">
-                <li><a href="#current-course">MA 26600: Diff Eq</a></li>
-                <li><a href="#">MA 36600: ODEs</a></li>
+                <li><a href="#main-content">MA 26600: Diff Eq</a></li>
+                <li><a href="ma-30300-s26.html">MA 30300: Diff Eq II</a></li>
                 <li><a href="#">Digitizer Tool</a></li>
             </ul>
             <hr>
@@ -167,54 +168,61 @@
             
             <div class="mascot-box">
                 <img src="images/capychenflix.png" 
-                     alt="Three cheerful capybaras holding up a sign that reads 'Welcome to Chenflix!', representing the site's mascots." 
-                     width="60%">
+                     alt="Three cheerful capybaras representing the site's mascots.">
             </div>
 
             <section id="announcement">
                 <h2>The Great Migration</h2>
-                <p>I am proactively converting 10+ years of handwritten lecture notes into fully accessible HTML/MathJax formats to meet WCAG 2.2 AA standards. <strong>Pardon the dust!</strong></p>
+                <p>I am proactively converting 10+ years of handwritten lecture notes into fully accessible HTML formats. <strong>Pardon the dust!</strong></p>
             </section>
 
-            <section id="current-course">
-                <h3>Spring 2026: MA 26600 (Differential Equations)</h3>
-                <p>This course is being digitized in real-time.</p>
-                
-                <table class="migration-status" aria-label="Course Migration Progress">
+            <section id="digitization-status">
+                <h3>Digitization Status</h3>
+                <table class="status-table" aria-label="Past Course Digitization Update">
                     <thead>
                         <tr>
-                            <th>Unit / Lessons</th>
-                            <th>Format</th>
+                            <th>Courses</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Lessons 1–15</td>
-                            <td><a href="https://sites.google.com/view/chenflix/home">Legacy PDF</a></td>
-                            <td><span class="status-badge status-archive">Archived</span></td>
+                            <td>MA 30300 (Spring 2026)</td>
+                            <td><span class="status-badge status-live">Live</span></td>
                         </tr>
                         <tr>
-                            <td>Lesson 16: Exact Equations</td>
-                            <td><a href="/notes/ma266/lesson16.html">Accessible HTML</a></td>
-                            <td><span class="status-badge status-live">Live</span></td>
+                            <td>MA 16100 (Spring 2022)</td>
+                            <td><span class="status-badge status-progress">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>MA 26600 (Legacy)</td>
+                            <td><span class="status-badge status-archive">Archived (PDF)</span></td>
                         </tr>
                     </tbody>
                 </table>
             </section>
 
-            <section id="math-demo">
-                <h3>Accessible Math Preview</h3>
-                $$ \frac{dy}{dx} + P(x)y = Q(x) $$
+            <section id="latex-cheat-sheet" class="cheat-sheet">
+                <h3>MathJax / LaTeX Cheat Sheet</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li><strong>Fractions:</strong> <code>$\frac{dy}{dx}$</code> &rarr; $\frac{dy}{dx}$</li>
+                    <li><strong>Integrals:</strong> <code>$$\int_{a}^{b} f(x) dx$$</code></li>
+                    <li><strong>Greek:</strong> <code>$\alpha, \beta, \lambda$</code> &rarr; $\alpha, \beta, \lambda$</li>
+                </ul>
             </section>
         </main>
 
         <aside class="sidebar">
-            <h2>Community</h2>
-            <p>Join the discussion.</p>
+            <h2>Quick Links</h2>
             <ul style="list-style: none; padding: 0;">
                 <li><a href="mailto:your-email@example.edu">Email Me</a></li>
+                <li><a href="#">Subreddit</a></li>
             </ul>
+            <hr>
+            <h3>Standards</h3>
+            <p style="font-size: 0.85rem;">
+                All digitized content is checked against <strong>WCAG 2.2 AA</strong>.
+            </p>
         </aside>
 
     </div>
