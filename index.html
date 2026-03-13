@@ -26,26 +26,7 @@
             background-color: var(--primary-bg);
         }
 
-        /* WCAG Skip Link */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--accent-color);
-            color: white;
-            padding: 8px;
-            z-index: 100;
-        }
-        .skip-link:focus { top: 0; }
-
-        /* HEADER FIX: Completely transparent and hidden */
-        header {
-            padding: 0;
-            margin: 0;
-            border: none; /* No more blue line */
-            background: transparent;
-        }
-
+        /* 1. VISUALLY HIDDEN - Keeps the text for screen readers only */
         .visually-hidden {
             position: absolute !important;
             width: 1px !important;
@@ -58,10 +39,21 @@
             border: 0 !important;
         }
 
+        /* 2. HEADER FIX - Forces the blue line and background to die */
+        header {
+            display: block !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important; /* The Nuclear Option for the blue line */
+            background: transparent !important;
+            height: 0; /* Ensures it doesn't take up vertical space */
+        }
+
+        /* 3. LAYOUT & SPACING */
         .container {
             display: grid;
             max-width: 1250px;
-            margin: 40px auto; /* Increased space at the top since header is gone */
+            margin: 40px auto; 
             gap: 30px;
             padding: 20px;
             grid-template-columns: 1fr;
@@ -111,9 +103,7 @@
             text-align: left;
         }
 
-        .migration-status th {
-            background: #eee;
-        }
+        .migration-status th { background: #eee; }
 
         .status-badge {
             padding: 4px 8px;
@@ -133,7 +123,16 @@
         }
 
         a { color: var(--accent-color); text-decoration: underline; }
-        a:focus { outline: 3px solid var(--focus-ring); background: var(--focus-ring); color: black; }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--accent-color);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+        }
+        .skip-link:focus { top: 0; }
     </style>
 </head>
 <body>
@@ -176,7 +175,7 @@
 
             <section id="current-course">
                 <h3>Spring 2026: MA 26600 (Differential Equations)</h3>
-                <p>This course is being digitized in real-time. Lessons are moved here as they are completed.</p>
+                <p>This course is being digitized in real-time.</p>
                 
                 <table class="migration-status" aria-label="Course Migration Progress">
                     <thead>
@@ -197,43 +196,28 @@
                             <td><a href="/notes/ma266/lesson16.html">Accessible HTML</a></td>
                             <td><span class="status-badge status-live">Live</span></td>
                         </tr>
-                        <tr>
-                            <td>Lesson 17: Linear Models</td>
-                            <td><a href="/notes/ma266/lesson17.html">Accessible HTML</a></td>
-                            <td><span class="status-badge status-live">Live</span></td>
-                        </tr>
                     </tbody>
                 </table>
             </section>
 
             <section id="math-demo">
                 <h3>Accessible Math Preview</h3>
-                <p>Equations now render natively for screen readers and mobile devices:</p>
                 $$ \frac{dy}{dx} + P(x)y = Q(x) $$
             </section>
         </main>
 
         <aside class="sidebar">
             <h2>Community</h2>
-            <p>Join the discussion or find me on social media.</p>
+            <p>Join the discussion.</p>
             <ul style="list-style: none; padding: 0;">
-                <li><a href="https://reddit.com">Subreddit</a></li>
-                <li><a href="#">LinkedIn</a></li>
                 <li><a href="mailto:your-email@example.edu">Email Me</a></li>
             </ul>
-            <hr>
-            <h2>License</h2>
-            <p style="font-size: 0.85rem;">
-                Materials are licensed under 
-                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a>.
-            </p>
         </aside>
 
     </div>
 
     <footer>
         <p>&copy; 2026 Chenflix | Built for Accessibility</p>
-        <p style="font-size: 0.8rem;">To request an accessible version of a legacy document, please email me.</p>
     </footer>
 
 </body>
