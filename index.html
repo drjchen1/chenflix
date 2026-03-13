@@ -11,10 +11,11 @@
     <style>
         :root {
             --primary-bg: #ffffff;
-            --secondary-bg: #f4f4f9;
-            --text-color: #212121;
+            --secondary-bg: #f8f9fa;
+            --text-color: #212529;
             --accent-color: #0056b3;
             --focus-ring: #ffbf47;
+            --border-color: #dee2e6;
         }
 
         body {
@@ -25,7 +26,7 @@
             background-color: var(--primary-bg);
         }
 
-        /* Skip Link for Keyboard Users */
+        /* WCAG Skip Link */
         .skip-link {
             position: absolute;
             top: -40px;
@@ -37,67 +38,91 @@
         }
         .skip-link:focus { top: 0; }
 
-        /* Modern 3-Column Layout */
+        header {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            background: var(--secondary-bg);
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        h1 { margin: 0; font-size: 2.5rem; }
+
         .container {
             display: grid;
-            max-width: 1200px;
+            max-width: 1250px;
             margin: 0 auto;
-            gap: 20px;
+            gap: 30px;
             padding: 20px;
-            grid-template-columns: 1fr; /* Mobile default */
+            grid-template-columns: 1fr;
         }
 
         @media (min-width: 900px) {
             .container {
-                grid-template-columns: 250px 1fr 250px;
-                align-items: start;
+                grid-template-columns: 280px 1fr 280px;
             }
         }
 
-        header {
-            text-align: center;
-            padding: 2rem 1rem;
-            background: var(--secondary-bg);
-            border-bottom: 3px solid var(--accent-color);
-        }
-
-        /* The Mascot Centerpiece */
-        .mascot-area {
-            text-align: center;
-            padding: 20px;
-        }
-        .mascot-area img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-        }
-
-        /* Sidebar Sections */
         .sidebar {
             background: var(--secondary-bg);
             padding: 1.5rem;
-            border-radius: 8px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            height: fit-content;
         }
 
-        /* Accessible Links and Buttons */
-        a {
-            color: var(--accent-color);
-            text-decoration: underline;
-            padding: 4px; /* Increases Target Size */
+        .main-content {
+            padding: 0 10px;
         }
-        a:focus {
-            outline: 3px solid var(--focus-ring);
-            background-color: var(--focus-ring);
-            color: black;
+
+        .mascot-box {
+            text-align: center;
+            margin-bottom: 2rem;
         }
+
+        .mascot-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Migration Table Styling */
+        .migration-status {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+
+        .migration-status th, .migration-status td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .migration-status th {
+            background: #eee;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .status-live { background: #d4edda; color: #155724; }
+        .status-archive { background: #e2e3e5; color: #383d41; }
 
         footer {
-            margin-top: 40px;
-            padding: 20px;
+            margin-top: 50px;
+            padding: 30px;
             text-align: center;
-            font-size: 0.9rem;
-            border-top: 1px solid #ccc;
+            background: var(--secondary-bg);
+            border-top: 1px solid var(--border-color);
         }
+
+        a { color: var(--accent-color); text-decoration: underline; }
+        a:focus { outline: 3px solid var(--focus-ring); background: var(--focus-ring); color: black; }
     </style>
 </head>
 <body>
@@ -106,41 +131,97 @@
 
     <header>
         <h1>Chenflix</h1>
-        <p>Accessible Mathematics & Engineering Resources</p>
+        <p>Accessible Math & Engineering Resources</p>
     </header>
 
-    <main id="main-content" class="container">
+    <div class="container">
         
-        <nav class="sidebar" aria-label="Course Navigation">
-            <h2>Courses</h2>
+        <nav class="sidebar" aria-label="Course Directory">
+            <h2>Current Courses</h2>
             <ul style="list-style: none; padding: 0;">
-                <li><a href="#">MA 16100: Calculus I</a></li>
-                <li><a href="#">MA 26600: Diff Equations</a></li>
-                <li><a href="#">MA 36600: Ord. Diff Eq</a></li>
+                <li><a href="#current-course">MA 26600: Diff Eq</a></li>
+                <li><a href="#">MA 36600: ODEs</a></li>
+                <li><a href="#">Digitizer Tool</a></li>
+            </ul>
+            <hr>
+            <h3>Legacy Portfolios</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="https://sites.google.com/view/chenflix/home" target="_blank">Google Site Archive</a></li>
             </ul>
         </nav>
 
-        <section class="mascot-area">
-            <img src="YOUR_CAPYBARA_IMAGE_URL.jpg" 
-                 alt="A capybara holding a sign that says OSRR with the final R redacted, representing the site's mascot.">
-            <p>Welcome to the newly overhauled Chenflix. Everything here is built to be accessible to all students.</p>
-            <p>Example Math: When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\), given by:</p>
-            $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$
-        </section>
+        <main id="main-content" class="main-content">
+            
+            <div class="mascot-box">
+                <img src="YOUR_CAPYBARA_IMAGE_URL.jpg" 
+                     alt="A capybara holding a sign that says OSRR with the final R redacted, representing the site's mascot.">
+            </div>
+
+            <section id="announcement">
+                <h2>The Great Migration</h2>
+                <p>I am proactively converting 10+ years of handwritten lecture notes into fully accessible HTML/MathJax formats to meet WCAG 2.2 AA standards. <strong>Pardon the dust!</strong></p>
+            </section>
+
+            <section id="current-course">
+                <h3>Spring 2026: MA 26600 (Differential Equations)</h3>
+                <p>This course is being digitized in real-time. Lessons are moved here as they are completed.</p>
+                
+                <table class="migration-status" aria-label="Course Migration Progress">
+                    <thead>
+                        <tr>
+                            <th>Unit / Lessons</th>
+                            <th>Format</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lessons 1–15</td>
+                            <td><a href="https://sites.google.com/view/chenflix/home">Legacy PDF</a></td>
+                            <td><span class="status-badge status-archive">Archived</span></td>
+                        </tr>
+                        <tr>
+                            <td>Lesson 16: Exact Equations</td>
+                            <td><a href="/notes/ma266/lesson16.html">Accessible HTML</a></td>
+                            <td><span class="status-badge status-live">Live</span></td>
+                        </tr>
+                        <tr>
+                            <td>Lesson 17: Linear Models</td>
+                            <td><a href="/notes/ma266/lesson17.html">Accessible HTML</a></td>
+                            <td><span class="status-badge status-live">Live</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="math-demo">
+                <h3>Accessible Math Preview</h3>
+                <p>Equations now render natively for screen readers and mobile devices:</p>
+                $$ \frac{dy}{dx} + P(x)y = Q(x) $$
+            </section>
+        </main>
 
         <aside class="sidebar">
-            <h2>Quick Links</h2>
+            <h2>Community</h2>
+            <p>Join the discussion or find me on social media.</p>
             <ul style="list-style: none; padding: 0;">
-                <li><a href="https://www.reddit.com/">Subreddit</a></li>
-                <li><a href="#">Handwritten Notes Digitizer</a></li>
-                <li><a href="/archive"><strong>Pre-2026 Archive</strong></a></li>
+                <li><a href="https://reddit.com">Subreddit</a></li>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="mailto:your-email@example.edu">Email Me</a></li>
             </ul>
+            <hr>
+            <h2>License</h2>
+            <p style="font-size: 0.85rem;">
+                Materials are licensed under 
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a>.
+            </p>
         </aside>
 
-    </main>
+    </div>
 
     <footer>
-        <p>&copy; 2026 Chenflix. All math rendered via MathJax.</p>
+        <p>&copy; 2026 Chenflix | Built for Accessibility</p>
+        <p style="font-size: 0.8rem;">To request an accessible version of a legacy document, please email me.</p>
     </footer>
 
 </body>
