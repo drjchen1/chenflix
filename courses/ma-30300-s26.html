@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 30300 | Differential Equations and Partial Differential Equations</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --purdue-gold: #ceb888;
+            --purdue-black: #000000;
+            --bg-gray: #f2f2f2;
+            --link-blue: #005cb9;
+            --accent-light: #f5efe9;
+            --gold-text: #856a2d; /* Adjusted for WCAG 2.2 AA 4.5:1 contrast compliance */
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--purdue-black);
+            background-color: var(--bg-gray);
+            max-width: 65rem;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        header {
+            background-color: var(--purdue-black);
+            color: var(--purdue-gold);
+            padding: 2.5rem 1rem;
+            border-bottom: 5px solid var(--purdue-gold);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header span { display: block; }
+        .course-title { font-size: 1.3rem; font-weight: 400; margin: 0.6rem 0; color: #fff; }
+        main { background: white; padding: 2rem; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .week-heading { 
+            background: var(--bg-gray); 
+            padding: 0.5rem 1rem; 
+            margin: 2rem 0 1rem 0; 
+            border-left: 4px solid var(--purdue-black);
+            font-weight: bold;
+        }
+        .lecture-list { list-style: none; padding: 0; }
+        .lecture-item { 
+            padding: 1.2rem; 
+            border-bottom: 1px solid #eee; 
+        }
+        .lecture-item:hover { background-color: var(--accent-light); }
+        .lecture-title { display: block; font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .lec-highlight { color: var(--gold-text); margin-right: 0.2rem; } 
+        .section-links { display: block; font-size: 0.95rem; color: #444; }
+        .section-row { margin-bottom: 0.4rem; }
+        a { color: var(--link-blue); font-weight: 600; text-decoration: underline; margin: 0 0.3rem; }
+        a:focus { outline: 3px solid var(--purdue-gold); background-color: #fff9e6; outline-offset: 2px; }
+        .unavail { color: #666; font-style: italic; margin-left: 0.3rem; }
+    </style>
+</head>
+<body>
+    <header role="banner">
+        <h1>
+            <span>MA 30300</span>
+            <span class="course-title">Differential Equations And Partial Differential Equations</span>
+            <span class="semester">Spring 2026</span>
+        </h1>
+    </header>
+
+    <main id="main-content" role="main">
+        <section aria-labelledby="week1-title">
+            <div id="week1-title" class="week-heading">Week 1 (1/12 – 1/16)</div>
+            <ul class="lecture-list">
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 1</span> 5.2 The Eigenvalue Method for Homogeneous Systems</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_egh8yrlg" aria-label="Video for Lecture 1 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Lesson%201%20%285.2%29%20JC1-acc.html" aria-label="Notes for Lecture 1 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_8cfmywqe" aria-label="Video for Lecture 1 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Lesson%201%20%285.2%29%20JC2-acc.html" aria-label="Notes for Lecture 1 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 2</span> 5.2 (continued), 5.5 Multiple Eigenvalue Solutions</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_zw5cimmz" aria-label="Video for Lecture 2 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Lesson%202%20%285.2,5.5%29%20JC1-acc.html" aria-label="Notes for Lecture 2 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_dm15ruwx" aria-label="Video for Lecture 2 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Lesson%202%20%285.2,5.5%29%20JC2-acc.html" aria-label="Notes for Lecture 2 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 3</span> 5.5 (continued)</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_cnoummww" aria-label="Video for Lecture 3 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Lesson%203%20%285.5%29%20JC1-acc.html" aria-label="Notes for Lecture 3 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_calj7kei" aria-label="Video for Lecture 3 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Lesson%203%20%285.5%29%20JC2-acc.html" aria-label="Notes for Lecture 3 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="week2-title">
+            <div id="week2-title" class="week-heading">Week 2 (1/20 – 1/23)</div>
+            <ul class="lecture-list">
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 4</span> 5.3 Solution Curves / Phase Portraits of Linear Homogeneous Systems</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_hou2f93h" aria-label="Video for Lecture 4 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Lesson%204%20%285.3%29%20JC1-acc.html" aria-label="Notes for Lecture 4 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_1ut5340p" aria-label="Video for Lecture 4 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Lesson%204%20%285.3%29%20JC2-acc.html" aria-label="Notes for Lecture 4 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 5</span> 6.1 Stability and the Phase Plane</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_6gl31aed" aria-label="Video for Lecture 5 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.1%29%20JC1.pdf" aria-label="Handwritten Notes for Lecture 5 (7:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.1%29%20JC1-acc.html" aria-label="Accessible Notes for Lecture 5 (7:30)">Notes (accessible)</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_p36uuvli" aria-label="Video for Lecture 5 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.1%29%20JC2.pdf" aria-label="Handwritten Notes for Lecture 5 (8:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.1%29%20JC2-acc.html" aria-label="Accessible Notes for Lecture 5 (8:30)">Notes (accessible)</a></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="week3-title">
+            <div id="week3-title" class="week-heading">Week 3 (1/26 – 1/30)</div>
+            <ul class="lecture-list">
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 6</span> 6.2 Linear and Almost Linear Systems</span>
+                    <div class="section-links">
+                        <div class="section-row">Both classes—<a href="https://mediaspace.itap.purdue.edu/media/6.2+Linear+and+Almost+Linear+Systems+%28part+1%29/1_unakli8x" aria-label="Video for Lecture 6">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Lesson%206%20%286.2%29.pdf" aria-label="Handwritten Notes for Lecture 6">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Lesson%206%20%286.2%29-acc.html" aria-label="Accessible Notes for Lecture 6">Notes (accessible)</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 7</span> 6.2 (continued)</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_zwydhn07" aria-label="Video for Lecture 7 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.2%29%20JC1.pdf" aria-label="Handwritten Notes for Lecture 7 (7:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.2%29%20JC1-acc.html" aria-label="Accessible Notes for Lecture 7 (7:30)">Notes (accessible)</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_56s2t4v0" aria-label="Video for Lecture 7 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.2%29%20JC2.pdf" aria-label="Handwritten Notes for Lecture 7 (8:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.2%29%20JC2-acc.html" aria-label="Accessible Notes for Lecture 7 (8:30)">Notes (accessible)</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 8</span> 6.3 Ecological Models</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_4xd9iidb" aria-label="Video for Lecture 8 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.3%29%20JC1.pdf" aria-label="Handwritten Notes for Lecture 8 (7:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.3%29%20JC1-acc.html" aria-label="Accessible Notes for Lecture 8 (7:30)">Notes (accessible)</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_gb1u0af5" aria-label="Video for Lecture 8 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.3%29%20JC2.pdf" aria-label="Handwritten Notes for Lecture 8 (8:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.3%29%20JC2-acc.html" aria-label="Accessible Notes for Lecture 8 (8:30)">Notes (accessible)</a></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="week4-title">
+            <div id="week4-title" class="week-heading">Week 4 (2/2 – 2/6)</div>
+            <ul class="lecture-list">
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 9</span> 6.3 (continued)</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_5c6xiimd" aria-label="Video for Lecture 9 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.3-2%29%20JC1.pdf" aria-label="Handwritten Notes for Lecture 9 (7:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.3-2%29%20JC1-acc.html" aria-label="Accessible Notes for Lecture 9 (7:30)">Notes (accessible)</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_gb1u0af5" aria-label="Video for Lecture 9 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.3-2%29%20JC2.pdf" aria-label="Handwritten Notes for Lecture 9 (8:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%286.3-2%29%20JC2-acc.html" aria-label="Accessible Notes for Lecture 9 (8:30)">Notes (accessible)</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 10</span> 7.1 Laplace Transform</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_k7bs9rhh" aria-label="Video for Lecture 10 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.1%29%20JC1.pdf" aria-label="Handwritten Notes for Lecture 10 (7:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.1%29%20JC1-acc.html" aria-label="Accessible Notes for Lecture 10 (7:30)">Notes (accessible)</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_9jies8o6" aria-label="Video for Lecture 10 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.1%29%20JC2.pdf" aria-label="Handwritten Notes for Lecture 10 (8:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.1%29%20JC2-acc.html" aria-label="Accessible Notes for Lecture 10 (8:30)">Notes (accessible)</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 11</span> 7.2 Laplace Transform of Initial-Value Problems</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_wchjd1xz" aria-label="Video for Lecture 11 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.2%29%20JC1-acc.html" aria-label="Notes for Lecture 11 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_j30c119t" aria-label="Video for Lecture 11 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.2%29%20JC2-acc.html" aria-label="Notes for Lecture 11 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="week5-title">
+            <div id="week5-title" class="week-heading">Week 5 (2/9 – 2/13)</div>
+            <ul class="lecture-list">
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 12</span> 7.2 (continued), 7.3 Translation of Laplace Transform</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_2h9d74q4" aria-label="Video for Lecture 12 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.2-2,%207.3%29%20JC1-acc.html" aria-label="Notes for Lecture 12 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_uldzv2ut" aria-label="Video for Lecture 12 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.2-2,%207.3%29%20JC2-acc.html" aria-label="Notes for Lecture 12 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 13</span> 7.4 Derivative, Integral, and Multiplication of Laplace Transform</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_vlibe07f" aria-label="Video for Lecture 13 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.4%29%20JC1.pdf" aria-label="Handwritten Notes for Lecture 13 (7:30)">Notes (handwritten)</a> | <span class="unavail">Notes (accessible unavailable)</span></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_bmciv6ir" aria-label="Video for Lecture 13 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.4%29%20JC2.pdf" aria-label="Handwritten Notes for Lecture 13 (8:30)">Notes (handwritten)</a> | <span class="unavail">Notes (accessible unavailable)</span></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 14</span> 7.4 (continued), 7.5 Step Functions</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_9ah4luo8" aria-label="Video for Lecture 14 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.4-2,%207.5%29%20JC1.pdf" aria-label="Handwritten Notes for Lecture 14 (7:30)">Notes (handwritten)</a> | <span class="unavail">Notes (accessible unavailable)</span></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_5sf3x1w9" aria-label="Video for Lecture 14 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.4-2,%207.5%29%20JC2.pdf" aria-label="Handwritten Notes for Lecture 14 (8:30)">Notes (handwritten)</a> | <span class="unavail">Notes (accessible unavailable)</span></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="week6-title">
+            <div id="week6-title" class="week-heading">Week 6 (2/16 – 2/20)</div>
+            <ul class="lecture-list">
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 15</span> 7.5 (continued), 7.6 Impulse Functions</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_06w19ztv" aria-label="Video for Lecture 15 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.5-2,%207.6%29%20JC1.pdf" aria-label="Handwritten Notes for Lecture 15 (7:30)">Notes (handwritten)</a> | <span class="unavail">Notes (accessible unavailable)</span></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_98yeeo7d" aria-label="Video for Lecture 15 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.5-2,%207.6%29%20JC2.pdf" aria-label="Handwritten Notes for Lecture 15 (8:30)">Notes (handwritten)</a> | <span class="unavail">Notes (accessible unavailable)</span></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 16</span> 7.6 (continued), 2.4 Euler's Method</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_5ghmzs6q" aria-label="Video for Lecture 16 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.6-2,%202.4%29%20JC1.pdf" aria-label="Handwritten Notes for Lecture 16 (7:30)">Notes (handwritten)</a> | <span class="unavail">Notes (accessible unavailable)</span></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_fpehpdgn" aria-label="Video for Lecture 16 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%287.6-2,%202.4%29%20JC2.pdf" aria-label="Handwritten Notes for Lecture 16 (8:30)">Notes (handwritten)</a> | <span class="unavail">Notes (accessible unavailable)</span></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 17</span> 2.5 Improved Euler's Method</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_dzav2zqq" aria-label="Video for Lecture 17 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%282.5%29%20JC1.pdf" aria-label="Handwritten Notes for Lecture 17 (7:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%282.5%29%20JC1-acc.html" aria-label="Accessible Notes for Lecture 17 (7:30)">Notes (accessible)</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_llu6hkoz" aria-label="Video for Lecture 17 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%282.5%29%20JC2.pdf" aria-label="Handwritten Notes for Lecture 17 (8:30)">Notes (handwritten)</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%282.5%29%20JC2-acc.html" aria-label="Accessible Notes for Lecture 17 (8:30)">Notes (accessible)</a></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="week7-title">
+            <div id="week7-title" class="week-heading">Week 7 (2/23 – 2/27)</div>
+            <ul class="lecture-list">
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture</span> Exam 1 Review</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_d4iks8n4" aria-label="Video for Exam 1 Review (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Exam%201%20Review%20JC1-acc.html" aria-label="Notes for Exam 1 Review (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_p3ovdwli" aria-label="Video for Exam 1 Review (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/Exam%201%20Review%20JC2-acc.html" aria-label="Notes for Exam 1 Review (8:30)">Notes</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 18</span> 2.6 Runge-Kutta Method</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_jsjlse38" aria-label="Video for Lecture 18 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%282.6%29%20JC1-acc.html" aria-label="Notes for Lecture 18 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_z0ng8oam" aria-label="Video for Lecture 18 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%282.6%29%20JC2-acc.html" aria-label="Notes for Lecture 18 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 19</span> 9.1 Periodic Functions and Fourier Series</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_vmq2p52l" aria-label="Video for Lecture 19 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%289.1%29%20JC1-acc.html" aria-label="Notes for Lecture 19 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_nl1qqe50" aria-label="Video for Lecture 19 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%289.1%29%20JC2-acc.html" aria-label="Notes for Lecture 19 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+<section aria-labelledby="week8-title">
+            <div id="week8-title" class="week-heading">Week 8 (3/2 – 3/6)</div>
+            <ul class="lecture-list">
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 20</span> 9.1 (continued)</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_sdx3w938" aria-label="Video for Lecture 20 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%289.1-2%29%20JC1-acc.html" aria-label="Notes for Lecture 20 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_mpp6ybxs" aria-label="Video for Lecture 20 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%289.1-2%29%20JC2-acc.html" aria-label="Notes for Lecture 20 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 21</span> 9.2 General Fourier Series and Convergence</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_qmps7bcm" aria-label="Video for Lecture 21 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%289.2%29%20JC1-acc.html" aria-label="Notes for Lecture 21 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_ay5xjkz7" aria-label="Video for Lecture 21 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/%289.2%29%20JC2-acc.html" aria-label="Notes for Lecture 21 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 22</span> 9.2 (continued)</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_vfynrnwb" aria-label="Video for Lecture 22 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/(9.2-2) JC1-acc.html" aria-label="Notes for Lecture 22 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_m6xhrda0" aria-label="Video for Lecture 22 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/(9.2-2) JC2-acc.html" aria-label="Notes for Lecture 22 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        </section>
+
+<section aria-labelledby="week9-title">
+            <div id="week9-title" class="week-heading">Week 9 (3/9 – 3/13)</div>
+            <ul class="lecture-list">
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 23</span> 9.3 Fourier Cosine and Sine Series</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_1xiswafp" aria-label="Video for Lecture 23 (7:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/(9.3) JC1-acc.html" aria-label="Notes for Lecture 23 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_ck9lyp6v" aria-label="Video for Lecture 23 (8:30)">Video</a> | <a href="https://www.math.purdue.edu/~chenjk/MA303S26/(9.3) JC2-acc.html" aria-label="Notes for Lecture 23 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+                <li class="lecture-item">
+                    <span class="lecture-title"><span class="lec-highlight">Lecture 23</span> 9.3 (continued)</span>
+                    <div class="section-links">
+                        <div class="section-row">7:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%287%3A30%29/1_osxupctv" aria-label="Video for Lecture 23 (7:30)">Video</a> | <a href="https://web.ics.purdue.edu/~chenjk/(9.3-2)%20JC1-acc.html" aria-label="Notes for Lecture 23 (7:30)">Notes</a></div>
+                        <div class="section-row">8:30 class—<a href="https://mediaspace.itap.purdue.edu/media/Spring+2026+-+MA303+-+Chen+%288%3A30%29/1_llmofa04" aria-label="Video for Lecture 23 (8:30)">Video</a> | <a href="https://web.ics.purdue.edu/~chenjk/(9.3-2)%20JC2-acc.html" aria-label="Notes for Lecture 23 (8:30)">Notes</a></div>
+                    </div>
+                </li>
+
+
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
