@@ -73,7 +73,7 @@
             padding: 20px;
         }
 
-        /* Mobile Order: Mascot -> Current Courses -> Quick Links -> Main Content */
+        /* Mobile Ordering */
         .mascot-box { order: 1; text-align: center; }
         .sidebar-left { order: 2; }
         .sidebar-right { order: 3; }
@@ -84,7 +84,6 @@
             .container {
                 display: grid;
                 grid-template-columns: 280px 1fr 280px;
-                /* This map keeps everything in place regardless of zoom */
                 grid-template-areas: 
                     "left mascot right"
                     "left main right";
@@ -98,7 +97,7 @@
             .sidebar-right { grid-area: right; order: unset; }
         }
 
-        /* General Sidebar Styling */
+        /* Sidebar Styling */
         .sidebar-left, .sidebar-right {
             background: var(--secondary-bg);
             padding: 1.5rem;
@@ -110,7 +109,7 @@
         .main-content { padding: 0 10px; }
 
         .mascot-box img {
-            width: 75%; /* Scaled as requested */
+            width: 75%;
             max-width: 100%;
             height: auto;
             border-radius: 15px;
@@ -164,6 +163,11 @@
 
     <div class="container">
         
+        <div class="mascot-box">
+            <img src="images/capychenflix.png" 
+                 alt="Three cheerful capybaras representing the site's mascots.">
+        </div>
+
         <nav class="sidebar-left" aria-label="Course Directory">
             <h2>Current Courses</h2>
             <ul style="list-style: none; padding: 0;">
@@ -178,13 +182,20 @@
             </ul>
         </nav>
 
-        <main id="main-content" class="main-content">
-            
-            <div class="mascot-box">
-                <img src="images/capychenflix.png" 
-                     alt="Three cheerful capybaras representing the site's mascots.">
-            </div>
+        <aside class="sidebar-right">
+            <h2>Quick Links</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="mailto:your-email@example.edu">Email Me</a></li>
+                <li><a href="#">Subreddit</a></li>
+            </ul>
+            <hr>
+            <h3>Standards</h3>
+            <p style="font-size: 0.85rem;">
+                All digitized content is checked against <strong>WCAG 2.2 AA</strong>.
+            </p>
+        </aside>
 
+        <main id="main-content" class="main-content">
             <section id="announcement">
                 <h2>The Great Migration</h2>
                 <p>I am proactively converting 10+ years of handwritten lecture notes into fully accessible HTML formats. <strong>Pardon the dust!</strong></p>
@@ -216,19 +227,6 @@
                 </table>
             </section>
         </main>
-
-        <aside class="sidebar-right">
-            <h2>Quick Links</h2>
-            <ul style="list-style: none; padding: 0;">
-                <li><a href="mailto:your-email@example.edu">Email Me</a></li>
-                <li><a href="#">Subreddit</a></li>
-            </ul>
-            <hr>
-            <h3>Standards</h3>
-            <p style="font-size: 0.85rem;">
-                All digitized content is checked against <strong>WCAG 2.2 AA</strong>.
-            </p>
-        </aside>
 
     </div>
 
