@@ -123,15 +123,18 @@
         }
 
         a { color: var(--accent-color); text-decoration: underline; }
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--accent-color);
-            color: white;
-            padding: 8px;
-            z-index: 100;
-        }
+/* Update this specific block in your <style> section */
+.skip-link {
+    position: absolute;
+    top: -100px; /* Pushes it further away from the top edge */
+    left: 0;
+    background: var(--accent-color);
+    color: white;
+    padding: 8px;
+    z-index: 100;
+    border: none !important; /* THIS kills the blue line */
+    text-decoration: none !important; /* Ensures no underline shows up either */
+}
         .skip-link:focus { top: 0; }
     </style>
 </head>
