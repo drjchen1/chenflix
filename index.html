@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chenflix | Mathematics & Engineering Resources</title>
+    <title>Chenflix | Mathematics Resources</title>
     
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -64,18 +64,41 @@
             height: 0;
         }
 
-        .container {
-            display: grid;
-            max-width: 1250px;
-            margin: 40px auto;
-            gap: 30px;
-            padding: 20px;
-            grid-template-columns: 1fr;
-        }
+/* 1. Default Mobile Layout (Mascot First) */
+.container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    max-width: 1250px;
+    margin: 40px auto;
+    gap: 30px;
+    padding: 20px;
+}
 
-        @media (min-width: 900px) {
-            .container { grid-template-columns: 280px 1fr 280px; }
-        }
+/* Reordering elements for mobile */
+.mascot-box { order: 1; }
+.sidebar:nth-of-type(1) { order: 2; } /* Left sidebar */
+.main-content { order: 3; }          /* The Great Migration & Status */
+.sidebar:nth-of-type(2) { order: 4; } /* Right sidebar (Quick Links) */
+
+/* 2. Desktop Layout (Grid) */
+@media (min-width: 900px) {
+    .container {
+        display: grid;
+        grid-template-columns: 280px 1fr 280px;
+    }
+    
+    /* Reset orders for desktop grid placement */
+    .sidebar:nth-of-type(1) { grid-column: 1; order: unset; }
+    .main-content { grid-column: 2; order: unset; }
+    .sidebar:nth-of-type(2) { grid-column: 3; order: unset; }
+    
+    /* Keep mascot centered in the middle column on desktop */
+    .mascot-box { 
+        grid-column: 2; 
+        order: unset; 
+        margin-bottom: 2rem; 
+    }
+}
 
         .sidebar {
             background: var(--secondary-bg);
