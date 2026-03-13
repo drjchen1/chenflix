@@ -38,7 +38,14 @@
         }
         .skip-link:focus { top: 0; }
 
-        /* Hides the header visually but keeps it for screen readers */
+        /* HEADER FIX: Completely transparent and hidden */
+        header {
+            padding: 0;
+            margin: 0;
+            border: none; /* No more blue line */
+            background: transparent;
+        }
+
         .visually-hidden {
             position: absolute !important;
             width: 1px !important;
@@ -51,18 +58,10 @@
             border: 0 !important;
         }
 
-        /* Cleaned up header: No blue line, no background */
-        header {
-            padding: 0;
-            margin: 0;
-            border: none;
-            background: none;
-        }
-
         .container {
             display: grid;
             max-width: 1250px;
-            margin: 20px auto; /* Added margin to give the mascot space from the top */
+            margin: 40px auto; /* Increased space at the top since header is gone */
             gap: 30px;
             padding: 20px;
             grid-template-columns: 1fr;
