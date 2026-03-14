@@ -150,6 +150,23 @@
         }
 
         a { color: var(--accent-color); text-decoration: underline; }
+
+        .course-link {
+            display: flex;
+            flex-direction: column; /* Stacks name under the number */
+            text-decoration: none;
+        }
+
+        .course-number {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .course-title {
+            font-size: 0.85rem;
+            color: #666;
+            text-decoration: underline; /* Keeps it identifiable as a link */
+        }
     </style>
 </head>
 <body>
@@ -171,8 +188,12 @@
         <nav class="sidebar-left" aria-label="Course Directory">
             <h2>Current Courses</h2>
             <ul style="list-style: none; padding: 0;">
-                <li><a href="courses/ma-30300-s26.html">MA 30300: Differential Equations And Partial Differential Equations
-                    </a></li>
+                <li>
+                    <a href="ma-30300-s26.html" class="course-link">
+                        <span class="course-number">MA 30300</span>
+                        <span class="course-title">Diff Eq & Partial Diff Eq</span>
+                    </a>
+                </li>
             </ul>
             <hr>
             <h3>Archived Courses</h3>
