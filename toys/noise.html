@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phase & ANC Lab - High Volume</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --purdue-gold: #ceb888;
+            --purdue-black: #000000;
+            --bg-gray: #f2f2f2;
+            --link-blue: #005cb9;
+            --accent-light: #f5efe9;
+            --text-muted: #4b4f57;
+            --noise-red: #ef4444;
+            --anti-blue: #3b82f6;
+            --ebony: #000000;
+            --gold: var(--purdue-gold);
+            --purple: #7c3aed;
+        }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; max-width: 900px; margin: auto; padding: 20px; background: var(--bg-gray); color: var(--purdue-black); }
+        main { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .header { background: var(--purdue-black); color: var(--purdue-gold); padding: 25px; border-radius: 8px; text-align: center; margin-bottom: 20px; border-bottom: 4px solid var(--purdue-gold); }
+        #canvas-container { position: relative; width: 100%; height: 220px; background: #000; border-radius: 8px; margin: 15px 0; }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .controls { background: var(--accent-light); padding: 20px; border-radius: 8px; display: flex; flex-direction: column; gap: 15px; border: 1px solid #e3dfd4; }
+        .row { display: flex; align-items: center; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        button { padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; border: 2px solid var(--purdue-black); background: var(--purdue-black); color: var(--purdue-gold); font-size: 0.9rem; transition: 0.1s; min-height: 44px; }
+        .noise-btn { background: var(--purdue-gold); color: #000; border-color: var(--purdue-black); }
+        .noise-btn.active { background: var(--noise-red); color: white; border-color: #b91c1c; }
+        .anti-btn.active { background: var(--anti-blue); color: white; border-color: #2563eb; }
+        .phase-toggle { background: var(--purdue-black); color: var(--purdue-gold); border: 2px solid var(--purdue-gold); min-width: 220px; }
+        .phase-toggle.inverted { background: var(--purdue-gold); color: #000; }
+        .residual-btn.active { background: var(--purple); color: white; border-color: #5b21b6; }
+        .random-btn { background: var(--purdue-gold); color: #000; border: 2px solid var(--purdue-black); }
+        .legend { display: flex; gap: 15px; justify-content: center; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; color: #111; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .slider-container { display: flex; align-items: center; gap: 10px; font-weight: bold; color: var(--purdue-black); }
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: 0;
+            padding: 0.6rem 1rem;
+            background: #fff9e6;
+            color: #000;
+            border: 2px solid var(--purdue-gold);
+            z-index: 1000;
+        }
+        .skip-link:focus { left: 20px; top: 20px; }
+        button:focus-visible, input:focus-visible {
+            outline: 3px solid var(--purdue-gold);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<main id="main-content">
+    <section class="header">
+        <h1>Spectrum Adaptation Lab</h1>
+        <button id="noise-master" class="noise-btn" onclick="toggleNoise()">Toggle Ambient Noise</button>
+        <div class="row" style="margin-top: 15px;">
+            <div class="slider-container">
+                <span>Master Volume:</span>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" oninput="updateVolume(this.value)">
+            </div>
+            <button class="random-btn" onclick="randomizeAmplitudes()">🎲 Randomize Noise Profile</button>
+        </div>
+    </section>
+
+    <div class="legend">
+        <span><span class="dot" style="background: var(--noise-red)"></span> Total Noise</span>
+        <span><span class="dot" style="background: var(--anti-blue)"></span> Selected Anti-Waves</span>
+        <span><span class="dot" style="background: var(--gold)"></span> Audible Result</span>
+    </div>
+
+    <div id="canvas-container"><canvas id="mainCanvas"></canvas></div>
+
+    <section class="controls">
+        <div class="row">
+            <button id="phase-btn" class="phase-toggle" onclick="togglePhase()">PHASE: 0° (Normal)</button>
+            <button id="residual-btn" class="residual-btn" onclick="toggleResidual()">Show Residual Only</button>
+        </div>
+        <div class="row">
+            <span><strong>Toggle Anti-Noise for:</strong></span>
+            <button id="btn-110" class="anti-btn" onclick="toggleChannel(110, this)">110Hz</button>
+            <button id="btn-220" class="anti-btn" onclick="toggleChannel(220, this)">220Hz</button>
+            <button id="btn-330" class="anti-btn" onclick="toggleChannel(330, this)">330Hz</button>
+            <button id="btn-440" class="anti-btn" onclick="toggleChannel(440, this)">440Hz</button>
+            <button id="btn-550" class="anti-btn" onclick="toggleChannel(550, this)">550Hz</button>
+            <button id="btn-660" class="anti-btn" onclick="toggleChannel(660, this)">660Hz</button>
+        </div>
+    </section>
+</main>
+
+<script>
+    let audioCtx, masterGain;
+    let noiseOn = false, isInverted = false, showResidual = false;
+    const droneFreqs = [110, 220, 330, 440, 550, 660];
+    let droneAmps = [0.5, 0.2, 0.1, 0.08, 0.06, 0.04];
+    const gainMult = 0.3; // Increased from 0.1 for higher base volume
+    
+    let oscs = {}; 
+    let noiseGains = {}; 
+    let antiGains = {};
+
+    function initAudio() {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.value = 0.5;
+        masterGain.connect(audioCtx.destination);
+        
+        droneFreqs.forEach((f, i) => {
+            const osc = audioCtx.createOscillator();
+            const nG = audioCtx.createGain();
+            const aG = audioCtx.createGain();
+            osc.frequency.value = f;
+            nG.gain.value = 0;
+            aG.gain.value = 0;
+            osc.connect(nG).connect(masterGain);
+            osc.connect(aG).connect(masterGain);
+            osc.start();
+            oscs[f] = osc;
+            noiseGains[f] = nG;
+            antiGains[f] = aG;
+        });
+    }
+
+    function updateVolume(val) {
+        if (!audioCtx) initAudio();
+        masterGain.gain.setTargetAtTime(val, audioCtx.currentTime, 0.02);
+    }
+
+    function randomizeAmplitudes() {
+        if (!audioCtx) initAudio();
+        droneAmps = droneFreqs.map(() => Math.random() * 0.4 + 0.05);
+        droneFreqs.forEach((f, i) => {
+            if (noiseOn) noiseGains[f].gain.setTargetAtTime(droneAmps[i] * gainMult, audioCtx.currentTime, 0.1);
+            const btn = document.getElementById(`btn-${f}`);
+            if (btn.classList.contains('active')) {
+                const mult = isInverted ? -1 : 1;
+                antiGains[f].gain.setTargetAtTime(mult * droneAmps[i] * gainMult, audioCtx.currentTime, 0.1);
+            }
+        });
+    }
+
+    function toggleNoise() {
+        if (!audioCtx) initAudio();
+        noiseOn = !noiseOn;
+        document.getElementById('noise-master').classList.toggle('active', noiseOn);
+        droneFreqs.forEach((f, i) => {
+            noiseGains[f].gain.setTargetAtTime(noiseOn ? droneAmps[i] * gainMult : 0, audioCtx.currentTime, 0.05);
+        });
+    }
+
+    function toggleResidual() {
+        showResidual = !showResidual;
+        document.getElementById('residual-btn').classList.toggle('active', showResidual);
+    }
+
+    function toggleChannel(f, btn) {
+        if (!audioCtx) initAudio();
+        const active = btn.classList.toggle('active');
+        const mult = isInverted ? -1 : 1;
+        const amp = droneAmps[droneFreqs.indexOf(f)];
+        antiGains[f].gain.setTargetAtTime(active ? mult * amp * gainMult : 0, audioCtx.currentTime, 0.05);
+    }
+
+    function togglePhase() {
+        isInverted = !isInverted;
+        const btn = document.getElementById('phase-btn');
+        btn.innerText = isInverted ? "PHASE: 180° (Inverted)" : "PHASE: 0° (Normal)";
+        btn.classList.toggle('inverted', isInverted);
+        if (!audioCtx) return;
+        droneFreqs.forEach((f, i) => {
+            const btnEl = document.getElementById(`btn-${f}`);
+            if (btnEl && btnEl.classList.contains('active')) {
+                const mult = isInverted ? -1 : 1;
+                antiGains[f].gain.setTargetAtTime(mult * droneAmps[i] * gainMult, audioCtx.currentTime, 0.02);
+            }
+        });
+    }
+
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+    function draw() {
+        requestAnimationFrame(draw);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        const mid = canvas.height / 2;
+        if (!audioCtx) return;
+
+        const getVal = (x, list) => {
+            let y = 0;
+            list.forEach(f => {
+                const i = droneFreqs.indexOf(f);
+                y += Math.sin(x*0.05*(f/110)) * droneAmps[i] * 40;
+            });
+            return y;
+        };
+
+        let activeAntiFreqs = droneFreqs.filter(f => document.getElementById(`btn-${f}`).classList.contains('active'));
+
+        if (noiseOn && !showResidual) {
+            ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)'; ctx.setLineDash([5, 5]); ctx.beginPath();
+            for(let x=0; x<canvas.width; x++) {
+                let y = getVal(x, droneFreqs);
+                if(x===0) ctx.moveTo(x,mid-y); else ctx.lineTo(x,mid-y);
+            } ctx.stroke();
+        }
+
+        if (activeAntiFreqs.length > 0 && !showResidual) {
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.6)'; ctx.setLineDash([2, 2]); ctx.beginPath();
+            for(let x=0; x<canvas.width; x++) {
+                let yA = 0;
+                activeAntiFreqs.forEach(f => {
+                    const phase = isInverted ? Math.PI : 0;
+                    yA += Math.sin(x*0.05*(f/110) + phase) * droneAmps[droneFreqs.indexOf(f)] * 40;
+                });
+                if(x===0) ctx.moveTo(x,mid-yA); else ctx.lineTo(x,mid-yA);
+            } ctx.stroke();
+        }
+
+        ctx.strokeStyle = '#facc15'; ctx.setLineDash([]); ctx.lineWidth = 3; ctx.beginPath();
+        for(let x=0; x<canvas.width; x++) {
+            let yN = (noiseOn) ? getVal(x, droneFreqs) : 0;
+            let yA = 0;
+            activeAntiFreqs.forEach(f => {
+                const phase = isInverted ? Math.PI : 0;
+                yA += Math.sin(x*0.05*(f/110) + phase) * droneAmps[droneFreqs.indexOf(f)] * 40;
+            });
+            let finalY = yN + yA;
+            if (showResidual && noiseOn) {
+                const inactiveFreqs = droneFreqs.filter(f => !activeAntiFreqs.includes(f));
+                finalY = getVal(x, inactiveFreqs);
+            }
+            if(x===0) ctx.moveTo(x,mid-finalY); else ctx.lineTo(x,mid-finalY);
+        } ctx.stroke();
+    }
+    draw(); window.onresize = () => { canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight; };
+    setTimeout(window.onresize, 100);
+</script>
+</body>
+</html>

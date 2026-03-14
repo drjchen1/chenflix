@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Phase Portrait Lab | Dashboard</title>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: { renderActions: { addMenu: [] } }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/mathjax.js"></script>
+
+    <style>
+        :root {
+            --purdue-gold: #ceb888;
+            --purdue-black: #000000;
+            --bg: #f2f2f2;
+            --text-muted: #4b4f57;
+            --accent-light: #f5efe9;
+        }
+
+        body { 
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; padding: 0;
+            background: var(--bg); color: var(--purdue-black);
+            height: 100vh; display: flex; flex-direction: column;
+            overflow: hidden; 
+        }
+
+        header {
+            padding: 0.5rem 1.5rem;
+            background: var(--purdue-black);
+            border-bottom: 4px solid var(--purdue-gold);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        header h1 { font-size: 1.25rem; margin: 0; color: var(--purdue-gold); }
+        header p { font-size: 0.85rem; margin: 0; color: #f3f3f3; }
+
+        .dashboard {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .controls-sidebar {
+            width: 340px;
+            background: white;
+            border-right: 1px solid #e3dfd4;
+            padding: 1rem;
+            display: flex; flex-direction: column;
+            gap: 0.75rem;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        .input-group { display: flex; flex-direction: column; gap: 4px; }
+        label { font-size: 0.8rem; font-weight: 600; color: var(--purdue-black); }
+        
+        input, select { 
+            padding: 6px 8px; border: 2px solid #d1d5db; border-radius: 6px; 
+            font-family: inherit; font-size: 0.85rem;
+            width: 100%; box-sizing: border-box;
+            min-height: 40px;
+        }
+        
+        input:focus, select:focus { outline: 3px solid var(--purdue-gold); border-color: transparent; }
+
+        .bounds-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 8px; 
+        }
+
+        .param-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 8px; 
+            background: var(--accent-light); 
+            padding: 8px; 
+            border-radius: 8px; 
+        }
+
+        .viz-area {
+            flex: 1;
+            padding: 1rem;
+            display: flex; flex-direction: column;
+            gap: 1rem;
+            background: var(--bg);
+            overflow-y: auto;
+            align-items: center;
+        }
+
+        .canvas-card {
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            position: relative;
+            width: fit-content;
+        }
+
+        canvas { background: white; max-width: 100%; height: auto !important; }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+        }
+
+        button { 
+            padding: 8px; background: var(--purdue-black); color: var(--purdue-gold); border: 2px solid var(--purdue-gold); 
+            border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem;
+            min-height: 44px;
+        }
+        button:hover { filter: brightness(0.95); }
+        .btn-sec { background: #ffffff; color: var(--purdue-black); border-color: var(--purdue-black); }
+        .btn-acc { background: var(--purdue-gold); color: #000; border-color: var(--purdue-black); }
+        .btn-suc { background: var(--purdue-black); color: var(--purdue-gold); border-color: var(--purdue-gold); }
+
+        .status-panel {
+            background: #fff9e6;
+            border: 1px solid var(--purdue-gold);
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+
+        .legend { 
+            display: flex; gap: 8px; flex-wrap: wrap; 
+            font-size: 0.7rem; margin-top: 5px; border-top: 1px solid #eee; padding-top: 5px;
+        }
+
+        .tooltip {
+            position: absolute; background: rgba(0,0,0,0.85); color: white;
+            padding: 6px 10px; border-radius: 4px; font-size: 0.75rem;
+            pointer-events: none; display: none; z-index: 100;
+        }
+
+        h2 { font-size: 0.95rem; margin: 0 0 5px 0; color: var(--text-muted); }
+
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: 0;
+            padding: 0.6rem 1rem;
+            background: #fff9e6;
+            color: #000;
+            border: 2px solid var(--purdue-gold);
+            z-index: 1000;
+        }
+        .skip-link:focus { left: 20px; top: 20px; }
+        button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 3px solid var(--purdue-gold);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard { flex-direction: column; overflow-y: auto; }
+            body { overflow-y: auto; height: auto; }
+            .controls-sidebar { width: auto; border-right: none; border-bottom: 1px solid #ddd; }
+        }
+    </style>
+</head>
+<body>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header>
+        <div>
+            <h1>Phase Portrait Lab</h1>
+            <p>Interactive Differential Equations</p>
+        </div>
+        <div class="legend" aria-hidden="true">
+            <span style="color:#dc2626">● x-null</span>
+            <span style="color:#16a34a">● y-null</span>
+            <span style="color:#d97706">--- Eigenvectors</span>
+        </div>
+    </header>
+
+    <main id="main-content" class="dashboard">
+        <section class="controls-sidebar" aria-label="System Settings">
+            <div class="input-group">
+                <label for="presets">Library Presets</label>
+                <select id="presets" onchange="loadPreset()">
+                    <option value="saddle" selected>Linear Saddle</option>
+                    <option value="duffing">Duffing Oscillator</option>
+                    <option value="vanderpol">Van der Pol</option>
+                    <option value="pendulum">Pendulum</option>
+                    <option value="lotka">Lotka-Volterra</option>
+                    <option value="spiral">Stable Spiral</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="eqnX">x' = F(x,y)</label>
+                <input type="text" id="eqnX" value="x + 2*y">
+            </div>
+            <div class="input-group">
+                <label for="eqnY">y' = G(x,y)</label>
+                <input type="text" id="eqnY" value="2*x + y">
+            </div>
+
+            <div class="input-group">
+                <label for="maxT">Max Integration Time</label>
+                <input type="number" id="maxT" value="20" step="1" min="1" onchange="resetAll()">
+            </div>
+
+            <label>View Bounds (Xmin/max, Ymin/max)</label>
+            <div class="bounds-grid">
+                <input type="number" id="xmin" value="-5" step="0.5" aria-label="X Minimum" onchange="resetAll()">
+                <input type="number" id="xmax" value="5" step="0.5" aria-label="X Maximum" onchange="resetAll()">
+                <input type="number" id="ymin" value="-5" step="0.5" aria-label="Y Minimum" onchange="resetAll()">
+                <input type="number" id="ymax" value="5" step="0.5" aria-label="Y Maximum" onchange="resetAll()">
+            </div>
+
+            <label>System Parameters (a, b, c)</label>
+            <div class="param-grid">
+                <input type="number" id="pA" value="1.0" step="0.1" aria-label="Parameter a" onchange="resetAll()">
+                <input type="number" id="pB" value="1.0" step="0.1" aria-label="Parameter b" onchange="resetAll()">
+                <input type="number" id="pC" value="0.2" step="0.05" aria-label="Parameter c" onchange="resetAll()">
+            </div>
+
+            <div class="status-panel" role="status" aria-live="polite">
+                <div id="eigenOutput">Stability: Ready</div>
+            </div>
+
+            <div class="btn-grid">
+                <button onclick="resetAll()">Clear & Update</button>
+                <button onclick="drawNullclines()" class="btn-suc">Nullclines</button>
+                <button onclick="solveLinear()" class="btn-acc">Eigenvectors</button>
+                <button onclick="findEquilibria()" class="btn-acc">Critical points</button>
+                <button onclick="exportCSV()" class="btn-sec">Export CSV</button>
+                <button onclick="saveImage('portrait', 'phase.png')" class="btn-sec">Save PNG</button>
+            </div>
+        </section>
+
+        <section class="viz-area">
+            <div class="canvas-card">
+                <h2>Phase Portrait</h2>
+                <div id="tooltipPortrait" class="tooltip"></div>
+                <canvas id="portrait" width="600" height="400" role="img" aria-label="Vector field and phase trajectories."></canvas>
+            </div>
+
+            <div class="canvas-card">
+                <h2>Time-Series Plot</h2>
+                <div id="tooltipTS" class="tooltip"></div>
+                <canvas id="timeSeries" width="600" height="180" role="img" aria-label="x and y values relative to time."></canvas>
+                <div class="legend">
+                    <span style="color:#2563eb; font-weight: bold;">— x(t)</span>
+                    <span style="color:#db2777; font-weight: bold;">— y(t)</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById('portrait');
+        const ctx = canvas.getContext('2d');
+        const tsCanvas = document.getElementById('timeSeries');
+        const tsCtx = tsCanvas.getContext('2d');
+        const ttP = document.getElementById('tooltipPortrait');
+        const ttTS = document.getElementById('tooltipTS');
+
+        let lastTrajectoryData = [];
+
+        const presetList = {
+            duffing: { eqnX: "y", eqnY: "a*x - x**3 - c*y", xmin: -3, xmax: 3, ymin: -2, ymax: 2, a: 1, b: 0, c: 0.25 },
+            vanderpol: { eqnX: "y", eqnY: "a * (1 - x**2) * y - x", xmin: -4, xmax: 4, ymin: -4, ymax: 4, a: 1, b: 0, c: 0 },
+            pendulum: { eqnX: "y", eqnY: "-sin(x) - c*y", xmin: -6.28, xmax: 6.28, ymin: -3, ymax: 3, a: 1, b: 0, c: 0.2 },
+            lotka: { eqnX: "x * (a - y)", eqnY: "y * (x - b)", xmin: -0.5, xmax: 10, ymin: -0.5, ymax: 5, a: 1.5, b: 3, c: 0 },
+            saddle: { eqnX: "x + 2*y", eqnY: "2*x + y", xmin: -5, xmax: 5, ymin: -5, ymax: 5, a: 1, b: 1, c: 1 },
+            spiral: { eqnX: "-0.2*x + 2*y", eqnY: "-2*x - 0.2*y", xmin: -5, xmax: 5, ymin: -5, ymax: 5, a: 1, b: 1, c: 1 }
+        };
+
+        function loadPreset() {
+            const p = presetList[document.getElementById('presets').value];
+            document.getElementById('eqnX').value = p.eqnX;
+            document.getElementById('eqnY').value = p.eqnY;
+            document.getElementById('xmin').value = p.xmin;
+            document.getElementById('xmax').value = p.xmax;
+            document.getElementById('ymin').value = p.ymin;
+            document.getElementById('ymax').value = p.ymax;
+            document.getElementById('pA').value = p.a;
+            document.getElementById('pB').value = p.b;
+            document.getElementById('pC').value = p.c;
+            resetAll();
+        }
+
+        function getBounds() {
+            return {
+                xmin: parseFloat(document.getElementById('xmin').value),
+                xmax: parseFloat(document.getElementById('xmax').value),
+                ymin: parseFloat(document.getElementById('ymin').value),
+                ymax: parseFloat(document.getElementById('ymax').value)
+            };
+        }
+
+        function getScales() {
+            const b = getBounds();
+            const xRange = b.xmax - b.xmin;
+            const yRange = b.ymax - b.ymin;
+            
+            // "Axis Equal" logic: adjust scaling factors to maintain 1:1 visual aspect ratio
+            const canvasAspect = canvas.width / canvas.height;
+            const dataAspect = xRange / yRange;
+            
+            let scaleX, scaleY, offsetX = 0, offsetY = 0;
+
+            if (dataAspect > canvasAspect) {
+                // X is the limiting dimension
+                scaleX = canvas.width / xRange;
+                scaleY = scaleX;
+                offsetY = (canvas.height - (yRange * scaleY)) / 2;
+            } else {
+                // Y is the limiting dimension
+                scaleY = canvas.height / yRange;
+                scaleX = scaleY;
+                offsetX = (canvas.width - (xRange * scaleX)) / 2;
+            }
+
+            return { scaleX, scaleY, offsetX, offsetY, b };
+        }
+
+        function f(x, y, rev = false) {
+            try {
+                const a = parseFloat(document.getElementById('pA').value);
+                const b = parseFloat(document.getElementById('pB').value);
+                const c = parseFloat(document.getElementById('pC').value);
+                const s = { sin: Math.sin, cos: Math.cos, tan: Math.tan, exp: Math.exp, log: Math.log, sqrt: Math.sqrt, abs: Math.abs, PI: Math.PI, a, b, c };
+                const fnX = new Function('x', 'y', ...Object.keys(s), `return ${document.getElementById('eqnX').value.replace(/\^/g, '**')}`);
+                const fnY = new Function('x', 'y', ...Object.keys(s), `return ${document.getElementById('eqnY').value.replace(/\^/g, '**')}`);
+                return rev ? [-fnX(x,y,...Object.values(s)), -fnY(x,y,...Object.values(s))] : [fnX(x,y,...Object.values(s)), fnY(x,y,...Object.values(s))];
+            } catch(e) { return [0,0]; }
+        }
+
+        function toCanvas(x, y) {
+            const { scaleX, scaleY, offsetX, offsetY, b } = getScales();
+            return [
+                offsetX + (x - b.xmin) * scaleX,
+                canvas.height - (offsetY + (y - b.ymin) * scaleY)
+            ];
+        }
+
+        function fromCanvas(cx, cy) {
+            const { scaleX, scaleY, offsetX, offsetY, b } = getScales();
+            return [
+                b.xmin + (cx - offsetX) / scaleX,
+                b.ymin + ((canvas.height - cy) - offsetY) / scaleY
+            ];
+        }
+
+        function drawTrajectory(sx, sy, rev=false) {
+            let [x, y] = [sx, sy];
+            let dt = 0.02;
+            let maxT = parseFloat(document.getElementById('maxT').value) || 20;
+            let steps = Math.floor(maxT / dt);
+            
+            if(!rev) lastTrajectoryData = [];
+            ctx.beginPath();
+            ctx.strokeStyle = rev ? 'rgba(37, 99, 235, 0.2)' : '#2563eb';
+            ctx.lineWidth = 2.5;
+            let [cx, cy] = toCanvas(x, y); ctx.moveTo(cx, cy);
+            for(let i=0; i<steps; i++) {
+                if(!rev) lastTrajectoryData.push({t: i*dt, x, y});
+                let k1 = f(x, y, rev), k2 = f(x+k1[0]*dt/2, y+k1[1]*dt/2, rev), k3 = f(x+k2[0]*dt/2, y+k2[1]*dt/2, rev), k4 = f(x+k3[0]*dt, y+k3[1]*dt, rev);
+                x += (dt/6)*(k1[0]+2*k2[0]+2*k3[0]+k4[0]);
+                y += (dt/6)*(k1[1]+2*k2[1]+2*k3[1]+k4[1]);
+                [cx, cy] = toCanvas(x, y); ctx.lineTo(cx, cy);
+                const b = getBounds();
+                if(x < b.xmin-10 || x > b.xmax+10 || y < b.ymin-10 || y > b.ymax+10) break;
+            }
+            ctx.stroke();
+            if(!rev) drawTimeSeries();
+        }
+
+        function drawTimeSeries() {
+            tsCtx.clearRect(0,0,tsCanvas.width, tsCanvas.height);
+            if(lastTrajectoryData.length === 0) return;
+            const b = getBounds();
+            let xVals = lastTrajectoryData.map(p => p.x);
+            let yVals = lastTrajectoryData.map(p => p.y);
+            let range = Math.max(Math.abs(Math.min(...xVals, ...yVals)), Math.abs(Math.max(...xVals, ...yVals)), 1);
+
+            const toTsY = (val) => tsCanvas.height/2 - (val/range) * (tsCanvas.height/2.5);
+            tsCtx.strokeStyle = '#ddd'; tsCtx.beginPath(); tsCtx.moveTo(0, tsCanvas.height/2); tsCtx.lineTo(tsCanvas.width, tsCanvas.height/2); tsCtx.stroke();
+
+            ['x', 'y'].forEach(axis => {
+                tsCtx.beginPath();
+                tsCtx.strokeStyle = axis === 'x' ? '#2563eb' : '#db2777';
+                tsCtx.lineWidth = 2;
+                lastTrajectoryData.forEach((pt, i) => {
+                    const cx = (i / lastTrajectoryData.length) * tsCanvas.width;
+                    const cy = toTsY(pt[axis]);
+                    if(i===0) tsCtx.moveTo(cx, cy); else tsCtx.lineTo(cx, cy);
+                });
+                tsCtx.stroke();
+            });
+        }
+
+        function saveImage(canvasId, filename) {
+            const target = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = target.toDataURL("image/png");
+            link.click();
+        }
+
+        function exportCSV() {
+            if(lastTrajectoryData.length === 0) return;
+            let csv = "time,x,y\n" + lastTrajectoryData.map(d => `${d.t.toFixed(4)},${d.x.toFixed(6)},${d.y.toFixed(6)}`).join("\n");
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'trajectory.csv'; a.click();
+        }
+
+        function solveLinear() {
+            const h = 0.001;
+            const f10 = f(h, 0), f01 = f(0, h);
+            const a = f10[0]/h, b = f01[0]/h, c = f10[1]/h, d = f01[1]/h;
+            const tr = a+d, det = a*d-b*c, disc = tr*tr-4*det;
+            if(disc >= 0) {
+                const l1 = (tr+Math.sqrt(disc))/2, l2 = (tr-Math.sqrt(disc))/2;
+                document.getElementById('eigenOutput').innerText = `λ₁: ${l1.toFixed(2)}, λ₂: ${l2.toFixed(2)}`;
+                [l1, l2].forEach(l => {
+                    let vx, vy;
+                    if (Math.abs(b) > 1e-6) { vx = b; vy = l - a; }
+                    else if (Math.abs(c) > 1e-6) { vx = l - d; vy = c; }
+                    else { vx = (l === a) ? 1 : 0; vy = (l === d) ? 1 : 0; }
+                    const [cx0, cy0] = toCanvas(vx * 100, vy * 100);
+                    const [cx1, cy1] = toCanvas(-vx * 100, -vy * 100);
+                    ctx.save(); ctx.strokeStyle = '#d97706'; ctx.setLineDash([10, 5]); ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(cx0, cy0); ctx.lineTo(cx1, cy1); ctx.stroke(); ctx.restore();
+                });
+            } else { document.getElementById('eigenOutput').innerText = `Complex λ: ${(tr/2).toFixed(2)} ± ${(Math.sqrt(-disc)/2).toFixed(2)}i`; }
+        }
+
+        function drawDirectionField() {
+            const rows = 20, cols = 30;
+            for(let i=0; i<=cols; i++) {
+                for(let j=0; j<=rows; j++) {
+                    const [x, y] = fromCanvas(i * (canvas.width/cols), j * (canvas.height/rows));
+                    const [dx, dy] = f(x, y);
+                    const mag = Math.sqrt(dx*dx + dy*dy);
+                    if (mag < 1e-6) continue;
+                    const [cx, cy] = toCanvas(x, y);
+                    ctx.strokeStyle = '#e2e8f0'; ctx.beginPath();
+                    ctx.moveTo(cx, cy); ctx.lineTo(cx + (dx/mag)*10, cy - (dy/mag)*10); ctx.stroke();
+                }
+            }
+        }
+
+        function drawNullclines() {
+            const res = 120, b = getBounds();
+            const dx_s = (b.xmax-b.xmin)/res, dy_s = (b.ymax-b.ymin)/res;
+            for(let i=0; i<res; i++) {
+                for(let j=0; j<res; j++) {
+                    const x = b.xmin + i*dx_s, y = b.ymin + j*dy_s;
+                    const v = f(x, y), vX = f(x+dx_s, y), vY = f(x, y+dy_s);
+                    if(v[0]*vX[0] <= 0) { ctx.fillStyle='rgba(220,38,38,0.5)'; const [cx,cy]=toCanvas(x,y); ctx.fillRect(cx,cy,2,2); }
+                    if(v[1]*vY[1] <= 0) { ctx.fillStyle='rgba(22,163,74,0.5)'; const [cx,cy]=toCanvas(x,y); ctx.fillRect(cx,cy,2,2); }
+                }
+            }
+        }
+
+        function findEquilibria() {
+            const b = getBounds();
+            const res = 25;
+            const roots = [];
+            for(let i=0; i<=res; i++) {
+                for(let j=0; j<=res; j++) {
+                    let x = b.xmin + (i/res)*(b.xmax-b.xmin), y = b.ymin + (j/res)*(b.ymax-b.ymin);
+                    for(let iter=0; iter<8; iter++) {
+                        const v = f(x, y), h = 1e-7, vx = f(x+h, y), vy = f(x, y+h);
+                        const m11 = (vx[0]-v[0])/h, m12 = (vy[0]-v[0])/h, m21 = (vx[1]-v[1])/h, m22 = (vy[1]-v[1])/h;
+                        const det = m11*m22 - m12*m21;
+                        if(Math.abs(det) < 1e-12) break;
+                        x -= (m22*v[0] - m12*v[1])/det; y -= (-m21*v[0] + m11*v[1])/det;
+                    }
+                    if(Math.abs(f(x,y)[0]) < 1e-5 && Math.abs(f(x,y)[1]) < 1e-5) {
+                        if(!roots.some(p => Math.hypot(p.x-x, p.y-y) < 1e-3)) {
+                            roots.push({x, y});
+                            const [cx, cy] = toCanvas(x, y);
+                            ctx.fillStyle = 'white'; ctx.strokeStyle = 'black'; ctx.lineWidth = 2;
+                            ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+                        }
+                    }
+                }
+            }
+        }
+
+        function resetAll() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            tsCtx.clearRect(0,0,tsCanvas.width, tsCanvas.height);
+            lastTrajectoryData = [];
+            const [zx, zy] = toCanvas(0,0);
+            ctx.strokeStyle = '#ddd'; ctx.beginPath(); ctx.moveTo(0, zy); ctx.lineTo(canvas.width, zy); ctx.moveTo(zx, 0); ctx.lineTo(zx, canvas.height); ctx.stroke();
+            drawDirectionField();
+            if (window.MathJax && window.MathJax.typeset) { window.MathJax.typeset(); }
+        }
+
+        canvas.addEventListener('mousedown', e => {
+            const rect = canvas.getBoundingClientRect();
+            const [x, y] = fromCanvas(e.clientX - rect.left, e.clientY - rect.top);
+            drawTrajectory(x, y, false); drawTrajectory(x, y, true);
+        });
+
+        canvas.addEventListener('mousemove', e => {
+            if (lastTrajectoryData.length === 0) return;
+            const rect = canvas.getBoundingClientRect();
+            const cx = e.clientX - rect.left;
+            const cy = e.clientY - rect.top;
+            const [mx, my] = fromCanvas(cx, cy);
+
+            let nearest = lastTrajectoryData[0];
+            let minDist = Infinity;
+            lastTrajectoryData.forEach(p => {
+                let d = Math.pow(p.x - mx, 2) + Math.pow(p.y - my, 2);
+                if (d < minDist) { minDist = d; nearest = p; }
+            });
+
+            const b = getBounds();
+            const snapThreshold = Math.pow((b.xmax - b.xmin) * 0.04, 2); 
+
+            if (minDist < snapThreshold) {
+                const [ncx, ncy] = toCanvas(nearest.x, nearest.y);
+                ttP.style.display = 'block';
+                ttP.style.left = (ncx + 15) + 'px';
+                ttP.style.top = (ncy + 15) + 'px';
+                ttP.innerHTML = `t: ${nearest.t.toFixed(2)}s<br>x: ${nearest.x.toFixed(3)}<br>y: ${nearest.y.toFixed(3)}`;
+            } else { 
+                ttP.style.display = 'none'; 
+            }
+        });
+
+        canvas.addEventListener('mouseleave', () => ttP.style.display = 'none');
+
+        tsCanvas.addEventListener('mousemove', e => {
+            if(lastTrajectoryData.length === 0) return;
+            const rect = tsCanvas.getBoundingClientRect();
+            const cx = e.clientX - rect.left;
+            const cy = e.clientY - rect.top;
+            const index = Math.floor((cx / tsCanvas.width) * lastTrajectoryData.length);
+            const data = lastTrajectoryData[Math.min(index, lastTrajectoryData.length - 1)];
+            if(data) {
+                ttTS.style.display = 'block';
+                ttTS.style.left = (cx + 15) + 'px';
+                ttTS.style.top = (cy + 15) + 'px';
+                ttTS.innerHTML = `t: ${data.t.toFixed(2)}s<br>x: ${data.x.toFixed(3)}<br>y: ${data.y.toFixed(3)}`;
+            }
+        });
+
+        tsCanvas.addEventListener('mouseleave', () => ttTS.style.display = 'none');
+        window.addEventListener('load', () => { resetAll(); });
+    </script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Euler Resolution Lab</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+    <style>
+        :root {
+            --purdue-gold: #ceb888;
+            --purdue-black: #000000;
+            --bg-gray: #f2f2f2;
+            --link-blue: #005cb9;
+            --accent-light: #f5efe9;
+            --text-muted: #4b4f57;
+            --improved: #0f9d58;
+            --backward: #7c3aed;
+            --rk4: #b45309;
+            --error: #b91c1c;
+        }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: var(--bg-gray); color: var(--purdue-black); }
+        main { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 95%; margin: 0 auto; }
+        
+        .tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #ddd; flex-wrap: wrap; gap: 4px; }
+        
+        .tab-btn {
+            position: relative; 
+            padding: 12px 24px; 
+            cursor: pointer; 
+            border: none; 
+            background: none; 
+            font-weight: bold; 
+            color: #4b4f57; 
+            font-size: 1rem; 
+            transition: 0.2s; 
+        }
+        .tab-btn.active { color: var(--purdue-black); border-bottom: 3px solid var(--purdue-black); }
+        .tab-btn:hover { background: #f0f0f0; }
+        .tab-btn:focus-visible { outline: 3px solid var(--purdue-gold); outline-offset: 2px; }
+
+        .euler-popup {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 140px;
+            background: white;
+            border: 3px solid var(--purdue-black);
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            pointer-events: none;
+            overflow: visible; 
+        }
+
+        .euler-popup > img { 
+            width: 140px; 
+            height: 140px; 
+            object-fit: cover; 
+            display: block;
+        }
+
+        .tab-btn:hover .euler-popup { display: block; }
+
+        .euler-popup::after {
+            content: attr(data-label);
+            position: absolute;
+            top: 100%; 
+            left: -3px; 
+            width: calc(100% + 6px);
+            text-align: center;
+            background: var(--purdue-black);
+            color: white;
+            font-size: 0.65rem;
+            padding: 4px 0;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .rk4-grid {
+            display: grid;
+            grid-template-columns: 70px 70px;
+            grid-template-rows: 70px 70px;
+            width: 140px;
+            height: 140px;
+            background: gold;
+        }
+        .rk4-grid img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; background: var(--accent-light); padding: 22px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e3dfd4; align-items: center; }
+        .controls > div { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+        .custom-box { grid-column: 1 / -1; background: #f7f5f1; padding: 15px; border-radius: 4px; display: flex; gap: 10px; align-items: center; border: 1px solid #e3dfd4; }
+        input, select { padding: 10px 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; min-height: 48px; height: 48px; font-size: 1rem; width: 100%; }
+        input[type="number"] { padding-right: 0.6rem; }
+        button.btn-calc { background: var(--purdue-black); color: var(--purdue-gold); border: 2px solid var(--purdue-gold); padding: 15px; border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold; margin-bottom: 20px; font-size: 1rem; min-height: 44px; }
+        .canvas-container { width: 100%; height: 500px; margin: 20px 0; position: relative; }
+        .scrollable { overflow-x: auto; width: 100%; }
+        table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+        th { background: var(--purdue-black); color: var(--purdue-gold); padding: 12px; font-size: 0.85rem; }
+        td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        .error-text { color: var(--error); font-size: 0.85rem; font-weight: bold; }
+        .exact-col { background: #f9f9f9; }
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: 0;
+            padding: 0.6rem 1rem;
+            background: #fff9e6;
+            color: #000;
+            border: 2px solid var(--purdue-gold);
+            z-index: 1000;
+        }
+        .skip-link:focus { left: 20px; top: 20px; }
+        button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 3px solid var(--purdue-gold);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<main id="main-content">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('forward')">
+            Forward Euler
+            <div class="euler-popup" data-label="Low-Res Approximation">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Leonhard_Euler.jpg" style="image-rendering: pixelated; filter: blur(3px) contrast(1.2);">
+            </div>
+        </button>
+        <button class="tab-btn" onclick="openTab('backward')">
+            Backward Euler
+            <div class="euler-popup" data-label="Implicit (Looking Back)">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Leonhard_Euler.jpg" 
+     style="transform: scaleX(-1); image-rendering: pixelated; filter: blur(3px) contrast(1.2);">
+            </div>
+        </button>
+        <button class="tab-btn" onclick="openTab('improved')">
+            Improved Euler
+            <div class="euler-popup" data-label="High-Res Solution">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Leonhard_Euler.jpg">
+            </div>
+        </button>
+        <button class="tab-btn" onclick="openTab('rk4')">
+            RK4
+            <div class="euler-popup" data-label="2(Runge)+2(Kutta)=RK4">
+                <div class="rk4-grid">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Voit_202_Karl_Runge.jpg" alt="Runge">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Martin_Wilhelm_Kutta.jpg" alt="Kutta">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Martin_Wilhelm_Kutta.jpg" alt="Kutta">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Voit_202_Karl_Runge.jpg" alt="Runge">
+                </div>
+            </div>
+        </button>
+    </div>
+
+    <h1 id="methodTitle">Standard Euler Method (Forward)</h1>
+    
+    <div class="controls">
+        <div>
+            <label for="func">Preset Functions</label>
+            <select id="func" onchange="toggleCustom(this.value)">
+                <option value="y">y' = y</option>
+                <option value="t_minus_y">y' = t - y</option>
+                <option value="logistic">y' = y(1 - y/2)</option>
+                <option value="osc">y' = -t</option>
+                <option value="poly">y' = 3t²</option>
+                <option value="custom">-- Custom f(t, y) --</option>
+            </select>
+        </div>
+        <div>
+            <label for="y0">Initial \(y_0\)</label>
+            <input type="number" id="y0" value="1" step="0.1">
+        </div>
+        <div>
+            <label for="h">Step Size (\(h\))</label>
+            <input type="number" id="h" value="0.5" step="0.1">
+        </div>
+        <div>
+            <label for="tEnd">Target \(t\)</label>
+            <input type="number" id="tEnd" value="5">
+        </div>
+        <div id="customInputArea" class="custom-box" style="display:none;">
+            <label for="customF">\(f(t, y) = \)</label>
+            <input type="text" id="customF" placeholder="e.g., t + sin(y)" style="flex-grow:1;">
+            <button onclick="runSimulation()" style="padding:8px; cursor:pointer;">Update Visualization</button>
+        </div>
+    </div>
+
+    <button class="btn-calc" onclick="runSimulation()">Refresh Calculations</button>
+
+    <div class="canvas-container">
+        <canvas id="compChart"></canvas>
+    </div>
+
+    <section class="scrollable">
+        <table id="dataTable">
+            <thead>
+                <tr id="headerRow">
+                    <th>\(t_n\)</th>
+                    <th>\(y_n\)</th>
+                    <th class="exact-only">Local Error</th>
+                    <th class="exact-only">Global Error</th>
+                    <th class="exact-only">Exact \(y(t)\)</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+</main>
+
+<script>
+let myChart;
+let currentTab = 'forward';
+
+function openTab(tabName) {
+    currentTab = tabName;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    const btns = document.querySelectorAll('.tab-btn');
+    if (tabName === 'forward') btns[0].classList.add('active');
+    else if (tabName === 'backward') btns[1].classList.add('active');
+    else if (tabName === 'improved') btns[2].classList.add('active');
+    else btns[3].classList.add('active');
+
+    const titles = { 'forward': 'Standard Euler Method', 'improved': 'Improved Euler Method', 'backward': 'Backward Euler Method', 'rk4': 'Runge-Kutta Method (RK4)' };
+    document.getElementById('methodTitle').innerText = titles[tabName];
+    runSimulation();
+}
+
+function toggleCustom(val) {
+    document.getElementById('customInputArea').style.display = (val === 'custom') ? 'flex' : 'none';
+    runSimulation();
+}
+
+function getLogic(choice, y0) {
+    if (choice === 'custom') {
+        const expr = document.getElementById('customF').value || "0";
+        try {
+            const node = math.parse(expr);
+            const code = node.compile();
+            return { f: (t, y) => code.evaluate({t, y}), exact: null, bwd: null };
+        } catch (e) { return { f: (t, y) => 0, exact: null, bwd: null }; }
+    }
+    switch(choice) {
+        case 'y': return { f: (t, y) => y, exact: (t) => y0 * Math.exp(t), bwd: (y, h, t) => y / (1 - h) };
+        case 't_minus_y': return { f: (t, y) => t - y, exact: (t) => t - 1 + (y0 + 1) * Math.exp(-t), bwd: (y, h, t) => (y + h*(t+h)) / (1 + h) };
+        case 'logistic': return { 
+            f: (t, y) => y*(1 - y/2), 
+            exact: (t) => (2 * y0 * Math.exp(t)) / (2 + y0 * (Math.exp(t) - 1)), 
+            bwd: (y, h, t) => { 
+                // Solves implicit quadratic: (h/2)y^2 + (1-h)y - y_n = 0
+                return ((h - 1) + Math.sqrt(Math.pow(1 - h, 2) + 2 * h * y)) / h;
+            }
+        };
+        case 'osc': return { f: (t, y) => -t, exact: (t) => y0 - 0.5*t*t, bwd: (y, h, t) => y - h*(t+h) };
+        case 'poly': return { f: (t, y) => 3*t*t, exact: (t) => y0 + t*t*t, bwd: (y, h, t) => y + h*(3*Math.pow(t+h, 2)) };
+    }
+}
+
+function runSimulation() {
+    const y0 = parseFloat(document.getElementById('y0').value);
+    const h = parseFloat(document.getElementById('h').value);
+    const tEnd = parseFloat(document.getElementById('tEnd').value);
+    const logic = getLogic(document.getElementById('func').value, y0);
+    const f = logic.f;
+    const exact = logic.exact;
+
+    let t = 0, yVal = y0;
+    const dataPoints = [], dataExact = [];
+    const tbody = document.querySelector('#dataTable tbody');
+    tbody.innerHTML = '';
+
+    const exactCols = document.querySelectorAll('.exact-only');
+    exactCols.forEach(c => c.style.display = exact ? 'table-cell' : 'none');
+
+    while (t <= tEnd + 0.0001) {
+        let real = exact ? exact(t) : null;
+        if (exact) dataExact.push({x: t, y: real});
+        dataPoints.push({x: t, y: yVal});
+
+        let rowHtml = `<td>${t.toFixed(2)}</td><td>${yVal.toFixed(4)}</td>`;
+
+        if (exact) {
+            let gErr = Math.abs(real - yVal);
+            let lErr = 0;
+            if (t > 0) {
+                let tPrev = t - h, yExPrev = exact(tPrev), oneStep = 0;
+                if (currentTab === 'forward') oneStep = yExPrev + h * f(tPrev, yExPrev);
+                else if (currentTab === 'improved') {
+                    let k1 = f(tPrev, yExPrev);
+                    oneStep = yExPrev + (h/2) * (k1 + f(t, yExPrev + h*k1));
+                } else if (currentTab === 'rk4') {
+                    let k1 = f(tPrev, yExPrev);
+                    let k2 = f(tPrev + h/2, yExPrev + (h/2)*k1);
+                    let k3 = f(tPrev + h/2, yExPrev + (h/2)*k2);
+                    let k4 = f(t, yExPrev + h*k3);
+                    oneStep = yExPrev + (h/6) * (k1 + 2*k2 + 2*k3 + k4);
+                } else oneStep = logic.bwd(yExPrev, h, tPrev);
+                lErr = Math.abs(real - oneStep);
+            }
+            rowHtml += `<td class="error-text">${lErr.toFixed(6)}</td><td class="error-text">${gErr.toFixed(6)}</td><td class="exact-col">${real.toFixed(4)}</td>`;
+        }
+
+        tbody.innerHTML += `<tr>${rowHtml}</tr>`;
+
+        if (currentTab === 'forward') yVal += h * f(t, yVal);
+        else if (currentTab === 'improved') {
+            let k1 = f(t, yVal);
+            yVal += (h/2) * (k1 + f(t + h, yVal + h * k1));
+        } else if (currentTab === 'rk4') {
+            let k1 = f(t, yVal);
+            let k2 = f(t + h/2, yVal + (h/2)*k1);
+            let k3 = f(t + h/2, yVal + (h/2)*k2);
+            let k4 = f(t + h, yVal + h*k3);
+            yVal += (h/6) * (k1 + 2*k2 + 2*k3 + k4);
+        } else {
+            if (logic.bwd) yVal = logic.bwd(yVal, h, t);
+            else yVal += h * f(t+h, yVal);
+        }
+        t += h;
+    }
+    renderChart(dataPoints, dataExact);
+}
+
+function renderChart(approx, exact) {
+    const ctx = document.getElementById('compChart').getContext('2d');
+    if (myChart) myChart.destroy();
+    const colors = { 'forward': '#3498db', 'improved': '#27ae60', 'backward': '#8e44ad', 'rk4': '#f39c12' };
+    const datasets = [{ label: 'Approximation', data: approx, borderColor: colors[currentTab], pointRadius: 5, fill: false, tension: 0 }];
+    if (exact.length > 0) datasets.push({ label: 'Exact', data: exact, borderColor: '#e74c3c', borderDash: [5,5], pointRadius: 0, fill: false, tension: 0.1 });
+
+    myChart = new Chart(ctx, {
+        type: 'line', data: { datasets },
+        options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'linear', position: 'bottom' } } }
+    });
+}
+window.onload = runSimulation;
+</script>
+</body>
+</html>

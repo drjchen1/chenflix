@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convolution & Mass-Spring-Damper Intuition</title>
+    
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --purdue-gold: #ceb888;
+            --purdue-black: #000000;
+            --bg-gray: #f2f2f2;
+            --link-blue: #005cb9;
+            --accent-light: #f5efe9;
+            --text-muted: #4b4f57;
+        }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: var(--purdue-black); background-color: var(--bg-gray); padding: 20px; }
+        main { max-width: 900px; margin: 0 auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        h1, h2, h3 { color: var(--purdue-black); margin-top: 0; }
+        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; background: var(--accent-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid #e3dfd4; }
+        .input-group { display: flex; flex-direction: column; }
+        label { font-weight: 600; margin-bottom: 0.5rem; }
+        input, select, button { padding: 0.6rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 4px; min-height: 48px; font-size: 1rem; width: 100%; }
+        input[type="number"] { padding-right: 0.6rem; }
+        button { background-color: var(--purdue-black); color: var(--purdue-gold); cursor: pointer; font-weight: bold; margin-top: 1.5rem; border: 2px solid var(--purdue-gold); }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; }
+        .pop-btn { margin-top: 0; padding: 4px 12px; font-size: 0.8rem; background-color: var(--purdue-black); color: var(--purdue-gold); border: 2px solid var(--purdue-gold); }
+        .chart-container { position: relative; height: 350px; width: 100%; margin-bottom: 2rem; }
+        .slider-container { background: #fff9e6; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--purdue-gold); margin-bottom: 3rem; }
+        .play-controls { display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem; }
+        #tSlider { flex-grow: 1; cursor: pointer; }
+        #playBtn { margin-top: 0; min-width: 100px; background-color: var(--purdue-gold); color: #000; border: 2px solid var(--purdue-black); }
+
+        #modalOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; flex-direction: column; justify-content: center; align-items: center; }
+        #modalContent { background: white; width: 95%; height: 80%; padding: 20px; border-radius: 12px; position: relative; display: flex; justify-content: center; align-items: center; }
+        #closeModal { position: absolute; top: 10px; right: 20px; font-size: 2rem; cursor: pointer; color: #333; font-weight: bold; z-index: 1001; }
+        #popImage { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .modal-actions { margin-top: 1rem; display: flex; gap: 1rem; }
+        #downloadBtn { background-color: var(--purdue-black); color: var(--purdue-gold); margin-top: 0; padding: 10px 20px; border: 2px solid var(--purdue-gold); }
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: 0;
+            padding: 0.6rem 1rem;
+            background: #fff9e6;
+            color: #000;
+            border: 2px solid var(--purdue-gold);
+            z-index: 1000;
+        }
+        .skip-link:focus { left: 20px; top: 20px; }
+        button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 3px solid var(--purdue-gold);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<main id="main-content">
+    <header>
+        <h1>Convolution in 2nd-Order Systems</h1>
+        <p>This "app" visualizes the Convolution Integral as a sum of shifted impulse responses ($h(t)$).</p>
+    </header>
+
+    <section class="controls">
+        <div class="input-group"><label for="mass">Mass ($m$):</label><input type="number" id="mass" value="1" step="0.1"></div>
+        <div class="input-group"><label for="damping">Damping ($c$):</label><input type="number" id="damping" value="0.5" step="0.1"></div>
+        <div class="input-group"><label for="spring">Spring ($k$):</label><input type="number" id="spring" value="2" step="0.1"></div>
+        <div class="input-group">
+            <label for="forceType">Force $f(t)$:</label>
+            <select id="forceType">
+                <option value="sin">Sinusoid</option>
+                <option value="step">Step</option>
+                <option value="pulse">Pulse</option>
+            </select>
+        </div>
+        <button onclick="resetInputs()">Reset</button>
+    </section>
+
+    <section>
+        <div class="chart-header"><h3>1. Unit Impulse Response $h(t)$</h3> <button class="pop-btn" onclick="popOut('hChart')">Embiggen</button></div>
+        <div class="chart-container"><canvas id="hChart"></canvas></div>
+
+        <div class="chart-header"><h3>2. Full System Response (Static)</h3> <button class="pop-btn" onclick="popOut('combinedChart')">Embiggen</button></div>
+        <div class="chart-container"><canvas id="combinedChart"></canvas></div>
+
+        <div class="slider-container">
+            <div class="chart-header"><h3>3. Interactive Time Evolution</h3> <button class="pop-btn" onclick="popOut('interactiveChart')">Embiggen</button></div>
+            <label>Current Time ($t$): <span id="tVal">20.0</span>s</label>
+            <div class="play-controls">
+                <button id="playBtn" onclick="togglePlay()">Play</button>
+                <input type="range" id="tSlider" min="0" max="20" step="0.1" value="20">
+            </div>
+            <div class="chart-container" style="margin-top:1rem;"><canvas id="interactiveChart"></canvas></div>
+        </div>
+    </section>
+</main>
+
+<div id="modalOverlay">
+    <div id="modalContent">
+        <span id="closeModal" onclick="closePopOut()">&times;</span>
+        <img id="popImage" src="" alt="Enlarged Chart">
+    </div>
+    <div class="modal-actions">
+        <button id="downloadBtn" onclick="permanize()">Permanize to Disk</button>
+    </div>
+</div>
+
+<script>
+    let hChart, combinedChart, interactiveChart;
+    let currentPopSourceId = null;
+    let animationInterval = null;
+
+    function popOut(chartId) {
+        currentPopSourceId = chartId;
+        const sourceChart = chartId === 'hChart' ? hChart : (chartId === 'combinedChart' ? combinedChart : interactiveChart);
+        const imageData = sourceChart.toBase64Image();
+        document.getElementById('popImage').src = imageData;
+        document.getElementById('modalOverlay').style.display = 'flex';
+    }
+
+    function permanize() {
+        const link = document.createElement('a');
+        link.download = `system-response-${new Date().getTime()}.png`;
+        link.href = document.getElementById('popImage').src;
+        link.click();
+    }
+
+    function closePopOut() { 
+        document.getElementById('modalOverlay').style.display = 'none'; 
+        currentPopSourceId = null;
+    }
+
+    function togglePlay() {
+        const btn = document.getElementById('playBtn');
+        const slider = document.getElementById('tSlider');
+        if (animationInterval) {
+            clearInterval(animationInterval); animationInterval = null;
+            btn.innerText = "Play"; btn.style.backgroundColor = "#059669";
+        } else {
+            if (parseFloat(slider.value) >= 20) slider.value = 0;
+            btn.innerText = "Pause"; btn.style.backgroundColor = "#ef4444";
+            animationInterval = setInterval(() => {
+                let val = parseFloat(slider.value);
+                if (val < 20) { slider.value = (val + 0.1).toFixed(1); solveSystem(); } else { togglePlay(); }
+            }, 50);
+        }
+    }
+
+    function resetInputs() {
+        if (animationInterval) togglePlay();
+        document.getElementById('mass').value = 1; document.getElementById('damping').value = 0.5;
+        document.getElementById('spring').value = 2; document.getElementById('forceType').value = 'sin';
+        document.getElementById('tSlider').value = 20; solveSystem();
+    }
+
+    function solveSystem() {
+        const m = parseFloat(document.getElementById('mass').value), c = parseFloat(document.getElementById('damping').value), k = parseFloat(document.getElementById('spring').value);
+        const forceType = document.getElementById('forceType').value, tCurrent = parseFloat(document.getElementById('tSlider').value);
+        document.getElementById('tVal').innerText = tCurrent.toFixed(1);
+
+        const dt = 0.1, tMax = 20, labels = [], xCont = [], fVals = [], hVals = [];
+        const getForce = (t) => (forceType === 'sin' ? Math.sin(t) : (forceType === 'step' ? (t > 0 ? 1 : 0) : ((t > 1 && t < 2.5) ? 1.5 : 0)));
+        const getH = (tau) => {
+            if (tau < 0) return 0;
+            const wn = Math.sqrt(k/m), zeta = c / (2 * Math.sqrt(m*k));
+            if (zeta < 1) { const wd = wn * Math.sqrt(1 - zeta*zeta); return (1/(m*wd)) * Math.exp(-zeta*wn*tau) * Math.sin(wd*tau); }
+            return (tau/m) * Math.exp(-wn*tau);
+        };
+
+        let x=0, v=0;
+        for (let t=0; t<=tMax; t+=dt) {
+            labels.push(t.toFixed(1)); const f = getForce(t); fVals.push(f); hVals.push(getH(t));
+            const a = (f - c*v - k*x)/m; v += a*dt; x += v*dt; xCont.push(x);
+        }
+
+        const step = 10, approxSum = new Array(labels.length).fill(0), individuals = [], impulsesOnly = new Array(labels.length).fill(null);
+        for (let i = 0; i < labels.length; i += step) {
+            const tStart = parseFloat(labels[i]), mag = getForce(tStart); impulsesOnly[i] = mag;
+            const curve = new Array(labels.length).fill(null);
+            for (let j = i; j < labels.length; j++) {
+                const val = mag * getH(parseFloat(labels[j]) - tStart); curve[j] = val; approxSum[j] += val;
+            }
+            individuals.push(curve);
+        }
+        updateCharts(labels, hVals, xCont, fVals, approxSum, impulsesOnly, individuals, tCurrent);
+        
+        if (currentPopSourceId) {
+            const sourceChart = currentPopSourceId === 'hChart' ? hChart : (currentPopSourceId === 'combinedChart' ? combinedChart : interactiveChart);
+            document.getElementById('popImage').src = sourceChart.toBase64Image();
+        }
+    }
+
+    function updateCharts(labels, h, contX, f, sum, bars, individuals, tCurrent) {
+        if (hChart) hChart.destroy(); if (combinedChart) combinedChart.destroy(); if (interactiveChart) interactiveChart.destroy();
+        const commonOptions = { responsive: true, maintainAspectRatio: false, animation: false, scales: { x: { ticks: { maxRotation: 0 } } } };
+
+        hChart = new Chart(document.getElementById('hChart').getContext('2d'), {
+            type: 'line', data: { labels, datasets: [{ label: 'h(t)', data: h, borderColor: '#9333ea', pointRadius: 0 }] }, options: commonOptions
+        });
+
+        const getBaseDatasets = (curT) => {
+            const idxLimit = Math.round(curT / 0.1), slice = (arr) => arr.map((v, i) => (i <= idxLimit ? v : null));
+            const ds = individuals.map((d) => ({ data: slice(d), borderColor: 'rgba(5, 150, 105, 0.15)', borderWidth: 1, pointRadius: 0, fill: false }));
+            ds.unshift(
+                { label: 'True x(t)', data: slice(contX), borderColor: '#2563eb', borderWidth: 4, pointRadius: 0, fill: false },
+                { label: 'Force f(t)', data: slice(f), borderColor: '#cbd5e1', borderDash: [5,5], pointRadius: 0, fill: false },
+                { label: 'Approx Sum', data: slice(sum), borderColor: '#059669', borderWidth: 2, pointRadius: 0, fill: 'origin', backgroundColor: 'rgba(5, 150, 105, 0.05)' }
+            );
+            ds.push({ label: 'Impulses', data: slice(bars), type: 'bar', backgroundColor: '#ef4444', barPercentage: 0.2, categoryPercentage: 1.0 });
+            return ds;
+        };
+
+        combinedChart = new Chart(document.getElementById('combinedChart').getContext('2d'), {
+            type: 'line', data: { labels, datasets: getBaseDatasets(20) }, options: { ...commonOptions, plugins: { legend: { labels: { filter: i => i.text !== undefined } } } }
+        });
+
+        interactiveChart = new Chart(document.getElementById('interactiveChart').getContext('2d'), {
+            type: 'line', data: { labels, datasets: getBaseDatasets(tCurrent) }, options: { ...commonOptions, plugins: { legend: { display: false } } }
+        });
+    }
+
+    document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', solveSystem));
+    document.getElementById('tSlider').addEventListener('input', solveSystem);
+    solveSystem();
+</script>
+
+</body>
+</html>

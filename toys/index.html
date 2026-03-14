@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signals & Systems Learning Suite</title>
+  <style>
+    :root {
+      --purdue-gold: #ceb888;
+      --purdue-black: #000000;
+      --bg-gray: #f2f2f2;
+      --link-blue: #005cb9;
+      --accent-light: #f5efe9;
+      --gold-text: #856a2d;
+      --text-muted: #4b4f57;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--purdue-black);
+      background-color: var(--bg-gray);
+      max-width: 65rem;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    a { color: var(--link-blue); font-weight: 600; text-decoration: underline; }
+    a:focus { outline: 3px solid var(--purdue-gold); background-color: #fff9e6; outline-offset: 2px; }
+
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: 0;
+      padding: 0.6rem 1rem;
+      background: #fff9e6;
+      color: #000;
+      border: 2px solid var(--purdue-gold);
+      z-index: 1000;
+    }
+    .skip-link:focus { left: 1.5rem; top: 1.5rem; }
+
+    header {
+      background-color: var(--purdue-black);
+      color: var(--purdue-gold);
+      padding: 2.5rem 1rem;
+      border-bottom: 5px solid var(--purdue-gold);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    header h1 { margin: 0; font-size: 1.8rem; }
+    header span { display: block; }
+    .suite-title { font-size: 1.3rem; font-weight: 400; margin: 0.6rem 0; color: #fff; }
+    .suite-subtitle { font-size: 1rem; font-weight: 400; color: #f3f3f3; }
+
+    main {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .section-heading {
+      background: var(--bg-gray);
+      padding: 0.5rem 1rem;
+      margin: 0 0 1rem 0;
+      border-left: 4px solid var(--purdue-black);
+      font-weight: bold;
+    }
+
+    .tool-list { list-style: none; padding: 0; margin: 0; }
+
+    .tool-item {
+      padding: 1.2rem;
+      border-bottom: 1px solid #eee;
+    }
+    .tool-item:hover { background-color: var(--accent-light); }
+
+    .tool-title {
+      display: block;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tool-label { color: var(--gold-text); margin-right: 0.3rem; }
+
+    .tool-desc { color: var(--text-muted); margin: 0.3rem 0 0 0; }
+
+    .tool-link {
+      display: inline-block;
+      margin-top: 0.4rem;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 1.5rem 1rem; }
+      header { padding: 2rem 1rem; }
+      main { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header role="banner">
+    <h1>
+      <span>Signals & Systems</span>
+      <span class="suite-title">Interactive Learning Suite</span>
+      <span class="suite-subtitle">Hands-on labs for Fourier analysis, dynamics, and numerical methods</span>
+    </h1>
+  </header>
+
+  <main id="main-content" role="main">
+    <section aria-labelledby="tools-title">
+      <div id="tools-title" class="section-heading">Available Labs</div>
+      <ul class="tool-list">
+        <li class="tool-item">
+          <span class="tool-title"><span class="tool-label">Lab 1</span> Phase Portrait Lab</span>
+          <div class="tool-desc">Explore dynamical systems in phase space and connect trajectories to time-series behavior.</div>
+          <a class="tool-link" href="phase.html" target="_blank" rel="noopener">Open lab<span class="sr-only"> (opens in a new tab)</span></a>
+        </li>
+        <li class="tool-item">
+          <span class="tool-title"><span class="tool-label">Lab 2</span> Mass-Spring Convolution Lab</span>
+          <div class="tool-desc">See how impulse responses build full system behavior in second-order dynamics.</div>
+          <a class="tool-link" href="convolution.html" target="_blank" rel="noopener">Open lab<span class="sr-only"> (opens in a new tab)</span></a>
+        </li>
+        <li class="tool-item">
+          <span class="tool-title"><span class="tool-label">Lab 3</span> Euler Resolution Lab</span>
+          <div class="tool-desc">Compare step sizes and stability in the forward Euler method.</div>
+          <a class="tool-link" href="numerical.html" target="_blank" rel="noopener">Open lab<span class="sr-only"> (opens in a new tab)</span></a>
+        </li>
+        <li class="tool-item">
+          <span class="tool-title"><span class="tool-label">Lab 4</span> ode45 Tutorial + Exercises</span>
+          <div class="tool-desc">Work through guided problems from mass-spring systems to chaotic dynamics.</div>
+          <a class="tool-link" href="ode45.html" target="_blank" rel="noopener">Open lab<span class="sr-only"> (opens in a new tab)</span></a>
+        </li>
+        <li class="tool-item">
+          <span class="tool-title"><span class="tool-label">Lab 5</span> Fourier Instrument Lab</span>
+          <div class="tool-desc">Match harmonic ingredients to reproduce authentic timbres and hear the impact of each Fourier component.</div>
+          <a class="tool-link" href="Fourier.html" target="_blank" rel="noopener">Open lab<span class="sr-only"> (opens in a new tab)</span></a>
+        </li>
+        <li class="tool-item">
+          <span class="tool-title"><span class="tool-label">Lab 6</span> Gibbs Phenomenon Studio</span>
+          <div class="tool-desc">Listen and visualize how Fourier series approximations overshoot near discontinuities.</div>
+          <a class="tool-link" href="Gibbs.html" target="_blank" rel="noopener">Open lab<span class="sr-only"> (opens in a new tab)</span></a>
+        </li>
+        <li class="tool-item">
+          <span class="tool-title"><span class="tool-label">Lab 7</span> Spectrum Adaptation Lab</span>
+          <div class="tool-desc">Shape and cancel noise using phase relationships and spectral tools.</div>
+          <a class="tool-link" href="noise.html" target="_blank" rel="noopener">Open lab<span class="sr-only"> (opens in a new tab)</span></a>
+        </li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

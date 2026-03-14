@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fourier & Gibbs Audio Lab - Accessible Edition</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --purdue-gold: #ceb888;
+            --purdue-black: #000000;
+            --bg-gray: #f2f2f2;
+            --link-blue: #005cb9;
+            --accent-light: #f5efe9;
+            --text-muted: #4b4f57;
+        }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; max-width: 900px; margin: auto; padding: 20px; background: var(--bg-gray); color: var(--purdue-black); }
+        .card { background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid #e3dfd4; }
+        canvas { width: 100%; height: 350px; background: #ffffff; border: 1px solid #d8d0c0; border-radius: 8px; margin: 15px 0; }
+        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .audio-buttons { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        button { padding: 12px; cursor: pointer; border: 2px solid var(--purdue-black); border-radius: 6px; font-weight: bold; transition: 0.2s; min-height: 44px; background: var(--purdue-black); color: var(--purdue-gold); }
+        .btn-primary { background: var(--purdue-gold); color: #000; border-color: var(--purdue-gold); }
+        .btn-sustained { background: var(--purdue-black); color: var(--purdue-gold); border-color: var(--purdue-gold); }
+        .btn-stop { background: #111111; color: var(--purdue-gold); border-color: var(--purdue-gold); }
+        .btn-gibbs { background: var(--purdue-gold); color: #000; }
+        .btn-zoom { background: #1f1f1f; color: var(--purdue-gold); border-color: var(--purdue-gold); }
+        .btn-zoom.active { background: var(--purdue-gold); color: #000; outline: 3px solid var(--purdue-black); }
+        .btn-reset { background: #f7f5f1; color: #1a1a1a; border: 2px solid var(--purdue-black); }
+        input[type=range] { width: 100%; cursor: pointer; height: 30px; }
+        .math-display { background: #f7f5f1; padding: 15px; border-radius: 8px; margin: 15px 0; overflow-x: auto; color: #000; border: 1px solid #e3dfd4; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: 0;
+            padding: 0.6rem 1rem;
+            background: #fff9e6;
+            color: #000;
+            border: 2px solid var(--purdue-gold);
+            z-index: 1000;
+        }
+        .skip-link:focus { left: 20px; top: 20px; }
+        button:focus-visible, input:focus-visible {
+            outline: 3px solid var(--purdue-gold);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<main id="main-content" class="card">
+    <h1 id="main-title">Fourier Series & Gibbs Phenomenon</h1>
+    
+    <div class="controls">
+        <section aria-labelledby="wave-select-label">
+            <p id="wave-select-label"><strong>Select Waveform:</strong></p>
+            <div class="audio-buttons">
+                <button class="btn-primary" onclick="setWave('square')" aria-pressed="true" id="btn-sq">Square</button>
+                <button class="btn-primary" onclick="setWave('sawtooth')" aria-pressed="false" id="btn-saw">Sawtooth</button>
+            </div>
+        </section>
+        <section aria-labelledby="harmonic-label">
+            <label id="harmonic-label" for="terms"><strong>Harmonics (N):</strong> <span id="n-val" aria-live="polite">10</span></label>
+            <input type="range" id="terms" min="1" max="100" value="10" oninput="updateN(this.value)">
+        </section>
+    </div>
+
+    <div role="img" aria-label="Visual graph of the Fourier series approximation. The vertical axis shows the 1.18 overshoot line for Gibbs phenomenon.">
+        <canvas id="waveCanvas"></canvas>
+    </div>
+
+    <div class="audio-buttons">
+        <button id="zoomBtn" class="btn-zoom" onclick="toggleZoom()" aria-pressed="false">🔍 Toggle Zoom to Jump (t=0)</button>
+        <button class="btn-primary" onclick="playOnce()">Play Blip</button>
+        <button id="susBtn" class="btn-sustained" onclick="toggleSustained()">Start Sustained</button>
+        <button class="btn-stop" onclick="stopAll()">Stop Audio</button>
+        <button class="btn-gibbs" onmousedown="startGibbs()" onmouseup="stopGibbs()" onmouseleave="stopGibbs()" aria-describedby="gibbs-desc">Hold: Hear Gibbs Only</button>
+        <button class="btn-reset" onclick="resetApp()">🔄 Reset All</button>
+    </div>
+
+    <p id="gibbs-desc" class="sr-only">Plays only the high frequency harmonics to demonstrate ringing.</p>
+
+    <div class="math-display" aria-label="Mathematical formula for current waveform">
+        <p id="formula">$$f(t) \approx \sum_{n=1,3,5...}^{N} \frac{4}{n\pi} \sin(n\pi t)$$</p>
+    </div>
+</main>
+
+<script>
+    const canvas = document.getElementById('waveCanvas');
+    const ctx = canvas.getContext('2d');
+    let currentWave = 'square';
+    let N = 10;
+    let audioCtx = null;
+    let sustainedOscs = [];
+    let isSustained = false;
+    let gibbsOscs = [];
+    let isZoomed = false;
+
+    function resetApp() {
+        stopAll();
+        isZoomed = false;
+        N = 10;
+        document.getElementById('terms').value = 10;
+        document.getElementById('n-val').innerText = 10;
+        document.getElementById('zoomBtn').classList.remove('active');
+        document.getElementById('zoomBtn').setAttribute('aria-pressed', 'false');
+        setWave('square');
+        draw();
+    }
+
+    function updateN(val) {
+        N = parseInt(val);
+        document.getElementById('n-val').innerText = N;
+        if(isSustained) { stopAll(); toggleSustained(); }
+        draw();
+    }
+
+    function toggleZoom() {
+        isZoomed = !isZoomed;
+        const btn = document.getElementById('zoomBtn');
+        btn.classList.toggle('active', isZoomed);
+        btn.setAttribute('aria-pressed', isZoomed);
+        draw();
+    }
+
+    function setWave(type) {
+        currentWave = type;
+        const f = document.getElementById('formula');
+        f.innerHTML = type === 'square' ? "$$f(t) \\approx \\sum_{n=1,3,5...}^{N} \\frac{4}{n\\pi} \\sin(n\\pi t)$$" : "$$f(t) \\approx \\sum_{n=1,2,3...}^{N} \\frac{2}{n\\pi} \\sin(n\\pi t)$$";
+        
+        document.getElementById('btn-sq').setAttribute('aria-pressed', type === 'square');
+        document.getElementById('btn-saw').setAttribute('aria-pressed', type === 'sawtooth');
+        
+        MathJax.typeset();
+        if(isSustained) { stopAll(); toggleSustained(); }
+        draw();
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const scaleY = (canvas.height / 2) / 1.4;
+        const midY = canvas.height / 2;
+
+        ctx.strokeStyle = '#e9ecef';
+        ctx.lineWidth = 1;
+        ctx.font = "12px sans-serif";
+        [1, -1, 1.18, -1.18].forEach(val => {
+            let y = midY - (val * scaleY);
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+            ctx.fillStyle = "#6c757d";
+            ctx.fillText(val.toString(), 5, y - 5);
+        });
+
+        ctx.strokeStyle = '#000080'; // Navy
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+
+        for (let x = 0; x < canvas.width; x++) {
+            let t = isZoomed ? (x / canvas.width) * 0.4 - 0.2 : (x / canvas.width) * 4 - 2;
+            let y = 0;
+            for (let n = 1; n <= N; n++) {
+                if (currentWave === 'square') {
+                    if (n % 2 !== 0) y += (4 / (n * Math.PI)) * Math.sin(n * Math.PI * t);
+                } else {
+                    y += (2 / (n * Math.PI)) * Math.sin(n * Math.PI * t);
+                }
+            }
+            let canvasY = midY - (y * scaleY);
+            if (x === 0) ctx.moveTo(x, canvasY); else ctx.lineTo(x, canvasY);
+        }
+        ctx.stroke();
+    }
+
+    function createSynth(harmonicsList) {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        masterGain.connect(audioCtx.destination);
+        const oscs = harmonicsList.map(n => {
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            let amp = (currentWave === 'square') ? (4 / (n * Math.PI)) : (2 / (n * Math.PI));
+            osc.frequency.value = 220 * n;
+            g.gain.value = amp;
+            osc.connect(g); g.connect(masterGain);
+            return osc;
+        });
+        return { oscs, masterGain };
+    }
+
+    function playOnce() {
+        const h = [];
+        for(let i=1; i<=N; i++) if(currentWave === 'sawtooth' || i%2!==0) h.push(i);
+        const { oscs, masterGain } = createSynth(h);
+        oscs.forEach(o => o.start());
+        masterGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+        setTimeout(() => { if(oscs) oscs.forEach(o => { try{o.stop()}catch(e){} }); }, 1100);
+    }
+
+    function toggleSustained() {
+        const btn = document.getElementById('susBtn');
+        if(isSustained) { stopAll(); } else {
+            const h = [];
+            for(let i=1; i<=N; i++) if(currentWave === 'sawtooth' || i%2!==0) h.push(i);
+            const { oscs } = createSynth(h);
+            sustainedOscs = oscs;
+            sustainedOscs.forEach(o => o.start());
+            btn.innerText = "Stop Sustained";
+            btn.className = "btn-stop";
+            isSustained = true;
+        }
+    }
+
+    function startGibbs() {
+        const h = [];
+        for(let i=Math.max(1, N-10); i<=N; i++) if(currentWave === 'sawtooth' || i%2!==0) h.push(i);
+        const { oscs } = createSynth(h);
+        gibbsOscs = oscs;
+        gibbsOscs.forEach(o => o.start());
+    }
+
+    function stopGibbs() {
+        if(gibbsOscs) gibbsOscs.forEach(o => { try{o.stop()}catch(e){} });
+        gibbsOscs = [];
+    }
+
+    function stopAll() {
+        if(sustainedOscs) sustainedOscs.forEach(o => { try{o.stop()}catch(e){} });
+        sustainedOscs = [];
+        isSustained = false;
+        const btn = document.getElementById('susBtn');
+        btn.innerText = "Start Sustained";
+        btn.className = "btn-sustained";
+    }
+
+    draw();
+</script>
+</body>
+</html>

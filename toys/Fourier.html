@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fourier Instrument Lab: Authentic Timbres</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --purdue-gold: #ceb888;
+            --purdue-black: #000000;
+            --bg-gray: #f2f2f2;
+            --link-blue: #005cb9;
+            --accent-light: #f5efe9;
+            --text-muted: #4b4f57;
+            --target-blue: #1e6aa8;
+            --synth-green: #0f9d58;
+            --ebony: #000000;
+            --gold: var(--purdue-gold);
+        }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; max-width: 900px; margin: auto; padding: 20px; background: var(--bg-gray); color: var(--purdue-black); }
+        main { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .piano-header { background: var(--purdue-black); color: var(--purdue-gold); padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center; border-bottom: 4px solid var(--purdue-gold); }
+        .button-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        select { padding: 10px; border-radius: 4px; font-weight: bold; border: 2px solid var(--gold); cursor: pointer; background: white; min-height: 44px; }
+        .btn-piano { background: var(--gold); border: none; color: #000; padding: 12px 20px; font-size: 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; min-height: 44px; }
+        .btn-sustain { background: var(--purdue-black); color: var(--purdue-gold); border: 2px solid var(--purdue-gold); padding: 12px 20px; font-size: 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; min-height: 44px; }
+        .btn-sustain.active { background: var(--gold); color: #000; }
+        .viz-label { font-weight: bold; font-size: 0.8rem; margin-top: 10px; text-transform: uppercase; color: #64748b; }
+        #canvas-container, #spectrum-container { position: relative; width: 100%; background: #000; border-radius: 8px; margin: 5px 0 20px 0; overflow: hidden; }
+        #canvas-container { height: 200px; }
+        #spectrum-container { height: 120px; }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 20px; }
+        button.harmonic-btn { border-radius: 6px; cursor: pointer; font-weight: bold; border: 2px solid #e2e8f0; background: white; padding: 12px; transition: 0.2s; min-height: 44px; }
+        button.active { background: var(--synth-green); color: white; border-color: #16a34a; }
+        .legend { display: flex; gap: 20px; font-size: 0.9rem; justify-content: center; margin-bottom: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 2px; display: inline-block; margin-right: 5px; }
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: 0;
+            padding: 0.6rem 1rem;
+            background: #fff9e6;
+            color: #000;
+            border: 2px solid var(--purdue-gold);
+            z-index: 1000;
+        }
+        .skip-link:focus { left: 20px; top: 20px; }
+        button:focus-visible, select:focus-visible, input:focus-visible {
+            outline: 3px solid var(--purdue-gold);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<main id="main-content">
+    <section class="piano-header">
+        <h2>1. Set the Target</h2>
+        <div class="button-group">
+            <select id="inst-selector" onchange="changeInstrument(this.value)">
+                <option value="piano">Piano (Percussive)</option>
+                <option value="violin">Violin (Bowed)</option>
+                <option value="flute">Flute (Blown)</option>
+            </select>
+            <select id="note-selector" onchange="changeNote(this.value)">
+                <option value="130.81">C3</option>
+                <option value="196.00">G3</option>
+                <option value="261.63" selected>C4 (Mid C)</option>
+                <option value="392.00">G4</option>
+            </select>
+            <button class="btn-piano" onclick="playStrike()">Play Note</button>
+            <button id="sustain-btn" class="btn-sustain" onclick="toggleSustain()">Sustain Target</button>
+        </div>
+    </section>
+
+    <div class="legend">
+        <span><span class="dot" style="background: var(--target-blue)"></span> Target Instrument</span>
+        <span><span class="dot" style="background: var(--synth-green)"></span> Your Reconstruction</span>
+    </div>
+
+    <div class="viz-label">Oscilloscope (Time Domain)</div>
+    <div id="canvas-container"><canvas id="targetCanvas"></canvas><canvas id="liveCanvas"></canvas></div>
+    <div class="viz-label">Spectrum Analyzer (Frequency Domain)</div>
+    <div id="spectrum-container"><canvas id="spectrumCanvas"></canvas></div>
+
+    <section>
+        <h2>2. Match the Ingredients</h2>
+        <div class="controls" id="btn-bank"></div>
+    </section>
+</main>
+
+<script>
+    let audioCtx;
+    let targetAlpha = 0.3;
+    let sustainActive = false;
+    let sustainNodes = [];
+    let baseFreq = 261.63;
+
+    // Enhanced instrument logic: Recipes + Envelopes
+    const instruments = {
+        piano: {
+            recipe: [ {n:1, a:0.7}, {n:2, a:0.45}, {n:3, a:0.3}, {n:4, a:0.15}, {n:5, a:0.1}, {n:6, a:0.05} ],
+            attack: 0.01, decay: 2.0, type: 'percussive'
+        },
+        violin: {
+            recipe: [ {n:1, a:0.5}, {n:2, a:0.6}, {n:3, a:0.4}, {n:4, a:0.35}, {n:5, a:0.3}, {n:6, a:0.25} ],
+            attack: 0.15, decay: 1.5, type: 'bowed'
+        },
+        flute: {
+            recipe: [ {n:1, a:0.9}, {n:2, a:0.15}, {n:3, a:0.05}, {n:4, a:0.01}, {n:5, a:0.005}, {n:6, a:0.001} ],
+            attack: 0.1, decay: 1.5, type: 'blown'
+        }
+    };
+    let currentInst = instruments.piano;
+
+    function getCtx() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        return audioCtx;
+    }
+
+    function changeInstrument(val) { stopAllSounds(); currentInst = instruments[val]; targetAlpha = 0.3; }
+    function changeNote(val) { stopAllSounds(); baseFreq = parseFloat(val); updateButtonLabels(); }
+
+    function stopAllSounds() {
+        if (sustainActive) toggleSustain();
+        Object.keys(activeNodes).forEach(n => { activeNodes[n].osc.stop(); delete activeNodes[n]; });
+        document.querySelectorAll('.harmonic-btn').forEach(b => b.classList.remove('active'));
+    }
+
+    function updateButtonLabels() {
+        const buttons = document.querySelectorAll('.harmonic-btn');
+        buttons.forEach((btn, i) => { btn.innerHTML = `Harmonic ${i+1}<br><small>${(baseFreq * (i+1)).toFixed(1)}Hz</small>`; });
+    }
+
+    function playStrike() {
+        const ctx = getCtx();
+        const now = ctx.currentTime;
+        targetAlpha = 1.0; 
+        currentInst.recipe.forEach(h => {
+            const osc = ctx.createOscillator(); const g = ctx.createGain();
+            osc.frequency.value = baseFreq * h.n;
+            g.gain.setValueAtTime(0, now);
+            // Violin and Flute have slower "Attack"
+            g.gain.linearRampToValueAtTime(h.a * 0.15, now + currentInst.attack);
+            // Percussive (Piano) fades, others hold slightly longer then fade
+            if(currentInst.type === 'percussive') {
+                g.gain.exponentialRampToValueAtTime(0.0001, now + currentInst.decay);
+            } else {
+                g.gain.setValueAtTime(h.a * 0.15, now + 1.0);
+                g.gain.exponentialRampToValueAtTime(0.0001, now + 1.5);
+            }
+            osc.connect(g).connect(ctx.destination);
+            osc.start(); osc.stop(now + 2.1);
+        });
+    }
+
+    function toggleSustain() {
+        const ctx = getCtx();
+        const btn = document.getElementById('sustain-btn');
+        if (sustainActive) {
+            sustainNodes.forEach(node => { node.g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.2); setTimeout(() => node.osc.stop(), 200); });
+            sustainNodes = []; sustainActive = false;
+            btn.innerText = "Sustain Target"; btn.classList.remove('active');
+        } else {
+            currentInst.recipe.forEach(h => {
+                const osc = ctx.createOscillator(); const g = ctx.createGain();
+                osc.frequency.value = baseFreq * h.n; g.gain.value = 0;
+                osc.connect(g).connect(ctx.destination); osc.start();
+                g.gain.linearRampToValueAtTime(h.a * 0.15, ctx.currentTime + currentInst.attack);
+                sustainNodes.push({osc, g});
+            });
+            sustainActive = true; targetAlpha = 1.0;
+            btn.innerText = "Stop Sustain"; btn.classList.add('active');
+        }
+    }
+
+    // Reconstruction logic (maintained)
+    const activeNodes = {};
+    function toggle(n, ampIdx, btn) {
+        const ctx = getCtx();
+        const amp = currentInst.recipe[ampIdx].a;
+        if (activeNodes[n]) {
+            activeNodes[n].g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.1);
+            const node = activeNodes[n];
+            setTimeout(() => { node.osc.stop(); }, 100);
+            delete activeNodes[n]; btn.classList.remove('active');
+        } else {
+            const osc = ctx.createOscillator(); const g = ctx.createGain();
+            osc.frequency.value = baseFreq * n; g.gain.value = 0;
+            osc.connect(g).connect(ctx.destination); osc.start();
+            g.gain.linearRampToValueAtTime(amp * 0.15, ctx.currentTime + 0.1);
+            activeNodes[n] = { osc, g, amp }; btn.classList.add('active');
+        }
+    }
+
+    // Canvas Logic (maintained)
+    const tCanvas = document.getElementById('targetCanvas'); const lCanvas = document.getElementById('liveCanvas');
+    const sCanvas = document.getElementById('spectrumCanvas'); const tCtx = tCanvas.getContext('2d');
+    const lCtx = lCanvas.getContext('2d'); const sCtx = sCanvas.getContext('2d');
+
+    function resize() { [tCanvas, lCanvas, sCanvas].forEach(c => { c.width = c.clientWidth; c.height = c.clientHeight; }); }
+    window.onresize = resize; setTimeout(resize, 100);
+
+    function draw() {
+        requestAnimationFrame(draw);
+        tCtx.clearRect(0,0, tCanvas.width, tCanvas.height);
+        lCtx.clearRect(0,0, lCanvas.width, lCanvas.height);
+        sCtx.clearRect(0,0, sCanvas.width, sCanvas.height);
+        if (!sustainActive && targetAlpha > 0.3) targetAlpha -= 0.01;
+        const scale = 13 / (baseFreq / 261); 
+
+        // Oscilloscope
+        tCtx.strokeStyle = `rgba(59, 130, 246, ${targetAlpha})`;
+        tCtx.lineWidth = 2; tCtx.setLineDash([5, 5]);
+        tCtx.beginPath();
+        for (let x = 0; x < tCanvas.width; x++) {
+            let y = 0;
+            currentInst.recipe.forEach(h => { y += Math.sin(x / scale * h.n) * (h.a * 60); });
+            if (x === 0) tCtx.moveTo(x, tCanvas.height/2 - y); else tCtx.lineTo(x, tCanvas.height/2 - y);
+        }
+        tCtx.stroke();
+
+        lCtx.strokeStyle = '#22c55e';
+        lCtx.lineWidth = 3; lCtx.beginPath();
+        for (let x = 0; x < lCanvas.width; x++) {
+            let y = 0;
+            Object.keys(activeNodes).forEach(n => { y += Math.sin(x / scale * n) * (activeNodes[n].amp * 60); });
+            if (x === 0) lCtx.moveTo(x, lCanvas.height/2 - y); else lCtx.lineTo(x, lCanvas.height/2 - y);
+        }
+        lCtx.stroke();
+
+        // Spectrum
+        const barWidth = sCanvas.width / 7;
+        currentInst.recipe.forEach((h, i) => {
+            const x = (i + 0.5) * barWidth;
+            sCtx.strokeStyle = `rgba(59, 130, 246, ${targetAlpha})`;
+            sCtx.strokeRect(x - 10, sCanvas.height, 20, -h.a * 100);
+            if (activeNodes[h.n]) {
+                sCtx.fillStyle = '#22c55e';
+                sCtx.fillRect(x - 10, sCanvas.height, 20, -h.a * 100);
+            }
+        });
+    }
+
+    const bank = document.getElementById('btn-bank');
+    for(let i=1; i<=6; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'harmonic-btn';
+        btn.innerHTML = `Harmonic ${i}<br><small>${(baseFreq * i).toFixed(1)}Hz</small>`;
+        btn.onclick = () => toggle(i, i-1, btn);
+        bank.appendChild(btn);
+    }
+    draw();
+</script>
+</body>
+</html>
