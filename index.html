@@ -153,19 +153,20 @@
 
         .course-link {
             display: flex;
-            flex-direction: column; /* Stacks name under the number */
+            flex-direction: column; /* This forces the title under the number */
             text-decoration: none;
+            padding: 5px 0;
         }
 
         .course-number {
             font-weight: bold;
-            font-size: 1.1rem;
+            color: var(--accent-color);
+            text-decoration: underline; /* Standard link behavior */
         }
 
         .course-title {
             font-size: 0.85rem;
-            color: #666;
-            text-decoration: underline; /* Keeps it identifiable as a link */
+            color: #495057; /* Slightly softer color for the long title */
         }
     </style>
 </head>
