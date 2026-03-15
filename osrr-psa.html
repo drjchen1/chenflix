@@ -17,7 +17,7 @@
             line-height: 1.6;
             color: var(--text-main);
             background-color: var(--bg-body);
-            max-width: 1000px; /* Increased max-width for widescreen layout */
+            max-width: 1000px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -29,14 +29,13 @@
         }
 
         h1 {
-            font-size: clamp(1.8rem, 3vw, 2.8rem); /* Fluid typography to keep title on one line */
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
             margin-bottom: 0.5rem;
             line-height: 1.2;
             color: #000;
-            white-space: nowrap; /* Forces one line on wider screens */
+            white-space: nowrap;
         }
 
-        /* Responsive adjustment for mobile screens where nowrap would cause overflow */
         @media (max-width: 800px) {
             h1 {
                 white-space: normal;
@@ -50,19 +49,21 @@
             margin-top: 0;
         }
 
+        /* The R remains text color, only the line is red */
         .strike-r {
             text-decoration: line-through;
             text-decoration-color: var(--netflix-red);
             text-decoration-thickness: 3px;
             font-weight: bold;
-            color: var(--netflix-red);
+            color: inherit; /* Keeps letter same color as surrounding text */
         }
 
+        /* The full word remains text color, only the line is red */
         .strike-full {
             text-decoration: line-through;
             text-decoration-color: var(--netflix-red);
             text-decoration-thickness: 3px;
-            color: var(--netflix-red);
+            color: inherit; /* Keeps word same color as surrounding text */
         }
 
         p {
