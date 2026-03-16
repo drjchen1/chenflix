@@ -120,7 +120,12 @@
             }
 
             .sidebar-left { grid-area: left; }
-            .mascot-box { grid-area: mascot; margin-bottom: 2rem; }
+            .mascot-box { 
+                grid-area: mascot; 
+                margin-bottom: 2rem; 
+                display: flex; 
+                justify-content: center; 
+            }
             .main-content { grid-area: main; }
             .sidebar-right { grid-area: right; }
         }
@@ -240,24 +245,20 @@
                     </a>
                 </li>                
             </ul>
-        </nav>
 
-        <aside class="sidebar-right">
+            <hr aria-hidden="true">
+
             <h2>About Me</h2>
-            <p style="font-size: 0.9rem; margin-bottom: 10px;">
-                <strong>Dr. Kuan-Hua Chen</strong><br>
-                Lead Operations Administrator & Senior Lecturer<br>
-                Purdue Aerospace Engineering
-            </p>
+            <p style="font-size: 0.9rem; margin-bottom: 5px;"><strong>Dr. Kuan-Hua Chen</strong></p>
             <p style="font-size: 0.9rem;">
                 <a href="https://www.math.purdue.edu/~chenjk/" target="_blank" rel="noopener noreferrer">
                     Official Purdue Profile <span class="visually-hidden">(opens in new tab)</span>
                 </a>
             </p>
+        </nav>
 
-            <hr aria-hidden="true">
-
-            <h3>Resources</h3>
+        <aside class="sidebar-right">
+            <h2>Resources</h2>
             <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
                 <li><a href="toys/index.html" target="_blank">Interactive Learning Tools</a></li>
                 <li><a href="https://ai.studio/apps/6c7a3a5b-4f4a-4290-b42d-4e8347551f4c" target="_blank">Digitizer Tool</a></li>
