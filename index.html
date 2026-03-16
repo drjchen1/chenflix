@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Chenflix | Accessible Calculus & Engineering Math Resources | Dr. Kuan-Hua Chen</title>
-    <meta name="description" content="Free, WCAG 2.2 accessible lecture notes and videos for Multivariable Calculus, Differential Equations, and Linear Algebra. Developed by Dr. Kuan-Hua Chen at Purdue.">
-    <meta name="keywords" content="Chenflix, Kuan-Hua Chen, Purdue Math, Calculus II, Multivariable Calculus, Differential Equations, Taylor Series, Stokes Theorem, Laplace Transforms, Heat Equation, Lagrange Multipliers, Integration by Parts, Accessible Math Notes">
+    <meta name="description" content="Free, WCAG 2.2 accessible lecture notes and videos for Multivariable Calculus, Differential Equations, and Linear Algebra. Developed by Dr. Kuan-Hua Chen at Purdue University.">
+    <meta name="keywords" content="Chenflix, Kuan-Hua Chen, Mathematics, Engineering Math, Purdue, Calculus Resources, Accessible Math, MA 16200, MA 26100, MA 30300">
 
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="images/site.webmanifest">
     
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     
@@ -41,11 +43,8 @@
         "Differential Equations", 
         "Linear Algebra", 
         "Calculus II",
-        "Stokes Theorem",
-        "Laplace Transforms",
-        "Taylor Series",
-        "Lagrange Multipliers",
-        "Heat Equation"
+        "Calculus I",
+        "Aerospace Engineering"
       ],
       "sameAs": [
         "https://www.reddit.com/user/DrJChen/",
@@ -63,6 +62,9 @@
             --accent-color: #0056b3;
             --focus-ring: #ffbf47;
             --border-color: #dee2e6;
+            --code-bg: #f4f4f4;
+            --status-prog-bg: #fff3cd;
+            --status-prog-text: #856404;
         }
 
         body {
@@ -71,19 +73,6 @@
             color: var(--text-color);
             margin: 0;
             background-color: var(--primary-bg);
-        }
-
-        /* Accessibility: Hidden from sight, visible to screen readers and Google */
-        .visually-hidden {
-            position: absolute !important;
-            width: 1px !important;
-            height: 1px !important;
-            padding: 0 !important;
-            margin: -1px !important;
-            overflow: hidden !important;
-            clip: rect(0, 0, 0, 0) !important;
-            white-space: nowrap !important;
-            border: 0 !important;
         }
 
         .skip-link {
@@ -97,6 +86,18 @@
             text-decoration: none;
         }
         .skip-link:focus { top: 0; outline: 3px solid var(--focus-ring); }
+
+        .visually-hidden {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
 
         .container {
             display: flex;
@@ -117,8 +118,14 @@
                 margin: 40px auto;
                 align-items: start;
             }
+
             .sidebar-left { grid-area: left; }
-            .mascot-box { grid-area: mascot; margin-bottom: 2rem; display: flex; justify-content: center; }
+            .mascot-box { 
+                grid-area: mascot; 
+                margin-bottom: 2rem; 
+                display: flex; 
+                justify-content: center; 
+            }
             .main-content { grid-area: main; }
             .sidebar-right { grid-area: right; }
         }
@@ -130,6 +137,8 @@
             border: 1px solid var(--border-color);
             height: fit-content;
         }
+
+        .main-content { padding: 0 10px; }
 
         .mascot-box img {
             width: 85%;
@@ -161,6 +170,7 @@
             display: inline-block;
         }
         .status-live { background: #d4edda; color: #155724; }
+        .status-progress { background: var(--status-prog-bg); color: var(--status-prog-text); }
 
         footer {
             margin-top: 50px;
@@ -170,10 +180,43 @@
             border-top: 1px solid var(--border-color);
         }
 
-        .contact-links { display: flex; gap: 1.25rem; padding-top: 0.5rem; align-items: center; }
-        .contact-icon { color: #003566; transition: color 0.2s ease, transform 0.2s ease; }
-        .contact-icon:hover { color: #c28e0e; transform: scale(1.1); }
-        .purdue-p { fill: currentColor; width: 24px; height: 24px; }
+        a { color: var(--accent-color); text-decoration: underline; }
+
+        .course-link {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            padding: 5px 0;
+        }
+
+        .course-number { font-weight: bold; color: var(--accent-color); text-decoration: underline; }
+        .course-title { font-size: 0.85rem; color: #495057; }
+
+        nav ul li, aside ul li { margin-bottom: 12px; }
+
+        .contact-links {
+            display: flex;
+            gap: 1.25rem;
+            padding-top: 0.5rem;
+            align-items: center;
+        }
+
+        .contact-icon {
+            color: #003566;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .contact-icon:hover {
+            color: #c28e0e;
+            transform: scale(1.1);
+        }
+
+        /* Styling for the Purdue P SVG */
+        .purdue-p {
+            fill: currentColor;
+            width: 24px;
+            height: 24px;
+        }
     </style>
 </head>
 <body>
@@ -181,69 +224,94 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <div class="container">
+        
         <div class="mascot-box">
-            <img src="images/capychenflix.png" alt="Three cheerful capybaras holding a sign that reads 'Welcome to Chenflix!'">
+            <img src="images/capychenflix.png" 
+                 alt="Three cheerful capybaras holding a sign that reads 'Welcome to Chenflix!', representing the site's mascots.">
         </div>
 
         <nav class="sidebar-left" aria-label="Course Directory">
             <h2>Current Courses</h2>
             <ul style="list-style: none; padding: 0;">
-                <li><a href="courses/ma-16200-f23.html" style="text-decoration:none;"><strong>Calculus II</strong><br><small>Purdue MA 16200</small></a></li>
-                <li style="margin-top:10px;"><a href="courses/ma-26100-s23.html" style="text-decoration:none;"><strong>Multivariable Calculus</strong><br><small>Purdue MA 26100</small></a></li>
-                <li style="margin-top:10px;"><a href="courses/ma-30300-s26.html" style="text-decoration:none;"><strong>Diff Eq & Partial DE</strong><br><small>Purdue MA 30300</small></a></li>
+                <li>
+                    <a href="courses/ma-16200-f23.html" class="course-link" target="_blank">
+                        <span class="course-number">Calculus II</span>
+                        <span class="course-title">Purdue MA 16200</span>
+                    </a>
+                </li>  
+                <li>
+                    <a href="courses/ma-26100-s23.html" class="course-link" target="_blank">
+                        <span class="course-number">Multivariable Calculus</span>
+                        <span class="course-title">Purdue MA 26100</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="courses/ma-30300-s26.html" class="course-link" target="_blank">
+                        <span class="course-number">Diff Eq & Partial Diff Eq</span>
+                        <span class="course-title">Purdue MA 30300</span>
+                    </a>
+                </li>                
             </ul>
         </nav>
 
         <aside class="sidebar-right">
             <h2>Resources</h2>
             <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
-                <li><a href="toys/index.html">Interactive Tools</a></li>
-                <li><a href="osrr-psa.html">PSA: The OSRR</a></li>
-                <li><a href="https://sites.google.com/view/chenflix/home">Google Site Archive</a></li>
+                <li><a href="toys/index.html" target="_blank">Interactive Learning Tools</a></li>
+                <li><a href="https://ai.studio/apps/6c7a3a5b-4f4a-4290-b42d-4e8347551f4c" target="_blank">Digitizer Tool</a></li>
+                <li><a href="osrr-psa.html" target="_blank">PSA: The OSRR</a></li>
+                <li><a href="https://sites.google.com/view/chenflix/home" target="_blank">Archived Chenflix (all courses)</a></li>
             </ul>
+
             <hr aria-hidden="true">
+
             <h3>Contact Me</h3>
             <div class="contact-links">
-                <a href="https://www.math.purdue.edu/~chenjk/" aria-label="Purdue Profile">
-                    <svg class="contact-icon purdue-p" viewBox="0 0 24 24"><path d="M4 2h10c4.42 0 8 3.58 8 8s-3.58 8-8 8H8v4H4V2zm4 12h6c2.21 0 4-1.79 4-4s-1.79-4-4-4H8v8z"/></svg>
+                <a href="https://www.math.purdue.edu/~chenjk/" target="_blank" aria-label="Purdue University Profile">
+                    <svg class="contact-icon purdue-p" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M4 2h10c4.42 0 8 3.58 8 8s-3.58 8-8 8H8v4H4V2zm4 12h6c2.21 0 4-1.79 4-4s-1.79-4-4-4H8v8z"/>
+                    </svg>
                 </a>
                 <a href="mailto:chenjk@purdue.edu" aria-label="Email Me">
-                    <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </a>
-                <a href="https://www.reddit.com/user/DrJChen/" aria-label="Reddit">
-                    <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18c3.4 0 6.5-1.5 8.5-4C18 11.5 15.3 10 12 10s-6 1.5-8.5 4c2 2.5 5.1 4 8.5 4Z"/><circle cx="17" cy="4" r="2"/></svg>
+                <a href="https://www.reddit.com/user/DrJChen/" target="_blank" aria-label="Reddit">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M12 18c3.4 0 6.5-1.5 8.5-4C18 11.5 15.3 10 12 10s-6 1.5-8.5 4c2 2.5 5.1 4 8.5 4Z"/><circle cx="17" cy="4" r="2"/></svg>
                 </a>
-                <a href="https://www.linkedin.com/in/kuan-hua-chen-30b0765a/" aria-label="LinkedIn">
-                    <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                <a href="https://www.linkedin.com/in/kuan-hua-chen-30b0765a/" target="_blank" aria-label="LinkedIn">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                 </a>
             </div>
         </aside>
 
         <main id="main-content" class="main-content">
-            <section class="visually-hidden">
-                <h2>Key Mathematics Topics</h2>
-                <p>Calculus II, Multivariable Calculus, and Differential Equations resources including Taylor Series, Stokes' Theorem, Divergence Theorem, Lagrange Multipliers, Laplace Transforms, Heat Equation, Wave Equation, and Separation of Variables.</p>
-            </section>
-
-            <section>
+            <section id="announcement">
                 <h2>The Great Migration</h2>
-                <p>I am digitizing my handwritten notes into accessible HTML. Find the live versions below.</p>
+                <p>I am digitizing all of my handwritten lecture notes into accessible HTML. New versions will be posted here as they are completed; meanwhile, the original handwritten notes remain available on the <a href="https://sites.google.com/view/chenflix/home" target="_blank" rel="noopener noreferrer">Google Site Archive</a>.</p>
             </section>
             
-            <section>
+            <section id="digitization-status">
                 <h3>Digitization Status</h3>
-                <table class="status-table">
-                    <thead><tr><th>Course</th><th>Status</th></tr></thead>
+                <table class="status-table" aria-label="Past Course Digitization Update">
+                    <thead>
+                        <tr><th>Courses</th><th>Status</th></tr>
+                    </thead>
                     <tbody>
                         <tr><td>Calculus II (Fall 2023)</td><td><span class="status-badge status-live">Live</span></td></tr>
-                        <tr><td>Multivariable (Spring 2023)</td><td><span class="status-badge status-live">Live</span></td></tr>
-                        <tr><td>Diff Eq (Spring 2026)</td><td><span class="status-badge status-live">Live</span></td></tr>
+                        <tr><td>Multivariable Calculus (Spring 2023)</td><td><span class="status-badge status-live">Live</span></td></tr>
+                        <tr><td>Diff Eq & Partial DE (Spring 2026)</td><td><span class="status-badge status-live">Live</span></td></tr>
+                        <tr><td>Calculus I (Spring 2022)</td><td><span class="status-badge status-progress">In Progress</span></td></tr>
+                        <tr><td>Linear Algebra (Summer 2018)</td><td><span class="status-badge status-progress">In Progress</span></td></tr>
                     </tbody>
                 </table>
             </section>
         </main>
     </div>
 
-    <footer><p>&copy; 2026 Kuan-Hua Chen | Built with Accessibility in mind</p></footer>
+    <footer>
+        <p>&copy; 2026 Kuan-Hua Chen | Built with Accessibility in mind</p>
+    </footer>
+
+    <script data-goatcounter="https://chenflix.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
