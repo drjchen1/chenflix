@@ -47,7 +47,7 @@
       ],
       "sameAs": [
         "https://www.reddit.com/user/DrJChen/",
-        "https://www.linkedin.com/in/kuan-hua-chen-30b0765a/"
+        "https://www.linkedin.com/in/kuan-hua-chen-30b0765a/",
         "https://www.math.purdue.edu/~chenjk/"
       ]
     }
@@ -109,7 +109,6 @@
             padding: 20px;
         }
 
-        /* Mobile Ordering */
         .mascot-box { order: 1; text-align: center; }
         .sidebar-left { order: 2; }
         .sidebar-right { order: 3; }
@@ -133,7 +132,6 @@
             .sidebar-right { grid-area: right; order: unset; }
         }
 
-        /* Sidebar Styling */
         .sidebar-left, .sidebar-right {
             background: var(--secondary-bg);
             padding: 1.5rem;
@@ -152,7 +150,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* Tables & Badges */
         .status-table {
             width: 100%;
             border-collapse: collapse;
@@ -268,9 +265,19 @@
                     </a>
                 </li>                
             </ul>
+
+            <hr aria-hidden="true">
+
+            <h2>About Me</h2>
+            <p style="font-size: 0.9rem;">Dr. Kuan-Hua Chen is a Senior Lecturer in the Department of Mathematics at Purdue University.</p>
+            <p style="font-size: 0.9rem;">
+                <a href="https://www.math.purdue.edu/~chenjk/" target="_blank" rel="noopener noreferrer">
+                    Official Purdue Profile <span class="visually-hidden">(opens in new tab)</span>
+                </a>
+            </p>
         </nav>
 
-        <aside class="sidebar-right">
+        <aside class="sidebar-right" aria-label="External Resources">
             <h2>Resources</h2>
             <ul style="list-style: none; padding: 0;">
                 <li><a href="toys/index.html" target="_blank">Interactive Learning Tools <span class="visually-hidden">(opens in new tab)</span></a></li>
@@ -291,7 +298,7 @@
                 </li>
             </ul>
 
-            <hr>
+            <hr aria-hidden="true">
 
             <h3>Contact Me</h3>
             <div class="contact-links">
@@ -342,35 +349,3 @@
                         <tr>
                             <td>Differential Equations & Partial DE (MA 30300, Spring 2026)</td>
                             <td><span class="status-badge status-live">Live</span></td>
-                        </tr>
-                        <tr>
-                            <td>Calculus I (MA 16100, Spring 2022)</td>
-                            <td><span class="status-badge status-progress">In Progress</span></td>
-                        </tr>
-                        <tr>
-                            <td>Linear Algebra (MA 26500, Summer 2018)</td>
-                            <td><span class="status-badge status-progress">In Progress</span></td>
-                        </tr>
-                        <tr>
-                            <td>Differential Equations (MA 26600, Summer 2018)</td>
-                            <td><span class="status-badge status-progress">In Progress</span></td>
-                        </tr>
-                        <tr>
-                            <td>Linear Algebra & Diff Eq (MA 26200, Spring 2025)</td>
-                            <td><span class="status-badge status-progress">In Progress</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </main>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Kuan-Hua Chen | Built with Accessibility in mind</p>
-    </footer>
-
-    <script data-goatcounter="https://chenflix.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-    
-</body>
-</html>
