@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 16200 | Calculus II</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --purdue-gold: #ceb888;
+            --purdue-black: #000000;
+            --bg-gray: #f2f2f2;
+            --link-blue: #005cb9;
+            --accent-light: #f5efe9;
+            --gold-text: #856a2d; /* Adjusted for WCAG 2.2 AA 4.5:1 contrast compliance */
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--purdue-black);
+            background-color: var(--bg-gray);
+            max-width: 65rem;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        header {
+            background-color: var(--purdue-black);
+            color: var(--purdue-gold);
+            padding: 2.5rem 1rem;
+            border-bottom: 5px solid var(--purdue-gold);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header span { display: block; }
+        .course-title { font-size: 1.3rem; font-weight: 400; margin: 0.6rem 0; color: #fff; }
+        main { background: white; padding: 2rem; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .lecture-list { list-style: none; padding: 0; }
+        .lecture-item {
+            padding: 1.2rem;
+            border-bottom: 1px solid #eee;
+        }
+        .lecture-item:hover { background-color: var(--accent-light); }
+        .lecture-title { display: block; font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .lec-highlight { color: var(--gold-text); margin-right: 0.2rem; }
+        .section-links { display: block; font-size: 0.95rem; color: #444; }
+        .section-row { margin-bottom: 0.4rem; }
+        a { color: var(--link-blue); font-weight: 600; text-decoration: underline; margin: 0 0.3rem; }
+        a:focus { outline: 3px solid var(--purdue-gold); background-color: #fff9e6; outline-offset: 2px; }
+        .note-text { font-size: 0.9rem; color: #666; margin-top: 0.5rem; display: block; }
+    </style>
+</head>
+<body>
+    <header role="banner">
+        <h1>
+            <span>MA 16200</span>
+            <span class="course-title">Calculus II</span>
+            <span class="semester">Fall 2023</span>
+        </h1>
+    </header>
+
+    <main id="main-content" role="main">
+        <ul class="lecture-list">
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 1</span> 13.1 Vectors and 13.2 Vectors in Three Dimensions (part 1)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_gueptc0u" aria-label="Video for Lesson 1">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%201--13.1,%2013.2%281%29-acc.html" aria-label="Notes for Lesson 1">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 2</span> 13.2 Vectors in Three Dimensions (part 2)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_vnu66x6j" aria-label="Video for Lesson 2">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%202--13.2%282%29-acc.html" aria-label="Notes for Lesson 2">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 3</span> 13.3 Dot Product</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_t4sab8oc" aria-label="Video for Lesson 3">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%203--13.3-acc.html" aria-label="Notes for Lesson 3">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 4</span> 13.4 Cross Product</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_lqsjwno3" aria-label="Video for Lesson 4">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%204%20--13.4-acc.html" aria-label="Notes for Lesson 4">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 5</span> 6.2 Region Between Curves</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_x00wsnwp" aria-label="Video for Lesson 5">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%205%20--%206.2-acc.html" aria-label="Notes for Lesson 5">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 6</span> 6.3 Volumes by Slicing</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_xh2ftjh2" aria-label="Video for Lesson 6">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%206%20--%206.3-acc.html" aria-label="Notes for Lesson 6">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 7</span> 6.4 Volumes by Shells</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_ddjuekgr" aria-label="Video for Lesson 7">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%207%20--%206.4-acc.html" aria-label="Notes for Lesson 7">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 8</span> 6.5+6.6 Length and Surface Area</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_o9v2dhts" aria-label="Video for Lesson 8">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%208%20--%206.5+6.6-acc.html" aria-label="Notes for Lesson 8">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 9</span> 6.7 Physical Applications (part 1)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_vnmsgw2k" aria-label="Video for Lesson 9">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%209%20--%20%206.7%281%29-acc.html" aria-label="Notes for Lesson 9">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 10</span> 6.7 Physical Applications (part 2)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_u00zv9zs" aria-label="Video for Lesson 10">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2010%20--%206.7%282%29-acc.html" aria-label="Notes for Lesson 10">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 11</span> 8.2 Integration by Parts</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_gzw2vvmo" aria-label="Video for Lesson 11">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2011%20--%208.1+8.2-acc.html" aria-label="Notes for Lesson 11">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 12</span> 8.3 Trig Integrals (part 1)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_kumvzogm" aria-label="Video for Lesson 12">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2012%20--%208.3%281%29-acc.html" aria-label="Notes for Lesson 12">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 13</span> 8.3 Trig Integrals (part 2)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_jqisolla" aria-label="Video for Lesson 13">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2013%20--%208.3%282%29-acc.html" aria-label="Notes for Lesson 13">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 14</span> 8.4 Trig Substitution (part 1)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_9tihk9ax" aria-label="Video for Lesson 14">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2014%20--%208.4%281%29-acc.html" aria-label="Notes for Lesson 14">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 15</span> 8.4 Trig Substitution (part 2)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_gak73vud" aria-label="Video for Lesson 15">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2015%20--%208.4%282%29-acc.html" aria-label="Notes for Lesson 15">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 16</span> 8.5 Partial Fractions (part 1)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_zoufblgh" aria-label="Video for Lesson 16">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2016%20--%208.5%281%29-acc.html" aria-label="Notes for Lesson 16">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 17</span> 8.5 Partial Fractions (part 2)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_4p1idbdv" aria-label="Video for Lesson 17">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2017%20--%208.5%282%29-acc.html" aria-label="Notes for Lesson 17">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 18</span> 8.9 Improper Integrals</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_hdhgnd89" aria-label="Video for Lesson 18">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2018%20--%208.9-acc.html" aria-label="Notes for Lesson 18">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 19</span> 10.1 Sequences and Series: An Overview</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_f62v9vqx" aria-label="Video for Lesson 19">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2019%20--%2010.1-acc.html" aria-label="Notes for Lesson 19">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 20</span> 10.2 Sequences</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_dpsdun1a" aria-label="Video for Lesson 20">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2020%20--%2010.2-acc.html" aria-label="Notes for Lesson 20">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 21</span> 10.3 Infinite Series</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_ads48r7j" aria-label="Video for Lesson 21">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2021%20--%2010.3-acc.html" aria-label="Notes for Lesson 21">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 22</span> 10.4 The Divergence and Integral Tests</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_sa9i0u7q" aria-label="Video for Lesson 22">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2022%20--%2010.4-acc.html" aria-label="Notes for Lesson 22">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 23</span> 10.5 Comparison Tests</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_ifuqb3ie" aria-label="Video for Lesson 23">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2023%20--%2010.5-acc.html" aria-label="Notes for Lesson 23">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 24</span> 10.6 Alternating Series</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_3so2lpla" aria-label="Video for Lesson 24">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2024%20--%2010.6-acc.html" aria-label="Notes for Lesson 24">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 25</span> 10.7 Ratio and Root Tests</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_yid4fesj" aria-label="Video for Lesson 25">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2025%20--%2010.7-acc.html" aria-label="Notes for Lesson 25">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 26</span> 10.8 Choosing a Convergent Test</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_rqy7aiib" aria-label="Video for Lesson 26">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2026%20--%2010.8-acc.html" aria-label="Notes for Lesson 26">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 27</span> 11.1 Approximating Functions Using Polynomials (part 1)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_q5s7t39f" aria-label="Video for Lesson 27">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2027%20--%2011.1%281%29-acc.html" aria-label="Notes for Lesson 27">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 28</span> 11.1 Approximating Functions Using Polynomials (part 2)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_q1gmmndr" aria-label="Video for Lesson 28">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2028%20--%2011.1%282%29-acc.html" aria-label="Notes for Lesson 28">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 29</span> 11.2 Properties of Power Series (part 1)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_gdr6dth7" aria-label="Video for Lesson 29">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2029%20--%2011.2%281%29-acc.html" aria-label="Notes for Lesson 29">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 30</span> 11.2 Properties of Power Series (part 2)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_xd69iu2l" aria-label="Video for Lesson 30">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2030%20--%2011.2%282%29-acc.html" aria-label="Notes for Lesson 30">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 31</span> 11.3 Taylor Series</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_vh34epnt" aria-label="Video for Lesson 31">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2031%20--%2011.3-acc.html" aria-label="Notes for Lesson 31">Notes</a></div>
+                    <span class="note-text">Note: Due to hardware issues, only the second half was recorded. See <a href="https://mediaspace.itap.purdue.edu/media/Fall+2022+-+MA162+-+Chen+%288A30%29/1_xy9ptd5e">Fall 2022 video</a> for the first half.</span>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 32</span> 11.4 Working with Taylor Series</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_h50jgrpw" aria-label="Video for Lesson 32">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2032%20--%2011.4-acc.html" aria-label="Notes for Lesson 32">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Special Feature</span> Special Mario Kart "lecture"</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_dcpj6y70" aria-label="Special Mario Kart lecture">Video</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 33</span> 12.2 Polar Coordinates</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_tat69phj" aria-label="Video for Lesson 33">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2033%20--%2012.2%281%29-acc.html" aria-label="Notes for Lesson 33">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 34</span> 12.2 Polar Coordinates (part 2)</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_a5erupjk" aria-label="Video for Lesson 34">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2034%20--%2012.2%282%29-acc.html" aria-label="Notes for Lesson 34">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 35</span> 12.3 Areas and Lengths in Polar Coordinates</span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_0d40xilv" aria-label="Video for Lesson 35">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Lesson%2035%20--%2012.3-acc.html" aria-label="Notes for Lesson 35">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Exam 1 Review</span></span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_b7jm2fmu" aria-label="Video for Exam 1 Review">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Exam%201%20Review-acc.html" aria-label="Notes for Exam 1 Review">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Exam 2 Review</span></span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_8ia71wuj" aria-label="Video for Exam 2 Review">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Exam%202%20Review-acc.html" aria-label="Notes for Exam 2 Review">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Exam 3 Review</span></span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_zrla7n1x" aria-label="Video for Exam 3 Review">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Exam%203%20Review-acc.html" aria-label="Notes for Exam 3 Review">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Final Exam Review, Part 1</span></span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_4m1evp9b" aria-label="Video for Final Exam Review Part 1">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Final%20Review%201-acc.html" aria-label="Notes for Final Exam Review Part 1">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Final Exam Review, Part 2</span></span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_ozw9mevt" aria-label="Video for Final Exam Review Part 2">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Final%20Review%202-acc.html" aria-label="Notes for Final Exam Review Part 2">Notes</a></div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Final Exam Review, Part 3</span></span>
+                <div class="section-links">
+                    <div class="section-row"><a href="https://mediaspace.itap.purdue.edu/media/Fall+2023+-+MA162+-+Chen+%287A27%29/1_tvb4ksbb" aria-label="Video for Final Exam Review Part 3">Video</a> | <a href="https://www.math.purdue.edu/%7Echenjk/MA16200F23/Final%20Review%203-acc.html" aria-label="Notes for Final Exam Review Part 3">Notes</a></div>
+                </div>
+            </li>
+
+        </ul>
+    </main>
+</body>
+</html>
