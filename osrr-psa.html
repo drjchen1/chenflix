@@ -3,219 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PSA: The OSRR | Chenflix</title>
+    
+    <title>Chenflix | Accessible Calculus & Engineering Math Resources | Dr. Kuan-Hua Chen</title>
+    <meta name="description" content="Free, WCAG 2.2 accessible lecture notes and videos for Multivariable Calculus, Differential Equations, and Linear Algebra. Developed by Dr. Kuan-Hua Chen at Purdue University.">
+    <meta name="keywords" content="Chenflix, Kuan-Hua Chen, Mathematics, Engineering Math, Purdue, Calculus Resources, Accessible Math, MA 16200, MA 26100, MA 30300">
+
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="images/site.webmanifest">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Kuan-Hua Chen",
+      "jobTitle": "Lead Operations Administrator & Senior Lecturer",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "Purdue University",
+        "department": "Department of Mathematics"
+      },
+      "url": "https://drjchen1.github.io/chenflix/",
+      "knowsAbout": [
+        "Multivariable Calculus", 
+        "Differential Equations", 
+        "Linear Algebra", 
+        "Calculus II",
+        "Calculus I",
+        "Aerospace Engineering"
+      ],
+      "sameAs": [
+        "https://www.reddit.com/user/DrJChen/",
+        "https://www.linkedin.com/in/kuan-hua-chen-30b0765a/",
+        "https://www.math.purdue.edu/~chenjk/"
+      ]
+    }
+    </script>
+    
     <style>
         :root {
-            --netflix-red: #e50914;
-            --text-main: #333;
-            --text-muted: #666;
-            --bg-body: #ffffff;
+            --primary-bg: #ffffff;
+            --secondary-bg: #f8f9fa;
+            --text-color: #212529;
+            --accent-color: #0056b3;
+            --focus-ring: #ffbf47;
+            --border-color: #dee2e6;
+            --code-bg: #f4f4f4;
+            --status-prog-bg: #fff3cd;
+            --status-prog-text: #856404;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.6;
-            color: var(--text-main);
-            background-color: var(--bg-body);
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
+            color: var(--text-color);
+            margin: 0;
+            background-color: var(--primary-bg);
         }
 
-        header {
-            margin-bottom: 3rem;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 1.5rem;
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--accent-color);
+            color: white;
+            padding: 12px;
+            z-index: 1000;
+            text-decoration: none;
         }
-
-        h1 {
-            font-size: clamp(1.8rem, 3vw, 2.8rem);
-            margin-bottom: 0.5rem;
-            line-height: 1.2;
-            color: #000;
-            white-space: nowrap;
-        }
-
-        @media (max-width: 800px) {
-            h1 {
-                white-space: normal;
-            }
-        }
-
-        .subtitle {
-            font-size: 1.4rem;
-            color: var(--text-muted);
-            font-weight: 300;
-            margin-top: 0;
-        }
-
-        /* The R remains text color, only the line is red */
-        .strike-r {
-            text-decoration: line-through;
-            text-decoration-color: var(--netflix-red);
-            text-decoration-thickness: 3px;
-            color: inherit; /* Keeps letter same color as surrounding text */
-            font-weight: inherit; /* Removes the bolding so it matches perfectly */
-        }
-
-        /* The full word remains text color, only the line is red */
-        .strike-full {
-            text-decoration: line-through;
-            text-decoration-color: var(--netflix-red);
-            text-decoration-thickness: 3px;
-            color: inherit; /* Keeps word same color as surrounding text */
-        }
-
-        p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .standout {
-            font-weight: bold;
-            font-size: 1.5rem;
-            margin: 2rem 0;
-            color: #000;
-        }
-
-        blockquote {
-            border-left: 4px solid var(--netflix-red);
-            padding-left: 1.5rem;
-            margin: 2rem 0;
-            font-style: italic;
-            font-size: 1.2rem;
-            color: #000;
-        }
-
-        .resolution-box {
-            margin-top: 3rem; 
-            padding: 1.5rem; 
-            background-color: #f9f9f9; 
-            border-left: 4px solid #000;
-        }
-
-        footer {
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid #eee;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-style: italic;
-        }
+        .skip-link:focus { top: 0; outline: 3px solid var(--focus-ring); }
 
         .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
-        .resolution-box {
-            margin-top: 3rem; 
-            padding: 1.5rem; 
-            background-color: #f9f9f9; 
-            border-left: 4px solid #000;
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
         }
 
-        /* Removes the "blank line" effect at the top and bottom */
-        .resolution-box p:first-child { 
-            margin-top: 0; 
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1250px;
+            margin: 0 auto;
+            gap: 40px;
+            padding: 20px;
         }
-        .resolution-box p:last-child { 
-            margin-bottom: 0; 
+
+        @media (min-width: 900px) {
+            .container {
+                display: grid;
+                grid-template-columns: 280px 1fr 280px;
+                grid-template-areas: 
+                    "left mascot right"
+                    "left main right";
+                margin: 40px auto;
+                align-items: start;
+            }
+
+            .sidebar-left { grid-area: left; }
+            .mascot-box { 
+                grid-area: mascot; 
+                margin-bottom: 2rem; 
+                display: flex; 
+                justify-content: center; 
+            }
+            .main-content { grid-area: main; }
+            .sidebar-right { grid-area: right; }
+        }
+
+        .sidebar-left, .sidebar-right {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            height: fit-content;
+        }
+
+        .main-content { padding: 0 10px; }
+
+        .mascot-box img {
+            width: 85%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            font-size: 0.9rem;
+        }
+        .status-table th, .status-table td {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+        .status-table th { background: #eee; }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .status-live { background: #d4edda; color: #155724; }
+        .status-progress { background: var(--status-prog-bg); color: var(--status-prog-text); }
+
+        footer {
+            margin-top: 50px;
+            padding: 30px;
+            text-align: center;
+            background: var(--secondary-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        a { color: var(--accent-color); text-decoration: underline; }
+
+        .course-link {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            padding: 5px 0;
+        }
+
+        .course-number { font-weight: bold; color: var(--accent-color); text-decoration: underline; }
+        .course-title { font-size: 0.85rem; color: #495057; }
+
+        nav ul li, aside ul li { margin-bottom: 12px; }
+
+        .contact-links {
+            display: flex;
+            gap: 1.25rem;
+            padding-top: 0.5rem;
+            align-items: center;
+        }
+
+        .contact-icon {
+            color: #003566;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .contact-icon:hover {
+            color: #c28e0e;
+            transform: scale(1.1);
+        }
+
+        /* Styling for the Purdue P SVG */
+        .purdue-p {
+            fill: currentColor;
+            width: 24px;
+            height: 24px;
         }
     </style>
 </head>
 <body>
 
-<main>
-    <header>
-        <h1>A Betrayal of "Honesty, Integrity, and Respect"</h1>
-        <p class="subtitle">Why We Must Protest: My Experience with the OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R</p>
-    </header>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <section>
-        <p>
-            The Office of Student <span class="strike-full" aria-label="Rights (Crossed Out)">Rights</span> and Responsibilities (OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R) claims its mission is to "promote responsibility and encourage honesty, integrity, and respect." 
-            But after standing by a student falsely accused and systematically silenced, I know the truth.
-            Those words are not a mission. It's an empty slogan and a mask.
-            What I witnessed was a bureaucratic machine that does not seek the truth but instead functions to crush the very students it is paid to protect.
-        </p>
+    <div class="container">
+        
+        <div class="mascot-box">
+            <img src="images/capychenflix.png" 
+                 alt="Three cheerful capybaras holding a sign that reads 'Welcome to Chenflix!', representing the site's mascots.">
+        </div>
 
-        <p>
-            At the conduct hearing, I saw "A.W." play the roles of prosecutor, judge, and jury with a chilling level of arrogance.
-            She sat across from us and hid behind credentials of "holistic development" while conducting what was clearly a choreographed ritual.
-            Every honest and trembling plea my student made for the truth was met with a smug and practiced dismissal.
-            The verdict was not reached through evidence. It was waiting in the printer before we even sat down.
-        </p>
+        <nav class="sidebar-left" aria-label="Course Directory">
+            <h2>Current Courses</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li>
+                    <a href="courses/ma-16200-f23.html" class="course-link" target="_blank">
+                        <span class="course-number">Calculus II</span>
+                        <span class="course-title">Purdue MA 16200</span>
+                    </a>
+                </li>  
+                <li>
+                    <a href="courses/ma-26100-s23.html" class="course-link" target="_blank">
+                        <span class="course-number">Multivariable Calculus</span>
+                        <span class="course-title">Purdue MA 26100</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="courses/ma-30300-s26.html" class="course-link" target="_blank">
+                        <span class="course-number">Diff Eq & Partial Diff Eq</span>
+                        <span class="course-title">Purdue MA 30300</span>
+                    </a>
+                </li>                
+            </ul>
+        </nav>
 
-        <p>
-            After ruthlessly devastating the emotional wellbeing of my student, A.W. filed a Student of Concern Report.
-            This was not an act of care or kindness, it was the final twist of the knife.
-            It was a performance of empathy used to hide a total absence of a soul.
-        </p>
+        <aside class="sidebar-right">
+            <h2>Resources</h2>
+            <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+                <li><a href="toys/index.html" target="_blank">Interactive Learning Tools</a></li>
+                <li><a href="https://ai.studio/apps/6c7a3a5b-4f4a-4290-b42d-4e8347551f4c" target="_blank">Digitizer Tool</a></li>
+                <li><a href="osrr-psa.html" target="_blank">PSA: The OSRR</a></li>
+                <li><a href="https://sites.google.com/view/chenflix/home" target="_blank">Archived Chenflix (Google Sites)</a></li>
+            </ul>
 
-        <p>
-            When I reached out to "J.S." (A.W.'s supervisor), I expected a leader but I found an empty chair.
-            He sat there and sheepishly admitted the procedures were not followed, and essentially acknowledging the wound while refusing to stop the bleeding.
-            He then did the unthinkable. He did nothing. No correction, no apology, and no accountability.
-            Furthermore, the OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R validated A.W.’s behavior with a promotion.
-            J.S. might enjoy the cheers as he waves from a convertible during the Homecoming Parade, but that performance is a sham.
-            It is the costume of a man who lacks the spine to stand for a student when it actually counts.
-        </p>
+            <hr aria-hidden="true">
 
-        <p>
-            The OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R and its leadership think they can hide behind stacks of paperwork.
-            They use their policies like riot shields because they are betting that we will eventually get tired.
-            They want us to grow quiet and go away. They are gambling on our exhaustion.
-            They hope that if they move slow enough and act cold enough, we will forget the face of the student they tried to (almost successfully) crush.
-        </p>
+            <h3>Contact Me</h3>
+            <div class="contact-links">
+                <a href="https://www.math.purdue.edu/~chenjk/" target="_blank" aria-label="Purdue University Profile">
+                    <svg class="contact-icon purdue-p" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M4 2h10c4.42 0 8 3.58 8 8s-3.58 8-8 8H8v4H4V2zm4 12h6c2.21 0 4-1.79 4-4s-1.79-4-4-4H8v8z"/>
+                    </svg>
+                </a>
+                <a href="mailto:chenjk@purdue.edu" aria-label="Email Me">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </a>
+                <a href="https://www.reddit.com/user/DrJChen/" target="_blank" aria-label="Reddit">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M12 18c3.4 0 6.5-1.5 8.5-4C18 11.5 15.3 10 12 10s-6 1.5-8.5 4c2 2.5 5.1 4 8.5 4Z"/><circle cx="17" cy="4" r="2"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/kuan-hua-chen-30b0765a/" target="_blank" aria-label="LinkedIn">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+            </div>
+        </aside>
 
-        <p class="standout">They are wrong.</p>
+        <main id="main-content" class="main-content">
+            <section id="announcement">
+                <h2>The Great Migration</h2>
+                <p>I am digitizing all of my handwritten lecture notes into accessible HTML. New versions will be posted here as they are completed; meanwhile, the original handwritten notes remain available on the <a href="https://sites.google.com/view/chenflix/home" target="_blank" rel="noopener noreferrer">Google Site Archive</a>.</p>
+            </section>
+            
+            <section id="digitization-status">
+                <h3>Digitization Status</h3>
+                <table class="status-table" aria-label="Past Course Digitization Update">
+                    <thead>
+                        <tr><th>Courses</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Calculus II (Fall 2023)</td><td><span class="status-badge status-live">Live</span></td></tr>
+                        <tr><td>Multivariable Calculus (Spring 2023)</td><td><span class="status-badge status-live">Live</span></td></tr>
+                        <tr><td>Diff Eq & Partial DE (Spring 2026)</td><td><span class="status-badge status-live">Live</span></td></tr>
+                        <tr><td>Calculus I (Spring 2022)</td><td><span class="status-badge status-progress">In Progress</span></td></tr>
+                        <tr><td>Linear Algebra (Summer 2018)</td><td><span class="status-badge status-progress">In Progress</span></td></tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
 
-        <p>
-            Silence is the soil where this kind of rot grows, and we refuse to let it take root.
-            We speak because the light is the only thing they fear.
-            We speak because somewhere on this campus, there is another student who is frightened, alone, and innocent.
-            That student is about to walk into that office. They deserve a champion, not a charade.
-            They deserve a truth that isn't for sale to the highest ego.
-        </p>
+    <footer>
+        <p>&copy; 2026 Kuan-Hua Chen | Built with Accessibility in mind</p>
+    </footer>
 
-        <p>
-            We will not forget this atrocity. We will not keep quiet.
-        </p>
-
-        <blockquote>
-            “There may be times when we are powerless to prevent injustice, but there must never be a time when we fail to protest.” — Elie Wiesel
-        </blockquote>
-    </section>
-
-    <section class="resolution-box">
-        <p>
-            Nearly a year has passed, and while silence is often the preferred language of bureaucracy, it is rarely the language of integrity. I remain a believer in the restorative power of the truth and the necessity of closure.
-        </p>
-        <p>
-            The standing offer remains: if the OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R is willing to move past the choreography of conduct hearings and offer a sincere, transparent admission of the procedural and ethical errors made in this case, my door is open. 
-        </p>
-        <p style="margin-bottom: 0;">
-            Accountability has no expiration date. Until then, the light stays on.
-        </p>
-    </section>
-</main>
-
-<footer>
-    <p>
-        <strong>Disclaimer & Legal Notice:</strong> This page contains personal opinion, rhetorical hyperbole, and expressive commentary protected under the First Amendment of the U.S. Constitution. The narratives presented are based on the author’s direct involvement in OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R proceedings and publicly available information. While creative license is utilized for stylistic and expressive purposes, the core events described are substantially true.
-    </p>
-    <p>
-        This content is provided for informational purposes and constitutes fair comment on matters of public concern. The author does not solicit, encourage, or condone the harassment of any individuals or entities mentioned. All interpretations, characterizations, and conclusions are the author’s own.
-    </p>
-</footer>
-<script data-goatcounter="https://osrr.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-    
+    <script data-goatcounter="https://chenflix.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
