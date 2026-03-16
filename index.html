@@ -6,7 +6,7 @@
     
     <title>Chenflix | Accessible Calculus & Engineering Math Resources | Dr. Kuan-Hua Chen</title>
     <meta name="description" content="Free, WCAG 2.2 accessible lecture notes and videos for Multivariable Calculus, Differential Equations, and Linear Algebra. Developed by Dr. Kuan-Hua Chen at Purdue University.">
-    <meta name="keywords" content="Chenflix, Kuan-Hua Chen, Mathematics, Engineering Math, Purdue, Calculus Resources, Accessible Math, MA 16200, MA 26100, MA 30300">
+    <meta name="keywords" content="Chenflix, Kuan-Hua Chen, Mathematics, Engineering Math, Purdue, Calculus Resources, Accessible Math, MA 16200, MA 26100, MA 30300, Taylor Series, Stokes Theorem, Laplace Transforms, Heat Equation, Lagrange Multipliers, Integration by Parts">
 
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
@@ -44,8 +44,10 @@
         "Linear Algebra", 
         "Calculus II",
         "Calculus I",
-        "Aerospace Engineering"
-        "Partial Differential Equations"
+        "Aerospace Engineering",
+        "Partial Differential Equations",
+        "Stokes Theorem",
+        "Laplace Transforms"
       ],
       "sameAs": [
         "https://www.reddit.com/user/DrJChen/",
@@ -119,7 +121,6 @@
                 margin: 40px auto;
                 align-items: start;
             }
-
             .sidebar-left { grid-area: left; }
             .mascot-box { 
                 grid-area: mascot; 
@@ -193,8 +194,6 @@
         .course-number { font-weight: bold; color: var(--accent-color); text-decoration: underline; }
         .course-title { font-size: 0.85rem; color: #495057; }
 
-        nav ul li, aside ul li { margin-bottom: 12px; }
-
         .contact-links {
             display: flex;
             gap: 1.25rem;
@@ -212,7 +211,6 @@
             transform: scale(1.1);
         }
 
-        /* Styling for the Purdue P SVG */
         .purdue-p {
             fill: currentColor;
             width: 24px;
@@ -235,19 +233,19 @@
             <h2>Current Courses</h2>
             <ul style="list-style: none; padding: 0;">
                 <li>
-                    <a href="courses/ma-16200-f23.html" class="course-link" target="_blank">
+                    <a href="courses/ma-16200-f23.html" class="course-link">
                         <span class="course-number">Calculus II</span>
                         <span class="course-title">Purdue MA 16200</span>
                     </a>
                 </li>  
                 <li>
-                    <a href="courses/ma-26100-s23.html" class="course-link" target="_blank">
+                    <a href="courses/ma-26100-s23.html" class="course-link">
                         <span class="course-number">Multivariable Calculus</span>
                         <span class="course-title">Purdue MA 26100</span>
                     </a>
                 </li>
                 <li>
-                    <a href="courses/ma-30300-s26.html" class="course-link" target="_blank">
+                    <a href="courses/ma-30300-s26.html" class="course-link">
                         <span class="course-number">Diff Eq & Partial Diff Eq</span>
                         <span class="course-title">Purdue MA 30300</span>
                     </a>
@@ -288,7 +286,7 @@
         <main id="main-content" class="main-content">
             <section class="visually-hidden">
                 <h2>Key Mathematics Topics</h2>
-                <p>Calculus II, Multivariable Calculus, and Differential Equations resources including Taylor Series, Stokes' Theorem, Divergence Theorem, Lagrange Multipliers, Laplace Transforms, Heat Equation, Wave Equation, and Separation of Variables.</p>
+                <p>Calculus II, Multivariable Calculus, and Differential Equations resources including Taylor Series, Stokes' Theorem, Divergence Theorem, Lagrange Multipliers, Laplace Transforms, Heat Equation, Wave Equation, Separation of Variables, and Integration by Parts.</p>
             </section>
             
             <section id="announcement">
