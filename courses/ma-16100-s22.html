@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 16100 | Calculus I</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --purdue-gold: #ceb888;
+            --purdue-black: #000000;
+            --bg-gray: #f2f2f2;
+            --link-blue: #005cb9;
+            --accent-light: #f5efe9;
+            --gold-text: #856a2d; 
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--purdue-black);
+            background-color: var(--bg-gray);
+            max-width: 65rem;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        header {
+            background-color: var(--purdue-black);
+            color: var(--purdue-gold);
+            padding: 2.5rem 1rem;
+            border-bottom: 5px solid var(--purdue-gold);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header span { display: block; }
+        .course-title { font-size: 1.3rem; font-weight: 400; margin: 0.6rem 0; color: #fff; }
+        main { background: white; padding: 2rem; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .lecture-list { list-style: none; padding: 0; }
+        .lecture-item {
+            padding: 1.2rem;
+            border-bottom: 1px solid #eee;
+        }
+        .lecture-item:hover { background-color: var(--accent-light); }
+        .lecture-title { display: block; font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .lec-highlight { color: var(--gold-text); margin-right: 0.2rem; }
+        .section-links { display: block; font-size: 0.95rem; color: #444; }
+        .section-row { margin-bottom: 0.4rem; }
+        /* Mobile scrollable math */
+        .MathJax_Display {
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+        a { color: var(--link-blue); font-weight: 600; text-decoration: underline; margin: 0 0.3rem; }
+        a:focus { outline: 3px solid var(--purdue-gold); background-color: #fff9e6; outline-offset: 2px; }
+    </style>
+</head>
+<body>
+    <header role="banner">
+        <h1>
+            <span>MA 16100</span>
+            <span class="course-title">Calculus I</span>
+            <span class="semester">Spring 2022</span>
+        </h1>
+    </header>
+
+    <main id="main-content" role="main">
+        <ul class="lecture-list">
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 0</span> 1.1 Review of Functions and 1.2 Representing Functions</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_9p8gxlsg" aria-label="Video for Lesson 0">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%200%20%281.1,%201.2%29-acc.html" aria-label="Notes for Lesson 0">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 1</span> 1.3 Exponential and Logarithmic Functions</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_r0t6y7pn" aria-label="Video for Lesson 1">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%201%20%281.3%29-acc.html" aria-label="Notes for Lesson 1">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 2</span> 1.4 Trigonometric Functions and Their Inverses</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_0y7pj55p" aria-label="Video for Lesson 2">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%202%20%281.4%29-acc.html" aria-label="Notes for Lesson 2">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 3</span> 2.1 The Idea of Limits and 2.2 Definition of Limits</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_8ysqm23m" aria-label="Video for Lesson 3">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%203%20%282.1+2.2%29-acc.html" aria-label="Notes for Lesson 3">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 4</span> 2.3 Techniques for Computing Limits</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_2r3xrnmw" aria-label="Video for Lesson 4">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%204%20%282.3%29-acc.html" aria-label="Notes for Lesson 4">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 5</span> 2.4 Infinite Limits</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_nqdbon20" aria-label="Video for Lesson 5">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%205%20%282.4%29-acc.html" aria-label="Notes for Lesson 5">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 6</span> 2.5 Limits at Infinity</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_0xj7a2al" aria-label="Video for Lesson 6">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%206%20%282.5%29-acc.html" aria-label="Notes for Lesson 6">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 7</span> 2.6 Continuity</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_5m8vi1rr" aria-label="Video for Lesson 7">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%207%20%282.6%29-acc.html" aria-label="Notes for Lesson 7">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 8</span> 3.1 Introducing the Derivative</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_worroizy" aria-label="Video for Lesson 8">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%208%20%283.1%29-acc.html" aria-label="Notes for Lesson 8">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 9</span> 3.2 The Derivative as a Function</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_b3wi6okj" aria-label="Video for Lesson 9">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%209%20%283.2%29-acc.html" aria-label="Notes for Lesson 9">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 10</span> 3.3 Rules of Differentiation</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_c87cy0ad" aria-label="Video for Lesson 10">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2010%20%283.3%29-acc.html" aria-label="Notes for Lesson 10">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 11</span> 3.4 The Product and Quotient Rules</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_dc0ooiiz" aria-label="Video for Lesson 11">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2011%20%283.4%29-acc.html" aria-label="Notes for Lesson 11">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 12</span> 3.5 Derivatives of Trigonometric Functions</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_pxdkw50c" aria-label="Video for Lesson 12">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2012%20%283.5%29-acc.html" aria-label="Notes for Lesson 12">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 13</span> 3.6 Derivatives as Rates of Change and 3.7 The Chain Rule, part 1</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_uhcx9y2r" aria-label="Video for Lesson 13">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2013%20%283.6+3.7-1%29-acc.html" aria-label="Notes for Lesson 13">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 14</span> 3.7 The Chain Rule, part 2</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_v6ugufio" aria-label="Video for Lesson 14">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2014%20%283.7-2%29-acc.html" aria-label="Notes for Lesson 14">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 15</span> 3.8 Implicit Differentiation</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_fpqobgq1" aria-label="Video for Lesson 15">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2015%20%283.8%29-acc.html" aria-label="Notes for Lesson 15">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 16</span> 3.9 Derivatives of Logarithmic and Exponential Functions</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_6i9tmqx9" aria-label="Video for Lesson 16">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2016%20%283.9%29-acc.html" aria-label="Notes for Lesson 16">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 17</span> 3.10 Derivatives of Inverse Trigonometric Functions</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_ek1tcnxl" aria-label="Video for Lesson 17">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2017%20%283.10%29-acc.html" aria-label="Notes for Lesson 17">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 18</span> 3.11 Related Rates, part 1</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_7t81asr9" aria-label="Video for Lesson 18">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2018%20%283.11-1%29-acc.html" aria-label="Notes for Lesson 18">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 19</span> 3.11 Related Rates, part 2</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_rowwv8ue" aria-label="Video for Lesson 19">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2019%20%283.11-2%29-acc.html" aria-label="Notes for Lesson 19">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 20</span> 4.1 Maxima and Minima</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_rnpzqx6i" aria-label="Video for Lesson 20">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2020%20%284.1%29-acc.html" aria-label="Notes for Lesson 20">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 21</span> 4.2 The Mean Value Theorem and 4.3 What Derivatives Tell us, part 1</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_m0niu6r1" aria-label="Video for Lesson 21">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2021%20%284.2+4.3-1%29-acc.html" aria-label="Notes for Lesson 21">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 22</span> 4.3 What Derivatives Tell us, part 2</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_od1k1r6a" aria-label="Video for Lesson 22">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2022%20%284.3-2%29-acc.html" aria-label="Notes for Lesson 22">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 23</span> 4.4 Graphing Functions, part 1</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_uwqgk89i" aria-label="Video for Lesson 23">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2023%20%284.4-1%29-acc.html" aria-label="Notes for Lesson 23">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 24</span> 4.4 Graphing Functions, part 2</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_020q6j6r" aria-label="Video for Lesson 24">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2024%20%284.4-2%29-acc.html" aria-label="Notes for Lesson 24">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 25</span> 4.5 Optimization Problems, part 1</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_qrnk39jb" aria-label="Video for Lesson 25">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2025%20%284.5-1%29-acc.html" aria-label="Notes for Lesson 25">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 26</span> 4.5 Optimization Problems, part 2</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_vakqp0ms" aria-label="Video for Lesson 26">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2026%20%284.5-2%29-acc.html" aria-label="Notes for Lesson 26">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 27</span> 4.6 Linear Approximation</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_d0yz894p" aria-label="Video for Lesson 27">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2027%20%284.6%29-acc.html" aria-label="Notes for Lesson 27">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 28</span> 4.7 l'Hospital's Rule</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_g0hpau07" aria-label="Video for Lesson 28">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2028%20%284.7%29-acc.html" aria-label="Notes for Lesson 28">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 29</span> 4.9 Antiderivatives</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_pa6qrdot" aria-label="Video for Lesson 29">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2029%20%284.9%29-acc.html" aria-label="Notes for Lesson 29">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 30</span> 5.1 Approximating Areas Under Curves</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_r97imn5o" aria-label="Video for Lesson 30">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2030%20%285.1%29-acc.html" aria-label="Notes for Lesson 30">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 31</span> 5.2 Definite Integrals</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_5usec61j" aria-label="Video for Lesson 31">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2031%20%285.2%29-acc.html" aria-label="Notes for Lesson 31">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 32</span> 5.3 Fundamental Theorem of Calculus</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_7p4y3gx8" aria-label="Video for Lesson 32">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2032%20%285.3%29-acc.html" aria-label="Notes for Lesson 32">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 33</span> 5.4 + 5.5-1 Working with Integrals and Substitution Rule</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_sy3yz8v5" aria-label="Video for Lesson 33">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2033%20%285.4+5.5-1%29-acc.html" aria-label="Notes for Lesson 33">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 34</span> 5.5-2 Substitution Rule, part 2</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_og8ykibn" aria-label="Video for Lesson 34">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2034%20%285.5-2%29-acc.html" aria-label="Notes for Lesson 34">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lesson 35</span> 7.2 Exponential Growth and Decay</span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_ls3fstln" aria-label="Video for Lesson 35">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Lesson%2035%20%287.2%29-acc.html" aria-label="Notes for Lesson 35">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Exam 1 Review</span></span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_a4jnpeu3" aria-label="Video for Exam 1 Review">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Exam%201%20Review-acc.html" aria-label="Notes for Exam 1 Review">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Exam 2 Review</span></span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_bksv2s6n" aria-label="Video for Exam 2 Review">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Exam%202%20Review-acc.html" aria-label="Notes for Exam 2 Review">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Exam 3 Review</span></span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_zcc7rlum" aria-label="Video for Exam 3 Review">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Exam%203%20Review-acc.html" aria-label="Notes for Exam 3 Review">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Final Exam Review, Part 1</span></span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_l54j7fop" aria-label="Video for Final Exam Review Part 1">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Final%20Review%201-acc.html" aria-label="Notes for Final Exam Review Part 1">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Final Exam Review, Part 2</span></span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_2v5jurxl" aria-label="Video for Final Exam Review Part 2">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Final%20Review%202-acc.html" aria-label="Notes for Final Exam Review Part 2">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Final Exam Review, Part 3</span></span>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2022+-+MA161+-+Chen/1_9j01e1jg" aria-label="Video for Final Exam Review Part 3">Video</a> | 
+                        <a href="https://www.math.purdue.edu/%7Echenjk/MA161S22/Final%20Review%203-acc.html" aria-label="Notes for Final Exam Review Part 3">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </main>
+</body>
+</html>
