@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chenflix Editor</title>
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>Chenflix WYSIWYG Editor</h1>
+      <p>Edit text safely without changing structure, semantics, or CSS.</p>
+    </div>
+    <div class="header-actions">
+      <button id="openFileBtn" class="primary">Open HTML</button>
+      <button id="saveBtn" disabled>Save</button>
+      <button id="downloadBtn" disabled>Download</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="panel" aria-label="Preview">
+      <div class="panel-header">
+        <div>
+          <h2>Preview</h2>
+          <p class="muted">Click any text to edit it. Structure stays intact.</p>
+        </div>
+        <div class="panel-actions">
+          <button id="undoBtn" disabled>Undo</button>
+          <button id="redoBtn" disabled>Redo</button>
+          <button id="resetBtn" disabled>Reload</button>
+        </div>
+      </div>
+      <div class="iframe-wrap">
+        <iframe id="preview" title="Live preview"></iframe>
+      </div>
+    </section>
+
+    <aside class="panel" aria-label="Editor">
+      <div class="panel-header">
+        <div>
+          <h2>Selection</h2>
+          <p class="muted">Only text nodes are editable by default.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <label for="selectedPath">Element Path</label>
+        <input id="selectedPath" type="text" readonly>
+      </div>
+
+      <div class="section">
+        <label for="selectedText">Text Content</label>
+        <textarea id="selectedText" rows="8" placeholder="Select text in the preview"></textarea>
+        <div class="hint">Edits update the page instantly. No tags or classes will be altered.</div>
+      </div>
+
+      <div class="section">
+        <div class="toggle-row">
+          <label for="attrToggle" class="toggle-label">Enable attribute editing</label>
+          <input id="attrToggle" type="checkbox">
+        </div>
+        <p class="muted">Only safe attributes: <code>alt</code>, <code>title</code>, <code>aria-label</code>, <code>href</code>, <code>src</code>.</p>
+      </div>
+
+      <div class="section" id="attrSection" hidden>
+        <h3>Attributes</h3>
+        <div class="attr-grid">
+          <label for="attrAlt">alt</label>
+          <input id="attrAlt" type="text" data-attr="alt">
+
+          <label for="attrTitle">title</label>
+          <input id="attrTitle" type="text" data-attr="title">
+
+          <label for="attrAria">aria-label</label>
+          <input id="attrAria" type="text" data-attr="aria-label">
+
+          <label for="attrHref">href</label>
+          <input id="attrHref" type="text" data-attr="href">
+
+          <label for="attrSrc">src</label>
+          <input id="attrSrc" type="text" data-attr="src">
+        </div>
+        <div class="hint">Attribute changes are applied only to the selected element.</div>
+      </div>
+
+      <div class="section">
+        <h3>Status</h3>
+        <ul class="status-list">
+          <li><span>File</span><strong id="statusFile">No file loaded</strong></li>
+          <li><span>Changes</span><strong id="statusChanges">0</strong></li>
+          <li><span>Last action</span><strong id="statusAction">—</strong></li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="app-footer">
+    <p>Tip: Run a simple local server for file access, e.g. <code>python3 -m http.server</code> from the repo root.</p>
+  </footer>
+
+  <script src="editor.js"></script>
+</body>
+</html>
