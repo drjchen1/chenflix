@@ -199,13 +199,13 @@
             padding: 5px 0;
         }
 
-        .course-number {
+        .course-number, .resource-name {
             font-weight: 600;
             color: var(--accent-color);
             text-decoration: underline;
         }
 
-        .course-title {
+        .course-title, .resource-description {
             font-size: 0.85rem;
             color: #495057;
         }
@@ -292,7 +292,12 @@
         <aside class="sidebar-right">
             <h2>Resources</h2>
             <ul style="list-style: none; padding: 0;">
-                <li><a href="toys/index.html" target="_blank">Interactive Learning Tools <span class="visually-hidden">(opens in new tab)</span></a></li>
+                <li><a href="toys/index.html" target="_blank">
+                    <span class="resource-name">Interactive Learning Tools</span>
+                    <span class="resource-description">Visualizations & practice modules</span>
+                    <span class="visually-hidden">(opens in new tab)</span>
+                    </a>
+                </li>
                 <li>
                     <a href="https://ai.studio/apps/6c7a3a5b-4f4a-4290-b42d-4e8347551f4c" 
                        target="_blank" 
