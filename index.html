@@ -110,7 +110,7 @@
             margin: 0 auto;
             gap: 20px;
             padding: 20px;
-            align-items: stretch; /* This forces children to be the same height */
+        /*    align-items: stretch; /* This forces children to be the same height */ */
         }
 
         /* Mobile Ordering */
@@ -128,7 +128,7 @@
                     "left mascot right"
                     "left main right";
                 margin: 40px auto;
-                align-items: stretch; /* Stretch to force same height, default is start */
+                align-items: start; /* Stretch to force same height, default is start */
             }
 
             .sidebar-left { grid-area: left; order: unset; }
@@ -143,7 +143,7 @@
             padding: 1.5rem;
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            height: auto; /* Change 'fit-content' to 'auto' or remove it */
+            height: fit-content; /* Change 'fit-content' to 'auto' or remove it */
             flex: 1; /* Optional: gives them equal width as well */
         }
 
