@@ -49,21 +49,19 @@
             margin-top: 0;
         }
 
-        /* The R remains text color, only the line is red */
         .strike-r {
             text-decoration: line-through;
             text-decoration-color: var(--netflix-red);
             text-decoration-thickness: 3px;
-            color: inherit; /* Keeps letter same color as surrounding text */
-            font-weight: inherit; /* Removes the bolding so it matches perfectly */
+            color: inherit;
+            font-weight: inherit;
         }
 
-        /* The full word remains text color, only the line is red */
         .strike-full {
             text-decoration: line-through;
             text-decoration-color: var(--netflix-red);
             text-decoration-thickness: 3px;
-            color: inherit; /* Keeps word same color as surrounding text */
+            color: inherit;
         }
 
         p {
@@ -94,6 +92,9 @@
             border-left: 4px solid #000;
         }
 
+        .resolution-box p:first-child { margin-top: 0; }
+        .resolution-box p:last-child { margin-bottom: 0; }
+
         footer {
             margin-top: 4rem;
             padding-top: 2rem;
@@ -112,20 +113,6 @@
             overflow: hidden;
             clip: rect(0, 0, 0, 0);
             border: 0;
-        }
-        .resolution-box {
-            margin-top: 3rem; 
-            padding: 1.5rem; 
-            background-color: #f9f9f9; 
-            border-left: 4px solid #000;
-        }
-
-        /* Removes the "blank line" effect at the top and bottom */
-        .resolution-box p:first-child { 
-            margin-top: 0; 
-        }
-        .resolution-box p:last-child { 
-            margin-bottom: 0; 
         }
     </style>
 </head>
@@ -146,32 +133,27 @@
         </p>
 
         <p>
-            At the conduct hearing, I saw "A.W." play the roles of prosecutor, judge, and jury with a chilling level of arrogance.
-            She sat across from us and hid behind credentials of "holistic development" while conducting what was clearly a choreographed ritual.
-            Every honest and trembling plea my student made for the truth was met with a smug and practiced dismissal.
-            The verdict was not reached through evidence. It was waiting in the printer before we even sat down.
+            During the conduct hearing, I witnessed the office function as prosecutor, judge, and jury. 
+            The proceedings were presented under the guise of "holistic development," but the reality was a choreographed ritual where the outcome felt predetermined. 
+            Every honest plea for the truth was met with practiced dismissal. 
+            It became clear that the verdict was not reached through evidence; it was waiting in the printer before the hearing even began.
         </p>
 
         <p>
-            After ruthlessly devastating the emotional wellbeing of my student, A.W. filed a Student of Concern Report.
-            This was not an act of care or kindness, it was the final twist of the knife.
-            It was a performance of empathy used to hide a total absence of a soul.
+            The office’s subsequent actions further highlighted this disconnect. 
+            Filing a "Student of Concern" report after a devastating hearing was presented as an act of care, but in context, it functioned as a final administrative hurdle. A performance of empathy used to obscure a total absence of institutional accountability.
         </p>
 
         <p>
-            When I reached out to "J.S." (A.W.'s supervisor), I expected a leader but I found an empty chair.
-            He sat there and sheepishly admitted the procedures were not followed, and essentially acknowledging the wound while refusing to stop the bleeding.
-            He then did the unthinkable. He did nothing. No correction, no apology, and no accountability.
-            Furthermore, the OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R validated A.W.’s behavior with a promotion.
-            J.S. might enjoy the cheers as he waves from a convertible during the Homecoming Parade, but that performance is a sham.
-            It is the costume of a man who lacks the spine to stand for a student when it actually counts.
+            When I sought oversight from the leadership of the OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R, I found an office that prioritized self-preservation over justice. 
+            Internal leadership admitted that established procedures were not followed, essentially acknowledging the wound while refusing to stop the bleeding. 
+            They did nothing. No correction, no apology, and no understanding. 
+            Instead, the behavior was validated by the institution. It is the posture of an office that lacks the spine to stand for a student when it actually counts.
         </p>
 
         <p>
-            The OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R and its leadership think they can hide behind stacks of paperwork.
-            They use their policies like riot shields because they are betting that we will eventually get tired.
-            They want us to grow quiet and go away. They are gambling on our exhaustion.
-            They hope that if they move slow enough and act cold enough, we will forget the face of the student they tried to (almost successfully) crush.
+            The OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R leadership seems to believe they can hide behind stacks of paperwork and "riot shields" of policy. 
+            They are gambling on our exhaustion, hoping that if they move slow enough and act cold enough, we will eventually grow quiet and forget the face of the student they tried to crush.
         </p>
 
         <p class="standout">They are wrong.</p>
@@ -185,7 +167,7 @@
         </p>
 
         <p>
-            We will not forget this atrocity. We will not keep quiet.
+            We will not forget this. We will not keep quiet.
         </p>
 
         <blockquote>
@@ -200,7 +182,7 @@
         <p>
             The standing offer remains: if the OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R is willing to move past the choreography of conduct hearings and offer a sincere, transparent admission of the procedural and ethical errors made in this case, my door is open. 
         </p>
-        <p style="margin-bottom: 0;">
+        <p>
             Accountability has no expiration date. Until then, the light stays on.
         </p>
     </section>
@@ -214,8 +196,6 @@
         This content is provided for informational purposes and constitutes fair comment on matters of public concern. The author does not solicit, encourage, or condone the harassment of any individuals or entities mentioned. All interpretations, characterizations, and conclusions are the author’s own.
     </p>
 </footer>
-<script data-goatcounter="https://osrr.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-    
+
 </body>
 </html>
