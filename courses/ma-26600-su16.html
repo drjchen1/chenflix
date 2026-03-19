@@ -24,6 +24,21 @@
             margin: 0 auto;
             padding: 2rem 1.5rem;
         }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--purdue-gold);
+            color: var(--purdue-black);
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
         header {
             background-color: var(--purdue-black);
             color: var(--purdue-gold);
@@ -42,7 +57,12 @@
             border-bottom: 1px solid #eee;
         }
         .lecture-item:hover { background-color: var(--accent-light); }
-        .lecture-title { display: block; font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .lecture-title { 
+            display: block; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+            margin: 0 0 0.5rem 0; 
+        }
         .lec-highlight { color: var(--gold-text); margin-right: 0.2rem; }
         .section-links { display: block; font-size: 0.95rem; color: #444; }
         .section-row { margin-bottom: 0.4rem; }
@@ -52,9 +72,19 @@
         }
         a { color: var(--link-blue); font-weight: 600; text-decoration: underline; margin: 0 0.3rem; }
         a:focus { outline: 3px solid var(--purdue-gold); background-color: #fff9e6; outline-offset: 2px; }
+        footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #ddd;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #555;
+        }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header role="banner">
         <h1>
             <span>MA 26600</span>
@@ -67,7 +97,7 @@
         <ul class="lecture-list">
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 1</span> 1.1 Direction Fields</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 1</span> 1.1 Direction Fields</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-13_P/0_b9yvuzcn" aria-label="Video for Lesson 1">Video</a> | 
@@ -77,7 +107,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 2</span> 1.2 & 1.3 Solutions and Classification</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 2</span> 1.2 & 1.3 Solutions and Classification</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-14_P/0_2zsxwuvu" aria-label="Video for Lesson 2">Video</a> | 
@@ -87,7 +117,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 3</span> 2.1 Integrating Factors</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 3</span> 2.1 Integrating Factors</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-15_P/0_sdeyh19y" aria-label="Video for Lesson 3">Video</a> | 
@@ -97,7 +127,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 4</span> 2.2 Separable and Homogeneous Equations</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 4</span> 2.2 Separable and Homogeneous Equations</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-16_P/0_z8cyl2gb" aria-label="Video for Lesson 4">Video</a> | 
@@ -107,7 +137,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 5</span> 2.3 Mathematical Modeling</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 5</span> 2.3 Mathematical Modeling</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-17_P/0_xbmlx7ia" aria-label="Video for Lesson 5">Video</a> | 
@@ -117,7 +147,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 6</span> 2.4 Existence and Uniqueness, Bernoulli Equations</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 6</span> 2.4 Existence and Uniqueness, Bernoulli Equations</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-20_P/0_fuw0kpnu" aria-label="Video for Lesson 6">Video</a> | 
@@ -127,7 +157,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 7</span> 2.5 Autonomous Equations</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 7</span> 2.5 Autonomous Equations</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-21_P/0_o4y7it21" aria-label="Video for Lesson 7">Video</a> | 
@@ -137,7 +167,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 8</span> 2.6 Exact Equations</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 8</span> 2.6 Exact Equations</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-22_P/0_khyz0zot" aria-label="Video for Lesson 8">Video</a> | 
@@ -147,7 +177,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 9</span> 2.7 Euler's Method</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 9</span> 2.7 Euler's Method</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-23_P/0_0oi9c1vg" aria-label="Video for Lesson 9">Video</a> | 
@@ -157,7 +187,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 10</span> 3.1 The Characteristic Equation</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 10</span> 3.1 The Characteristic Equation</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-24_P/0_pazdnzsx" aria-label="Video for Lesson 10">Video</a> | 
@@ -167,7 +197,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 11</span> 3.2 The Theory of Linear Equations and the Wronskian</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 11</span> 3.2 The Theory of Linear Equations and the Wronskian</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-29_P/0_t67gvwvx" aria-label="Video for Lesson 11">Video</a> | 
@@ -177,7 +207,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 12</span> 3.3 Complex Roots of the Characteristic Equation</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 12</span> 3.3 Complex Roots of the Characteristic Equation</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-06-30_P/0_fkeggx6s" aria-label="Video for Lesson 12">Video</a> | 
@@ -187,7 +217,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 13</span> 3.4 Repeated Roots and Reduction of Order</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 13</span> 3.4 Repeated Roots and Reduction of Order</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-01_P/0_7be7ruby" aria-label="Video for Lesson 13">Video</a> | 
@@ -197,7 +227,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 14</span> 3.5 Nonhomogeneous equations, Method of Undetermined Coefficients</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 14</span> 3.5 Nonhomogeneous equations, Method of Undetermined Coefficients</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-05_P/0_ev3agaz0" aria-label="Video for Lesson 14">Video</a> | 
@@ -207,7 +237,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 15</span> 3.6 Variation of Parameters</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 15</span> 3.6 Variation of Parameters</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-06_P/0_jbz5iufl" aria-label="Video for Lesson 15">Video</a> | 
@@ -217,7 +247,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 16</span> 3.7 Mass-Spring Systems</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 16</span> 3.7 Mass-Spring Systems</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-07_P/0_nx78qgow" aria-label="Video for Lesson 16">Video</a> | 
@@ -227,7 +257,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 17</span> 3.8 Forced Vibrations</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 17</span> 3.8 Forced Vibrations</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-08_P/0_gqu9rfvt" aria-label="Video for Lesson 17">Video</a> | 
@@ -237,7 +267,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 18</span> 4.1 & 4.2 nth Order Linear Equations</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 18</span> 4.1 & 4.2 nth Order Linear Equations</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-11_P/0_1pcvf04s" aria-label="Video for Lesson 18">Video</a> | 
@@ -247,7 +277,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 19</span> 4.3 Method of Undetermined Coefficients for nth Order Equations</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 19</span> 4.3 Method of Undetermined Coefficients for nth Order Equations</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-12_P/0_vblvr27t" aria-label="Video for Lesson 19">Video</a> | 
@@ -257,7 +287,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 20</span> 6.1 Piecewise Continuous Functions and the Laplace Transform</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 20</span> 6.1 Piecewise Continuous Functions and the Laplace Transform</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-13_P/0_ce3x57t5" aria-label="Video for Lesson 20">Video</a> | 
@@ -267,7 +297,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 21</span> 6.2 Solving IVPs with the Laplace Transform</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 21</span> 6.2 Solving IVPs with the Laplace Transform</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-18_P/0_eo9giokh" aria-label="Video for Lesson 21">Video</a> | 
@@ -277,7 +307,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 22</span> 6.3 Step (Heaviside) Functions</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 22</span> 6.3 Step (Heaviside) Functions</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-19_P/0_9e92gxpk" aria-label="Video for Lesson 22">Video</a> | 
@@ -287,7 +317,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 23</span> 6.4 IVPs with Piecewise-Defined Forcing Functions</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 23</span> 6.4 IVPs with Piecewise-Defined Forcing Functions</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-20_P/0_bw5pppvr" aria-label="Video for Lesson 23">Video</a> | 
@@ -297,7 +327,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 24</span> 6.5 The Dirac \(\delta\) (Unit Impulse) Function</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 24</span> 6.5 The Dirac \( \delta\) (Unit Impulse) Function</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-20_P/0_bw5pppvr" aria-label="Video for Lesson 24">Video</a> | 
@@ -307,7 +337,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 25</span> 6.6 Convolution Integrals</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 25</span> 6.6 Convolution Integrals</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-22_P/0_wsac4ycb" aria-label="Video for Lesson 25">Video</a> | 
@@ -317,7 +347,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 26</span> 7.1 & 7.2 Systems of Differential Equations, Matrices</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 26</span> 7.1 & 7.2 Systems of Differential Equations, Matrices</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-25_P/0_f1b7gr5b" aria-label="Video for Lesson 26">Video</a> | 
@@ -327,7 +357,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 27</span> 7.3 & 7.4 Eigenvalues/vectors, Theory of Linear Systems</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 27</span> 7.3 & 7.4 Eigenvalues/vectors, Theory of Linear Systems</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-26_P/0_2vbrl4hd" aria-label="Video for Lesson 27">Video</a> | 
@@ -337,7 +367,7 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 28</span> 7.5 Solving Systems with Distinct Real Eigenvalues, Intro to Phase Portraits</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 28</span> 7.5 Solving Systems with Distinct Real Eigenvalues, Intro to Phase Portraits</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-27_P/0_9mok5kj5" aria-label="Video for Lesson 28">Video</a> | 
@@ -347,36 +377,43 @@
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 29</span> 7.6 Complex Conjugate Eigenvalues</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 29</span> 7.6 Complex Conjugate Eigenvalues</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-28_P/0_yvvf6dud" aria-label="Video for Lesson 29">Video</a> | 
-                        <span aria-label="Notes for Lesson 29">Notes (Unavailable)</span>
+                        <span>Notes Unavailable</span>
                     </div>
                 </div>
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 30</span> 7.8 Repeated Real Eigenvalues</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 30</span> 7.8 Repeated Real Eigenvalues</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-07-29_P/0_4ba2ycld" aria-label="Video for Lesson 30">Video</a> | 
-                        <span aria-label="Notes for Lesson 30">Notes (Unavailable)</span>
+                        <span>Notes Unavailable</span>
                     </div>
                 </div>
             </li>
 
             <li class="lecture-item">
-                <span class="lecture-title"><span class="lec-highlight">Lesson 31</span> 7.9 Nonhomogeneous Systems</span>
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 31</span> 7.9 Method of Undetermined Coefficients for Systems</h2>
                 <div class="section-links">
                     <div class="section-row">
                         <a href="https://mediaspace.itap.purdue.edu/media/Summer+2016+-+MA266+-+Chen_2016-08-01_P/0_eb6yt6nm" aria-label="Video for Lesson 31">Video</a> | 
-                        <span aria-label="Notes for Lesson 31">Notes (Unavailable)</span>
+                        <span>Notes Unavailable</span>
                     </div>
                 </div>
             </li>
 
         </ul>
+
+        <footer>
+            For sections 7.6-7.9, though the notes for MA 26600 are unavailable, students can see MA 36600 version of those sections at 
+            <a href="https://www.math.purdue.edu/~chenjk/MA366F25/7.6a.html">7.6a</a>, 
+            <a href="https://www.math.purdue.edu/~chenjk/MA366F25/7.8a.html">7.8a</a>, and 
+            <a href="https://sites.google.com/view/chenflix/courses/ma-36600/7-9a">7.9a</a>.
+        </footer>
     </main>
 </body>
 </html>
