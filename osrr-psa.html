@@ -33,13 +33,6 @@
             margin-bottom: 0.5rem;
             line-height: 1.2;
             color: #000;
-            white-space: nowrap;
-        }
-
-        @media (max-width: 800px) {
-            h1 {
-                white-space: normal;
-            }
         }
 
         .subtitle {
@@ -54,7 +47,6 @@
             text-decoration-color: var(--netflix-red);
             text-decoration-thickness: 3px;
             color: inherit;
-            font-weight: inherit;
         }
 
         .strike-full {
@@ -85,15 +77,32 @@
             color: #000;
         }
 
-        .resolution-box {
-            margin-top: 3rem; 
-            padding: 1.5rem; 
-            background-color: #f9f9f9; 
-            border-left: 4px solid #000;
+        .proposal-section {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            border-radius: 4px;
         }
 
-        .resolution-box p:first-child { margin-top: 0; }
-        .resolution-box p:last-child { margin-bottom: 0; }
+        .proposal-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .proposal-list li {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .proposal-list li::before {
+            content: "•";
+            color: var(--netflix-red);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
 
         footer {
             margin-top: 4rem;
@@ -102,17 +111,7 @@
             font-size: 0.85rem;
             color: var(--text-muted);
             font-style: italic;
-        }
-
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
+            text-align: center;
         }
     </style>
 </head>
@@ -126,75 +125,52 @@
 
     <section>
         <p>
-            The Office of Student <span class="strike-full" aria-label="Rights (Crossed Out)">Rights</span> and Responsibilities (OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R) claims its mission is to "promote responsibility and encourage honesty, integrity, and respect." 
-            But after standing by a student falsely accused and systematically silenced, I know the truth.
-            Those words are not a mission. It's an empty slogan and a mask.
-            What I witnessed was a bureaucratic machine that does not seek the truth but instead functions to crush the very students it is paid to protect.
+            The Office of Student <span class="strike-full" aria-label="Rights (Crossed Out)">Rights</span> and Responsibilities (OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R) claims its mission is to "promote responsibility and encourage honesty, integrity, and respect." But after standing by a student falsely accused and systematically silenced, I know the truth. What I witnessed was a bureaucratic machine that, in practice, functions to overwhelm the very students it is meant to support.
         </p>
 
         <p>
-            During the conduct hearing, I witnessed the office function as prosecutor, judge, and jury. 
-            The proceedings were presented under the guise of "holistic development," but the reality was a choreographed ritual where the outcome felt predetermined. 
-            Every honest plea for the truth was met with practiced dismissal. 
-            It became clear that the verdict was not reached through evidence; it was waiting in the printer before the hearing even began.
+            At the conduct hearing, I witnessed a process that felt more like a choreographed ritual than a search for truth. Every honest plea my student made was met with a practiced dismissal. It became clear that the outcome did not depend on the evidence presented in the room; it felt as though the verdict was reached long before we even sat down.
         </p>
 
         <p>
-            The office’s subsequent actions further highlighted this disconnect. 
-            Filing a "Student of Concern" report after a devastating hearing was presented as an act of care, but in context, it functioned as a final administrative hurdle. A performance of empathy used to obscure a total absence of institutional accountability.
+            The subsequent filing of a "Student of Concern" report was the final blow. Presented as an act of administrative care, it felt instead like a performance of empathy used to obscure a total absence of institutional accountability. When I reached out to leadership for oversight, I found an empty chair. They admitted that procedures were not followed, yet they chose to do nothing—no correction, no apology, and no responsibility.
         </p>
 
         <p>
-            When I sought oversight from the leadership of the OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R, I found an office that prioritized self-preservation over justice. 
-            Internal leadership admitted that established procedures were not followed, essentially acknowledging the wound while refusing to stop the bleeding. 
-            They did nothing. No correction, no apology, and no understanding. 
-            Instead, the behavior was validated by the institution. It is the posture of an office that lacks the spine to stand for a student when it actually counts.
-        </p>
-
-        <p>
-            The OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R leadership seems to believe they can hide behind stacks of paperwork and "riot shields" of policy. 
-            They are gambling on our exhaustion, hoping that if they move slow enough and act cold enough, we will eventually grow quiet and forget the face of the student they tried to crush.
+            The OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R seems to believe they can hide behind "riot their policies and red tapes, betting on our exhaustion. They hope that if they move slow enough and act cold enough, we will eventually grow quiet and forget the student they tried to crush.
         </p>
 
         <p class="standout">They are wrong.</p>
 
         <p>
-            Silence is the soil where this kind of rot grows, and we refuse to let it take root.
-            We speak because the light is the only thing they fear.
-            We speak because somewhere on this campus, there is another student who is frightened, alone, and innocent.
-            That student is about to walk into that office. They deserve a champion, not a charade.
-            They deserve a truth that isn't for sale to the highest ego.
+            Silence is the soil where institutional stagnation takes hold, and we refuse to let it take root. We speak because somewhere on this campus, there is another student who is frightened, alone, and innocent. They deserve a champion, not a charade. They deserve a process that values the truth over administrative convenience.
         </p>
 
-        <p>
-            We will not forget this. We will not keep quiet.
-        </p>
-
-        <blockquote>
+<blockquote>
             “There may be times when we are powerless to prevent injustice, but there must never be a time when we fail to protest.” — Elie Wiesel
         </blockquote>
-    </section>
 
-    <section class="resolution-box">
-        <p>
-            Nearly a year has passed, and while silence is often the preferred language of bureaucracy, it is rarely the language of integrity. I remain a believer in the restorative power of the truth and the necessity of closure.
+        <p class="transition-text">
+            Protest gets attention, but that is only the beginning. In the spirit of restoring the integrity and respect that the OSRR strives for, we must move beyond the grievance and begin to advocate for meaningful change.
         </p>
-        <p>
-            The standing offer remains: if the OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R is willing to move past the choreography of conduct hearings and offer a sincere, transparent admission of the procedural and ethical errors made in this case, my door is open. 
-        </p>
-        <p>
-            Accountability has no expiration date. Until then, the light stays on.
-        </p>
+
+        <div class="proposal-section">
+            <h2 style="margin-top: 0;">A Charter for Procedural Fairness</h2>
+            <p>To restore integrity to the OSRR, I propose five fundamental reforms to ensure that students are treated with the dignity and fairness they are promised:</p>
+            
+            <ul class="proposal-list">
+                <li><strong>Proactive Discovery:</strong> Evidence should be provided alongside the initial charge. Students should not be forced to request the very information being used against them.</li>
+                <li><strong>Contextual Integrity:</strong> Past "Student of Concern" reports related to health or well-being must play no role in conduct adjudications. Support tools should never be weaponized as evidence.</li>
+                <li><strong>Separation of Duties:</strong> No single employee should play the roles of investigator, prosecutor, judge, and jury. True adjudication requires impartial oversight.</li>
+                <li><strong>Active Advocacy:</strong> A student’s advisor must not be gagged. Young students deserve an active advocate to ensure a fair and balanced dialogue.</li>
+                <li><strong>Universal Right to Appeal:</strong> Every decision and outcome must be open to a transparent and accessible appeal process.</li>
+            </ul>
+        </div>
     </section>
 </main>
 
 <footer>
-    <p>
-        <strong>Disclaimer & Legal Notice:</strong> This page contains personal opinion, rhetorical hyperbole, and expressive commentary protected under the First Amendment of the U.S. Constitution. The narratives presented are based on the author’s direct involvement in OS<span class="strike-r" aria-label="Rights (Crossed Out)">R</span>R proceedings and publicly available information. While creative license is utilized for stylistic and expressive purposes, the core events described are substantially true.
-    </p>
-    <p>
-        This content is provided for informational purposes and constitutes fair comment on matters of public concern. The author does not solicit, encourage, or condone the harassment of any individuals or entities mentioned. All interpretations, characterizations, and conclusions are the author’s own.
-    </p>
+    <p>Accountability has no expiration date. Until then, the light stays on.</p>
 </footer>
 
 </body>
