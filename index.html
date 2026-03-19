@@ -64,7 +64,6 @@
             --code-bg: #f4f4f4;
             --status-prog-bg: #fff3cd;
             --status-prog-text: #856404;
-            /* Harmonized font stack */
             --main-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
@@ -77,7 +76,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Accessibility: Skip Link */
         .skip-link {
             position: absolute;
             top: -100px;
@@ -102,49 +100,54 @@
             border: 0 !important;
         }
 
-        /* --- 1. MOBILE LAYOUT (Default) --- */
         .container {
             display: flex;
             flex-direction: column;
-            max-width: 1250px;
+            max-width: 1300px;
             margin: 0 auto;
             gap: 20px;
             padding: 20px;
-        /*    align-items: stretch; /* This forces children to be the same height */ */
         }
 
-        /* Mobile Ordering */
         .mascot-box { order: 1; text-align: center; }
         .sidebar-left { order: 2; }
         .sidebar-right { order: 3; }
         .main-content { order: 4; }
 
-        /* --- 2. DESKTOP LAYOUT (900px+) --- */
         @media (min-width: 900px) {
             .container {
                 display: grid;
-                grid-template-columns: 280px 1fr 280px;
+                grid-template-columns: 320px 1fr 320px;
                 grid-template-areas: 
                     "left mascot right"
                     "left main right";
                 margin: 40px auto;
-                align-items: start; /* Stretch to force same height, default is start */
+                align-items: stretch; /* Evens out sidebar heights */
             }
 
             .sidebar-left { grid-area: left; order: unset; }
             .mascot-box { grid-area: mascot; order: unset; margin-bottom: 2rem; }
             .main-content { grid-area: main; order: unset; }
             .sidebar-right { grid-area: right; order: unset; }
+
+            /* Two-column layout for courses on desktop */
+            .sidebar-left ul {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px 20px;
+            }
+            
+            .sidebar-left ul li {
+                margin-bottom: 0 !important;
+            }
         }
 
-        /* Sidebar Styling */
         .sidebar-left, .sidebar-right {
             background: var(--secondary-bg);
             padding: 1.5rem;
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            height: fit-content; /* Change 'fit-content' to 'auto' or remove it */
-            flex: 1; /* Optional: gives them equal width as well */
+            height: auto;
         }
 
         .main-content { padding: 0 10px; }
@@ -157,7 +160,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* Tables & Badges */
         .status-table {
             width: 100%;
             border-collapse: collapse;
