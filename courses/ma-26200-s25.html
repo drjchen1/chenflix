@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 26200 | Linear Algebra and Differential Equations</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --purdue-gold: #ceb888;
+            --purdue-black: #000000;
+            --bg-gray: #f2f2f2;
+            --link-blue: #005cb9;
+            --accent-light: #f5efe9;
+            --gold-text: #856a2d; 
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--purdue-black);
+            background-color: var(--bg-gray);
+            max-width: 65rem;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--purdue-gold);
+            color: var(--purdue-black);
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+        header {
+            background-color: var(--purdue-black);
+            color: var(--purdue-gold);
+            padding: 2.5rem 1rem;
+            border-bottom: 5px solid var(--purdue-gold);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header span { display: block; }
+        .course-title { font-size: 1.3rem; font-weight: 400; margin: 0.6rem 0; color: #fff; }
+        main { background: white; padding: 2rem; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .lecture-list { list-style: none; padding: 0; }
+        .lecture-item {
+            padding: 1.2rem;
+            border-bottom: 1px solid #eee;
+        }
+        .lecture-item:hover { background-color: var(--accent-light); }
+        .lecture-title { 
+            display: block; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+            margin: 0 0 0.5rem 0; 
+        }
+        .lec-highlight { color: var(--gold-text); margin-right: 0.2rem; }
+        .section-links { display: block; font-size: 0.95rem; color: #444; }
+        .section-row { margin-bottom: 0.4rem; }
+        .MathJax_Display {
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+        a { color: var(--link-blue); font-weight: 600; text-decoration: underline; margin: 0 0.3rem; }
+        a:focus { outline: 3px solid var(--purdue-gold); background-color: #fff9e6; outline-offset: 2px; }
+        .note { font-style: italic; color: #666; font-size: 0.95rem; margin: 0 0.3rem; }
+        footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #ddd;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header role="banner">
+        <h1>
+            <span>MA 26200</span>
+            <span class="course-title">Linear Algebra and Differential Equations</span>
+            <span class="semester">Spring 2025</span>
+        </h1>
+    </header>
+
+    <main id="main-content" role="main">
+        <ul class="lecture-list">
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 1</span> 1.1 Differential Equations and Mathematical Models</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_8o0ndtzr" aria-label="Video for Lesson 1">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%201%20%28MWF%29-acc.html" aria-label="Notes for Lesson 1">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 2</span> 1.2 Integrals as General and Particular Solutions</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_6gy95zi9" aria-label="Video for Lesson 2">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%202%20%28MWF%29-acc.html" aria-label="Notes for Lesson 2">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 3</span> 1.3 Slope Fields and Solution Curves</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_qetgb66i" aria-label="Video for Lesson 3">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%203%20%28MWF%29-acc.html" aria-label="Notes for Lesson 3">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 4</span> 1.4 Separable Equations</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_tfwg8b0u" aria-label="Video for Lesson 4">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%204%20%28MWF%29-acc.html" aria-label="Notes for Lesson 4">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 5</span> 1.5 First-Order Linear Differential Equations (part 1)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_ledbig7c" aria-label="Video for Lesson 5">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%205%20%28MWF%29-acc.html" aria-label="Notes for Lesson 5">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 6</span> 1.5 First-Order Linear Differential Equations (part 2)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <span class="note">Video (No video recorded due to equipment issues)</span> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%206%20%28MWF%29-acc.html" aria-label="Notes for Lesson 6">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 7</span> 1.6 Substitution Methods and Exact Equations (part 1)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_2fszh2pn" aria-label="Video for Lesson 7">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%207%20%28MWF%29-acc.html" aria-label="Notes for Lesson 7">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 8</span> 1.6 Substitution Methods and Exact Equations (part 2)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_0okewdzo" aria-label="Video for Lesson 8">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%208%20%28MWF%29-acc.html" aria-label="Notes for Lesson 8">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 9</span> 2.1 Population Models</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_t0rfwajw" aria-label="Video for Lesson 9">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%209%20%28MWF%29-acc.html" aria-label="Notes for Lesson 9">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 10</span> 2.2 Equilibrium Solutions and Stability</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_3spozdfa" aria-label="Video for Lesson 10">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2010%20%28MWF%29-acc.html" aria-label="Notes for Lesson 10">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 11</span> 2.4 Euler's Method</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_009stzk8" aria-label="Video for Lesson 11">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2011%20%28MWF%29-acc.html" aria-label="Notes for Lesson 11">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 12</span> 3.1 Introduction to Linear Systems</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_bq74jh9b" aria-label="Video for Lesson 12">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2012%20%28MWF%29-acc.html" aria-label="Notes for Lesson 12">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 13</span> 3.2 Matrices and Gaussian Elimination</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_4w4g4u0r" aria-label="Video for Lesson 13">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2013%20%28MWF%29-acc.html" aria-label="Notes for Lesson 13">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 14</span> 3.3 Reduced Row-Echelon Form</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_vp5pjg9g" aria-label="Video for Lesson 14">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2014%20%28MWF%29-acc.html" aria-label="Notes for Lesson 14">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 15</span> 3.4 Matrix Operations</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_o4atlur1" aria-label="Video for Lesson 15">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2015%20%28MWF%29-acc.html" aria-label="Notes for Lesson 15">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 16</span> 3.5 Matrix Inverse</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_jye1nk8p" aria-label="Video for Lesson 16">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2016%20%28MWF%29-acc.html" aria-label="Notes for Lesson 16">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 17</span> 3.6 Determinants (part 1)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_mly1e2b5" aria-label="Video for Lesson 17-1">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2017-1%20%28MWF%29-acc.html" aria-label="Notes for Lesson 17-1">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 17</span> 3.6 Determinants (part 2)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_sw5iw0s4" aria-label="Video for Lesson 17-2">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2017-2%20%28MWF%29-acc.html" aria-label="Notes for Lesson 17-2">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 18</span> 4.1 The Vector Space R3</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_bhz1k0t9" aria-label="Video for Lesson 18">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2018%20%28MWF%29-acc.html" aria-label="Notes for Lesson 18">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 19</span> 4.2 The Vector Space Rn and Subspaces</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_e9nphgva" aria-label="Video for Lesson 19">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2019%20%28MWF%29-acc.html" aria-label="Notes for Lesson 19">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 20</span> 4.3 Linear Combinations and Linear Independence</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_y1kmr3i1" aria-label="Video for Lesson 20">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2020%20%28MWF%29-acc.html" aria-label="Notes for Lesson 20">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 21</span> 4.4 Bases and Dimensions</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_r2ghh7mu" aria-label="Video for Lesson 21">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2021%20%28MWF%29-acc.html" aria-label="Notes for Lesson 21">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 22</span> 4.5 Row and Column Spaces</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_3827zhzf" aria-label="Video for Lesson 22">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2022%20%28MWF%29-acc.html" aria-label="Notes for Lesson 22">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 23</span> 5.1 Intro to 2nd-Order Differential Equations</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_yk3tmc01" aria-label="Video for Lesson 23">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2023%20%28MWF%29-acc.html" aria-label="Notes for Lesson 23">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 24</span> 5.2 General Solutions of Linear Differential Equations</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_mc7dn4wh" aria-label="Video for Lesson 24">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2024%20%28MWF%29-acc.html" aria-label="Notes for Lesson 24">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 25</span> 5.3 Homogeneous Equations with Constant Coefficients</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_o5q5fcjc" aria-label="Video for Lesson 25">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2025%20%28MWF%29-acc.html" aria-label="Notes for Lesson 25">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 26</span> 5.3 Homogeneous Equations with Constant Coefficients (part 2)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_77ix83qr" aria-label="Video for Lesson 26">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2026%20%28MWF%29-acc.html" aria-label="Notes for Lesson 26">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 27</span> 5.4 Mechanical Vibrations</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_19kjm12t" aria-label="Video for Lesson 27">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2027%20%28MWF%29-acc.html" aria-label="Notes for Lesson 27">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 28</span> 5.5 Nonhomogeneous Eqs: Undetermined Coefficients</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_utgmx9cw" aria-label="Video for Lesson 28-1">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2028%20%28MWF%29-acc.html" aria-label="Notes for Lesson 28-1">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 28</span> 5.5 Nonhomogeneous Eqs: Undetermined Coefficients (part 2)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_te8gr5fu" aria-label="Video for Lesson 28-2">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2028-2%20%28MWF%29-acc.html" aria-label="Notes for Lesson 28-2">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 29</span> 5.5 Variation of Parameters</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_12zuqxkc" aria-label="Video for Lesson 29">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2029%20%28MWF%29-acc.html" aria-label="Notes for Lesson 29">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 30</span> 6.1 Eigenvalues and Eigenvectors</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_65qg7vii" aria-label="Video for Lesson 30">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2030%20%28MWF%29-acc.html" aria-label="Notes for Lesson 30">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 31</span> 7.1 First-Order System of Differential Equations</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_n738kues" aria-label="Video for Lesson 31">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2031%20%28MWF%29-acc.html" aria-label="Notes for Lesson 31">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 32</span> 7.2 Matrices and Linear Systems</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_9xadqx62" aria-label="Video for Lesson 32">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2032%20%28MWF%29-acc.html" aria-label="Notes for Lesson 32">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 33</span> 7.3 The Eigenvalue Method for Linear Systems</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_oocyg9l4" aria-label="Video for Lesson 33">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2033%20%28MWF%29-acc.html" aria-label="Notes for Lesson 33">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 33-2</span> 7.3 The Eigenvalue Method for Linear Systems (continued)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_qen1x5zf" aria-label="Video for Lesson 33-2">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2033-2%20%28MWF%29-acc.html" aria-label="Notes for Lesson 33-2">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 34</span> 7.6 Multiple Eigenvalue Solutions (part 1)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_zilqavgv" aria-label="Video for Lesson 34-1">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2034-1%20%28MWF%29-acc.html" aria-label="Notes for Lesson 34-1">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 34</span> 7.6 Multiple Eigenvalue Solutions (part 2)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_101v2u56" aria-label="Video for Lesson 34-2">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2034-2%20%28MWF%29-acc.html" aria-label="Notes for Lesson 34-2">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 34</span> 7.6 Multiple Eigenvalue Solutions (part 3)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_1fwhte8w" aria-label="Video for Lesson 34-3">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2034-3%20%28MWF%29-acc.html" aria-label="Notes for Lesson 34-3">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 35</span> 7.4 Solution Curves of Linear Systems (part 1)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_iuhptms6" aria-label="Video for Lesson 35">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2035%20%28MWF%29-acc.html" aria-label="Notes for Lesson 35">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="lecture-item">
+                <h2 class="lecture-title"><span class="lec-highlight">Lesson 36</span> 7.4 Solution Curves of Linear Systems (part 2)</h2>
+                <div class="section-links">
+                    <div class="section-row">
+                        <a href="https://mediaspace.itap.purdue.edu/media/Spring+2025+-+MA262+-+Chen+%287%3A30%29/1_h1rjba3r" aria-label="Video for Lesson 36">Video</a> | 
+                        <a href="https://www.math.purdue.edu/~chenjk/MA262S25/Lesson%2036%20%28MWF%29-acc.html" aria-label="Notes for Lesson 36">Notes</a>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+
+    </main>
+</body>
+</html>
