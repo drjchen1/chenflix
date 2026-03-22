@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1-D Heat Equation Lab</title>
+  <style>
+    :root {
+      --purdue-gold: #ceb888;
+      --purdue-black: #000000;
+      --bg-gray: #f2f2f2;
+      --link-blue: #005cb9;
+      --accent-light: #f5efe9;
+      --text-muted: #4b4f57;
+      --cold: #1d4ed8;
+      --warm: #facc15;
+      --hot: #dc2626;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--purdue-black);
+      background-color: var(--bg-gray);
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 14px;
+    }
+
+    a { color: var(--link-blue); font-weight: 600; text-decoration: underline; }
+    a:focus { outline: 3px solid var(--purdue-gold); background-color: #fff9e6; outline-offset: 2px; }
+
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: 0;
+      padding: 0.6rem 1rem;
+      background: #fff9e6;
+      color: #000;
+      border: 2px solid var(--purdue-gold);
+      z-index: 1000;
+    }
+    .skip-link:focus { left: 20px; top: 20px; }
+
+    header {
+      background-color: var(--purdue-black);
+      color: var(--purdue-gold);
+      padding: 1.2rem 0.8rem;
+      border-bottom: 5px solid var(--purdue-gold);
+      margin-bottom: 1rem;
+      text-align: center;
+      border-radius: 8px;
+    }
+    header h1 { margin: 0; font-size: 1.5rem; }
+    header p { margin: 0.4rem 0 0; color: #f3f3f3; }
+
+    main {
+      background: #ffffff;
+      padding: 1.25rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(130px, 1fr));
+      grid-template-rows: auto auto auto;
+      gap: 10px;
+      background: var(--accent-light);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #e3dfd4;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .controls > div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: flex-end;
+      min-height: 2.3em;
+      line-height: 1.15;
+    }
+    input, select, button {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      min-height: 40px;
+      height: 40px;
+      font-size: 0.95rem;
+      width: 100%;
+    }
+
+    button {
+      background: var(--purdue-black);
+      color: var(--purdue-gold);
+      border: 2px solid var(--purdue-gold);
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button.alt {
+      background: var(--purdue-gold);
+      color: #000;
+      border: 2px solid var(--purdue-black);
+    }
+
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid var(--purdue-gold);
+      outline-offset: 2px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e3dfd4;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .viz-title { font-weight: 600; margin: 0 0 6px; color: var(--text-muted); }
+
+    canvas { width: 100%; height: auto; display: block; }
+
+    .legend {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0 0;
+      font-weight: 600;
+    }
+
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+    .note { color: var(--text-muted); font-size: 0.82rem; margin-top: 4px; }
+
+    @media (max-width: 900px) {
+      .controls { grid-template-columns: repeat(3, minmax(120px, 1fr)); }
+    }
+
+    @media (max-width: 700px) {
+      .controls { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+      label { min-height: 2em; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header role="banner">
+    <h1>1-D Heat Equation Lab</h1>
+    <p>Analytical diffusion on a rod with editable length and boundary conditions.</p>
+  </header>
+
+  <main id="main-content" role="main">
+    <section class="controls" aria-label="Simulation controls">
+      <div>
+        <label for="rodLength">Rod length (L)</label>
+        <input type="number" id="rodLength" min="0.5" step="0.5" value="10">
+      </div>
+      <div>
+        <label for="kappa">Diffusivity (κ)</label>
+        <input type="number" id="kappa" min="0.1" max="2.5" step="0.05" value="1">
+      </div>
+      <div>
+        <label for="bc">Boundary condition</label>
+        <select id="bc">
+          <option value="dirichlet">Dirichlet (fixed ends)</option>
+          <option value="neumann">Neumann (insulated ends)</option>
+          <option value="periodic">Periodic (wrap-around)</option>
+        </select>
+      </div>
+      <div>
+        <label for="profile">Initial profile</label>
+        <select id="profile">
+          <option value="flat" selected>Flat</option>
+          <option value="gaussian">Gaussian</option>
+          <option value="triangle">Triangle</option>
+          <option value="square">Square pulse</option>
+        </select>
+      </div>
+      <div>
+        <label for="amp">Amplitude (A)</label>
+        <input type="number" id="amp" min="0" step="0.5" value="5">
+      </div>
+      <div>
+        <label for="center">Center (x₀)</label>
+        <input type="number" id="center" min="0" step="0.5" value="5">
+      </div>
+      <div>
+        <label for="width">Width (w)</label>
+        <input type="number" id="width" min="0.5" step="0.5" value="3">
+      </div>
+      <div>
+        <label for="maxTime">Max t</label>
+        <input type="number" id="maxTime" min="0.1" step="0.5" value="5">
+      </div>
+      <div>
+        <label for="timeSlider">Time (t): <span id="timeVal">0.00</span></label>
+        <input type="range" id="timeSlider" min="0" max="5" step="0.01" value="0">
+      </div>
+      <div>
+        <label for="speed">Play speed</label>
+        <select id="speed">
+          <option value="0.25">0.25×</option>
+          <option value="0.5">0.5×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.5">1.5×</option>
+          <option value="2">2×</option>
+        </select>
+      </div>
+      <div>
+        <label>&nbsp;</label>
+        <button id="playBtn" type="button">Play</button>
+      </div>
+      <div>
+        <label>&nbsp;</label>
+        <button id="resetBtn" type="button" class="alt">Reset</button>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="card">
+        <p class="viz-title">Temperature profile u(x,t)</p>
+        <canvas id="plot" width="900" height="250" aria-label="Temperature curve" role="img"></canvas>
+        <p class="note">Selected initial profile evolves according to the boundary condition.</p>
+      </div>
+      <div class="card">
+        <p class="viz-title">Conducting rod (color diffusion)</p>
+        <canvas id="rod" width="900" height="56" aria-label="Rod heat map" role="img"></canvas>
+        <div class="legend" aria-hidden="true">
+          <span><span class="dot" style="background: var(--cold)"></span>Cold</span>
+          <span><span class="dot" style="background: var(--warm)"></span>Warm</span>
+          <span><span class="dot" style="background: var(--hot)"></span>Hot</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const plot = document.getElementById('plot');
+    const rod = document.getElementById('rod');
+    const plotCtx = plot.getContext('2d');
+    const rodCtx = rod.getContext('2d');
+
+    const rodLengthInput = document.getElementById('rodLength');
+    const kappaInput = document.getElementById('kappa');
+    const bcSelect = document.getElementById('bc');
+    const profileSelect = document.getElementById('profile');
+    const ampInput = document.getElementById('amp');
+    const centerInput = document.getElementById('center');
+    const widthInput = document.getElementById('width');
+    const maxTimeInput = document.getElementById('maxTime');
+    const timeSlider = document.getElementById('timeSlider');
+    const speedSelect = document.getElementById('speed');
+    const playBtn = document.getElementById('playBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const timeVal = document.getElementById('timeVal');
+
+    let playing = false;
+    let lastTs = null;
+    let coeffKey = '';
+    let coeffs = { bc: 'dirichlet', L: 10, N: 60, a0: 0, an: [], bn: [], minY: -1, maxY: 1 };
+
+    function clampCenterWidth(L) {
+      centerInput.max = L;
+      widthInput.max = L;
+      if (parseFloat(centerInput.value) > L) centerInput.value = L;
+      if (parseFloat(widthInput.value) > L) widthInput.value = L;
+    }
+
+    function updateProfileControls() {
+      const isFlat = profileSelect.value === 'flat';
+      centerInput.disabled = isFlat;
+      widthInput.disabled = isFlat;
+      centerInput.parentElement.style.opacity = isFlat ? '0.6' : '1';
+      widthInput.parentElement.style.opacity = isFlat ? '0.6' : '1';
+    }
+
+    function syncTimeRange() {
+      const maxT = Math.max(0.1, parseFloat(maxTimeInput.value) || 5);
+      maxTimeInput.value = maxT.toFixed(2).replace(/\.00$/, '');
+      timeSlider.max = String(maxT);
+      if ((parseFloat(timeSlider.value) || 0) > maxT) {
+        timeSlider.value = String(maxT);
+      }
+    }
+
+    function getParams() {
+      syncTimeRange();
+      const L = Math.max(0.5, parseFloat(rodLengthInput.value) || 10);
+      const kappa = parseFloat(kappaInput.value) || 1;
+      const bc = bcSelect.value;
+      const profile = profileSelect.value;
+      const A = Math.max(0, parseFloat(ampInput.value) || 0);
+      const x0 = Math.min(L, Math.max(0, parseFloat(centerInput.value) || L / 2));
+      const w = Math.min(L, Math.max(0.01, parseFloat(widthInput.value) || L / 3));
+      const N = 60;
+      const t = parseFloat(timeSlider.value) || 0;
+      return { L, kappa, bc, profile, A, x0, w, N, t };
+    }
+
+    function setLabels() {
+      timeVal.textContent = Number(timeSlider.value).toFixed(2);
+    }
+
+    function colorFor(value, min, max) {
+      const v = Math.min(max, Math.max(min, value));
+      const t = (v - min) / (max - min || 1);
+      if (t <= 0.5) {
+        const u = t / 0.5;
+        return mixColor([29, 78, 216], [250, 204, 21], u);
+      }
+      const u = (t - 0.5) / 0.5;
+      return mixColor([250, 204, 21], [220, 38, 38], u);
+    }
+
+    function mixColor(a, b, t) {
+      const r = Math.round(a[0] + (b[0] - a[0]) * t);
+      const g = Math.round(a[1] + (b[1] - a[1]) * t);
+      const bch = Math.round(a[2] + (b[2] - a[2]) * t);
+      return `rgb(${r},${g},${bch})`;
+    }
+
+    function circleDist(x, x0, L) {
+      const d = Math.abs(x - x0);
+      return Math.min(d, L - d);
+    }
+
+    function profileAt(x, params) {
+      const { profile, A, x0, w, bc, L } = params;
+      if (profile === 'flat') return A;
+      const dist = (bc === 'periodic') ? circleDist(x, x0, L) : Math.abs(x - x0);
+      if (profile === 'gaussian') {
+        const sigma = w / 2;
+        if (sigma <= 0) return 0;
+        return A * Math.exp(-(dist * dist) / (2 * sigma * sigma));
+      }
+      if (profile === 'triangle') {
+        if (w <= 0) return 0;
+        return dist <= w / 2 ? A * (1 - (2 * dist) / w) : 0;
+      }
+      if (profile === 'square') {
+        return dist <= w / 2 ? A : 0;
+      }
+      return A;
+    }
+
+    function computeCoeffs(params) {
+      const { L, N, bc } = params;
+      const M = 600;
+      const dx = L / (M - 1);
+      const an = new Array(N + 1).fill(0);
+      const bn = new Array(N + 1).fill(0);
+      let a0sum = 0;
+      let minY = Infinity;
+      let maxY = -Infinity;
+
+      for (let i = 0; i < M; i++) {
+        const x = i * dx;
+        const fx = profileAt(x, params);
+        minY = Math.min(minY, fx);
+        maxY = Math.max(maxY, fx);
+
+        if (bc === 'dirichlet') {
+          for (let n = 1; n <= N; n++) {
+            bn[n] += fx * Math.sin((n * Math.PI * x) / L);
+          }
+        } else if (bc === 'neumann') {
+          a0sum += fx;
+          for (let n = 1; n <= N; n++) {
+            an[n] += fx * Math.cos((n * Math.PI * x) / L);
+          }
+        } else {
+          a0sum += fx;
+          for (let n = 1; n <= N; n++) {
+            an[n] += fx * Math.cos((2 * Math.PI * n * x) / L);
+            bn[n] += fx * Math.sin((2 * Math.PI * n * x) / L);
+          }
+        }
+      }
+
+      if (bc === 'dirichlet') {
+        const factor = (2 / L) * dx;
+        for (let n = 1; n <= N; n++) bn[n] *= factor;
+      } else if (bc === 'neumann') {
+        const factor = (2 / L) * dx;
+        for (let n = 1; n <= N; n++) an[n] *= factor;
+        a0sum = (a0sum * dx) / L;
+      } else {
+        const factor = (2 / L) * dx;
+        for (let n = 1; n <= N; n++) {
+          an[n] *= factor;
+          bn[n] *= factor;
+        }
+        a0sum = (a0sum * dx) / L;
+      }
+
+      if (!Number.isFinite(minY) || !Number.isFinite(maxY) || minY === maxY) {
+        minY = -1;
+        maxY = 1;
+      }
+
+      coeffs = { bc, L, N, a0: a0sum, an, bn, minY, maxY };
+    }
+
+    function ensureCoeffs(params) {
+      const key = [params.bc, params.profile, params.L, params.N, params.A, params.x0, params.w].join('|');
+      if (key !== coeffKey) {
+        computeCoeffs(params);
+        coeffKey = key;
+      }
+    }
+
+    function uAt(x, params) {
+      ensureCoeffs(params);
+      const { L, kappa, t } = params;
+      const { bc, N, a0, an, bn } = coeffs;
+      let sum = 0;
+      if (bc === 'dirichlet') {
+        for (let n = 1; n <= N; n++) {
+          const lambda = (n * Math.PI) / L;
+          sum += bn[n] * Math.sin(lambda * x) * Math.exp(-lambda * lambda * kappa * t);
+        }
+        return sum;
+      }
+      if (bc === 'neumann') {
+        sum = a0;
+        for (let n = 1; n <= N; n++) {
+          const lambda = (n * Math.PI) / L;
+          sum += an[n] * Math.cos(lambda * x) * Math.exp(-lambda * lambda * kappa * t);
+        }
+        return sum;
+      }
+      sum = a0;
+      for (let n = 1; n <= N; n++) {
+        const lambda = (2 * Math.PI * n) / L;
+        sum += (an[n] * Math.cos(lambda * x) + bn[n] * Math.sin(lambda * x)) * Math.exp(-lambda * lambda * kappa * t);
+      }
+      return sum;
+    }
+
+    function drawPlot(params) {
+      const { L } = params;
+      const w = plot.width;
+      const h = plot.height;
+      plotCtx.clearRect(0, 0, w, h);
+
+      const margin = 40;
+      const innerW = w - margin * 2;
+      const innerH = h - margin * 2;
+
+      ensureCoeffs(params);
+      const baseMax = Math.max(0.1, params.A);
+      const minY = 0;
+      const maxY = baseMax * 1.15;
+
+      plotCtx.strokeStyle = '#ddd';
+      plotCtx.lineWidth = 1;
+      plotCtx.beginPath();
+      plotCtx.moveTo(margin, margin);
+      plotCtx.lineTo(margin, h - margin);
+      plotCtx.lineTo(w - margin, h - margin);
+      plotCtx.stroke();
+
+      plotCtx.fillStyle = '#444';
+      plotCtx.font = '12px Segoe UI';
+      plotCtx.fillText('0', margin - 10, h - margin + 15);
+      plotCtx.fillText(L.toFixed(1), w - margin - 10, h - margin + 15);
+      plotCtx.fillText(maxY.toFixed(1), 6, margin + 4);
+      plotCtx.fillText(minY.toFixed(1), 6, h - margin + 4);
+
+      plotCtx.strokeStyle = '#000';
+      plotCtx.lineWidth = 2;
+      plotCtx.beginPath();
+      for (let i = 0; i <= innerW; i++) {
+        const x = (i / innerW) * L;
+        const y = uAt(x, params);
+        const px = margin + i;
+        const py = margin + (1 - (y - minY) / (maxY - minY)) * innerH;
+        if (i === 0) plotCtx.moveTo(px, py);
+        else plotCtx.lineTo(px, py);
+      }
+      plotCtx.stroke();
+    }
+
+    function drawRod(params) {
+      const { L } = params;
+      const w = rod.width;
+      const h = rod.height;
+      rodCtx.clearRect(0, 0, w, h);
+
+      ensureCoeffs(params);
+      const minY = 0;
+      const maxY = Math.max(0.1, params.A);
+
+      for (let i = 0; i < w; i++) {
+        const x = (i / (w - 1)) * L;
+        const val = uAt(x, params);
+        rodCtx.fillStyle = colorFor(val, minY, maxY);
+        rodCtx.fillRect(i, 0, 1, h);
+      }
+
+      rodCtx.strokeStyle = '#000';
+      rodCtx.lineWidth = 2;
+      rodCtx.strokeRect(0, 0, w, h);
+    }
+
+    function render() {
+      const params = getParams();
+      clampCenterWidth(params.L);
+      updateProfileControls();
+      setLabels();
+      drawPlot(params);
+      drawRod(params);
+    }
+
+    function step(ts) {
+      if (!playing) return;
+      if (!lastTs) lastTs = ts;
+      const dt = (ts - lastTs) / 1000;
+      lastTs = ts;
+
+      const speed = parseFloat(speedSelect.value) || 1;
+      const target = parseFloat(timeSlider.max) || 5;
+      let t = parseFloat(timeSlider.value) + dt * speed;
+      if (t >= target) {
+        timeSlider.value = target.toFixed(2);
+        playing = false;
+        playBtn.textContent = 'Play';
+        render();
+        return;
+      }
+      timeSlider.value = t.toFixed(2);
+      render();
+      requestAnimationFrame(step);
+    }
+
+    function togglePlay() {
+      playing = !playing;
+      playBtn.textContent = playing ? 'Pause' : 'Play';
+      if (playing) {
+        const tMax = parseFloat(timeSlider.max) || 5;
+        if ((parseFloat(timeSlider.value) || 0) >= tMax) {
+          timeSlider.value = 0;
+          render();
+        }
+        lastTs = null;
+        requestAnimationFrame(step);
+      }
+    }
+
+    function resetAll() {
+      timeSlider.value = 0;
+      playing = false;
+      playBtn.textContent = 'Play';
+      render();
+    }
+
+    [rodLengthInput, kappaInput, bcSelect, profileSelect, ampInput, centerInput, widthInput, maxTimeInput, timeSlider, speedSelect].forEach(el => {
+      el.addEventListener('input', () => {
+        if (!playing) render();
+        setLabels();
+      });
+    });
+
+    playBtn.addEventListener('click', togglePlay);
+    resetBtn.addEventListener('click', resetAll);
+
+    window.addEventListener('resize', () => {
+      plot.width = plot.clientWidth;
+      rod.width = rod.clientWidth;
+      render();
+    });
+
+    function initCanvasSizes() {
+      plot.width = plot.clientWidth;
+      rod.width = rod.clientWidth;
+    }
+
+    initCanvasSizes();
+    render();
+  </script>
+</body>
+</html>
