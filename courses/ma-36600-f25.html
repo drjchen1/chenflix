@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 26600 | Ordinary Differential Equations</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --purdue-gold: #ceb888;
+            --purdue-black: #000000;
+            --bg-gray: #f2f2f2;
+            --link-blue: #005cb9;
+            --accent-light: #f5efe9;
+            --gold-text: #856a2d;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--purdue-black);
+            background-color: var(--bg-gray);
+            max-width: 65rem;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        header {
+            background-color: var(--purdue-black);
+            color: var(--purdue-gold);
+            padding: 2.5rem 1rem;
+            border-bottom: 5px solid var(--purdue-gold);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header span { display: block; }
+        .course-title { font-size: 1.3rem; font-weight: 400; margin: 0.6rem 0; color: #fff; }
+        main { background: white; padding: 2rem; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .lecture-list { list-style: none; padding: 0; }
+        .lecture-item { padding: 1.2rem; border-bottom: 1px solid #eee; }
+        .lecture-item:hover { background-color: var(--accent-light); }
+        .lecture-title { display: block; font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .lec-highlight { color: var(--gold-text); margin-right: 0.2rem; }
+        .section-links { display: block; font-size: 0.95rem; color: #444; }
+        a { color: var(--link-blue); font-weight: 600; text-decoration: underline; margin: 0 0.3rem; }
+        a:focus { outline: 3px solid var(--purdue-gold); background-color: #fff9e6; outline-offset: 2px; }
+        .math-scroll { overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <header role="banner">
+        <h1>
+            <span>MA 36600</span>
+            <span class="course-title">Ordinary Differential Equations</span>
+            <span class="semester">Fall 2025</span>
+        </h1>
+    </header>
+
+    <main id="main-content" role="main">
+        <ul class="lecture-list">
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 1</span> Introduction and 1.1 Basic Mathematical Models; Direction fields</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_9exf0iqd">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%201%20%281.1%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 2</span> 1.1 (continued) and 1.2 Solutions of Some Differential Equations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_gq4esrf0">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%202%20%281.1+1.2%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 3</span> 1.2 (continued) and 1.3 Classification of Differential Equations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_x9htqxst">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%203%20%281.2+1.3%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 4</span> 2.1 First Order Linear Equations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_b19e88lz">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%204%20%282.1%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 5</span> 2.2 Separable Equations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_6q4txnhy">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%205%20%282.2%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 6</span> 2.2 (continued), 2.3 Modeling with First-Order Differential Equations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_eq761dp6">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%206%20%282.2+2.3%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 7</span> 2.3 (continued)</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_0jb12xos">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%207%20%282.3%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 8</span> 2.4 Difference Between Linear and Nonlinear Differential Equations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_4puahd81">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%208%20%282.4%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 9</span> 2.4 (continued), 2.5 Autonomous Differential Equations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_9nj5l3tq">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%209%20%282.4+2.5%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 10</span> 2.5 (continued), 2.6 Exact Differential Equations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_kqh3otpt">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2010%20%282.5+2.6%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 11</span> 2.6 (continued)</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_sas6mapo">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2011%20%282.6%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 12</span> 2.7 Euler's Method, 3.1 Linear Homogeneous Diff. Eqs. with Constant Coefficients</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_owgr0oe1">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2012%20%282.7+3.1%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 13</span> 3.1 (continued), 3.2 Fundamental Solutions of Linear Homogeneous Equations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_uze3pbr4">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2013%20%283.1+3.2%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 14</span> 3.2 (continued)</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_mrs8glqs">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2014%20%283.2%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 15</span> 3.3 Complex Roots of the Characteristic Eq., 3.4 Repeated Roots and Reduction of Order</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_qsnb863j">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2015%20%283.3+3.4%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Exam 1 Review</span></span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_4x809h20">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Exam1Review-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 16</span> 3.5 Undetermined Coefficients</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_ygaoi3dp">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2016%20%283.5%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 17</span> 3.5 (continued)</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_r6eg3axj">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2017%20%283.5%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 18</span> 3.6 Variation of Parameters</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_ave7l212">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2018%20%283.6%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 19</span> 3.6 (continued)</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_wd3j9omj">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2019%20%283.6%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 20</span> 3.7 Mechanical Vibrations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_bamcf327">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2020%20%283.7%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 21</span> 3.7 (continued)</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_s3nj34u4">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2021%20%283.7%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 22</span> 3.8 Forced Periodic Vibrations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_4znww3nt">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2022%20%283.8%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 23</span> 4.1-4.2 Higher-Order ODEs</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_tei0ofcw">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2023%20%284.1-4.2%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 24</span> 4.3 Undetermined Coefficients, 6.1 Definition of Laplace Transform</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_ptp2564s">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2024%20%284.1,%206.1%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 25</span> 6.1 (continued)</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_6mylsgc3">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2025%20%286.1%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 26</span> 6.2 Solution of Initial-Value Problems</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_9sh2y21a">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2026%20%286.2%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 27</span> 6.3 Step Functions</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_wacaqpt2">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2027%20%286.3%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 28</span> 6.4 Differential Equations with Discontinuous Forcing Functions</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_w2bcra25">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2028%20%286.4%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 29</span> 6.4 (continued), 6.5 Impulse Functions</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_e5iz2ed4">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2029%20%286.4+6.5%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 30</span> 6.5 (continued)</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_zpkcqmd1">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2030%20%286.5%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Exam 2 Review</span></span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_287glfqo">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Exam2Review-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 31</span> 6.6 The Convolution Integral</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_cb0id5oo">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2031%20%286.6%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 32</span> 7.1-7.3 Systems of 1st-order Equations and Linear Algebra Review</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_smpbh2q2">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2032%20%287.1-7.3%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 33</span> 7.4 Basic Theory of System of First-Order Equations</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_k8rlcnkm">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2033%20%287.3-7.4%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 34</span> 7.5 Homogeneous Systems with Constant Coefficients</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_kgl9jy9w">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2034%20%287.5%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 35</span> 7.6 Complex Eigenvalues, 7.8 Repeated Eigenvalues</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_ecsisjst">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2035%20%287.6%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 36</span> 7.8 (continued), 7.7 Fundamental Matrices</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_0lh4b3hk">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2036%20%287.8-7.7%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 37</span> 7.9 Nonhomogeneous Systems</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_03jz6joa">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2037%20%287.9%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Lecture 38</span> 5.2 Series Solutions Near Ordinary Points</span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_g103bofp">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%2038%20%285.2%29-acc.html">Notes</a>
+                </div>
+            </li>
+            <li class="lecture-item">
+                <span class="lecture-title"><span class="lec-highlight">Exam 3 Review</span></span>
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_ipgt0ggt">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Exam3Review-acc.html">Notes</a>
+                </div>
+            </li>
+        </ul>
+    </main>
+</body>
+</html>
