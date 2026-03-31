@@ -191,10 +191,11 @@
       <div>
         <label for="profile">Initial profile</label>
         <select id="profile">
-          <option value="flat" selected>Flat</option>
+          <option value="flat">Flat</option>
           <option value="gaussian">Gaussian</option>
           <option value="triangle">Triangle</option>
           <option value="square">Square pulse</option>
+          <option value="manual" selected>Manual / Draw</option>
         </select>
       </div>
       <div>
@@ -248,8 +249,8 @@
     <section class="row">
       <div class="card">
         <p class="viz-title">Temperature profile u(x,t)</p>
-        <canvas id="plot" width="900" height="250" aria-label="Temperature curve" role="img"></canvas>
-        <p class="note">Selected initial profile evolves according to the boundary condition.</p>
+        <canvas id="plot" width="900" height="250" aria-label="Temperature curve" role="img" style="cursor: crosshair;"></canvas>
+        <p class="note">When 'Manual' is selected, click and drag on the plot to draw your own profile.</p>
       </div>
       <div class="card">
         <p class="viz-title">Conducting rod (color diffusion)</p>
@@ -287,10 +288,15 @@
     const timeVal = document.getElementById('timeVal');
 
     let playing = false;
+    let drawing = false;
     let lastTs = null;
     let coeffKey = '';
+    let manualDirty = false;
     let coeffs = { bc: 'dirichlet', L: 10, N: 60, a0: 0, an: [], bn: [], minY: -1, maxY: 1 };
     let mouseX = null;
+
+    const M_SIZE = 600;
+    let customProfile = new Array(M_SIZE).fill(0);
 
     function clampCenterWidth(L) {
       centerInput.max = L;
@@ -300,11 +306,18 @@
     }
 
     function updateControls() {
-      const isFlat = profileSelect.value === 'flat';
-      centerInput.disabled = isFlat;
-      widthInput.disabled = isFlat;
-      centerInput.parentElement.style.opacity = isFlat ? '0.6' : '1';
-      widthInput.parentElement.style.opacity = isFlat ? '0.6' : '1';
+      const profile = profileSelect.value;
+      const isFlat = profile === 'flat';
+      const isManual = profile === 'manual';
+      
+      const disablePrimary = isFlat || isManual;
+      ampInput.disabled = isManual;
+      centerInput.disabled = disablePrimary;
+      widthInput.disabled = disablePrimary;
+      
+      [ampInput, centerInput, widthInput].forEach(el => {
+        el.parentElement.style.opacity = el.disabled ? '0.6' : '1';
+      });
 
       const isDirichlet = bcSelect.value === 'dirichlet';
       tlInput.disabled = !isDirichlet;
@@ -367,6 +380,10 @@
 
     function profileAt(x, params) {
       const { profile, A, x0, w, bc, L } = params;
+      if (profile === 'manual') {
+        const idx = Math.min(M_SIZE - 1, Math.max(0, Math.floor((x / L) * M_SIZE)));
+        return customProfile[idx];
+      }
       if (profile === 'flat') return A;
       const dist = (bc === 'periodic') ? circleDist(x, x0, L) : Math.abs(x - x0);
       if (profile === 'gaussian') {
@@ -386,22 +403,20 @@
 
     function computeCoeffs(params) {
       const { L, N, bc, TL, TR } = params;
-      const M = 600;
-      const dx = L / (M - 1);
+      const dx = L / (M_SIZE - 1);
       const an = new Array(N + 1).fill(0);
       const bn = new Array(N + 1).fill(0);
       let a0sum = 0;
       let minY = Infinity;
       let maxY = -Infinity;
 
-      for (let i = 0; i < M; i++) {
+      for (let i = 0; i < M_SIZE; i++) {
         const x = i * dx;
         const fx = profileAt(x, params);
         minY = Math.min(minY, fx);
         maxY = Math.max(maxY, fx);
 
         if (bc === 'dirichlet') {
-          // Shift initial profile by steady state line: w(x,0) = f(x) - v(x)
           const vx = TL + (TR - TL) * (x / L);
           const wx = fx - vx;
           for (let n = 1; n <= N; n++) {
@@ -421,15 +436,13 @@
         }
       }
 
+      const factor = (2 / L) * dx;
       if (bc === 'dirichlet') {
-        const factor = (2 / L) * dx;
         for (let n = 1; n <= N; n++) bn[n] *= factor;
       } else if (bc === 'neumann') {
-        const factor = (2 / L) * dx;
         for (let n = 1; n <= N; n++) an[n] *= factor;
         a0sum = (a0sum * dx) / L;
       } else {
-        const factor = (2 / L) * dx;
         for (let n = 1; n <= N; n++) {
           an[n] *= factor;
           bn[n] *= factor;
@@ -438,11 +451,12 @@
       }
 
       coeffs = { bc, L, N, a0: a0sum, an, bn, minY, maxY };
+      manualDirty = false;
     }
 
     function ensureCoeffs(params) {
       const key = [params.bc, params.profile, params.L, params.N, params.A, params.x0, params.w, params.TL, params.TR].join('|');
-      if (key !== coeffKey) {
+      if (key !== coeffKey || manualDirty) {
         computeCoeffs(params);
         coeffKey = key;
       }
@@ -458,7 +472,6 @@
           const lambda = (n * Math.PI) / L;
           sum += bn[n] * Math.sin(lambda * x) * Math.exp(-lambda * lambda * kappa * t);
         }
-        // Add steady state part back: u(x,t) = v(x) + w(x,t)
         const vx = TL + (TR - TL) * (x / L);
         return vx + sum;
       }
@@ -478,8 +491,17 @@
       return sum;
     }
 
+    function getVerticalBounds(params) {
+      let maxDraw = 0;
+      if (params.profile === 'manual') {
+        for (let v of customProfile) if (v > maxDraw) maxDraw = v;
+      }
+      const baseMax = Math.max(0.1, params.A, params.TL, params.TR, maxDraw);
+      return { min: 0, max: baseMax * 1.15 };
+    }
+
     function drawPlot(params) {
-      const { L, TL, TR, A } = params;
+      const { L } = params;
       const w = plot.width;
       const h = plot.height;
       plotCtx.clearRect(0, 0, w, h);
@@ -488,10 +510,9 @@
       const innerW = w - margin * 2;
       const innerH = h - margin * 2;
 
-      ensureCoeffs(params);
-      const baseMax = Math.max(0.1, A, TL, TR);
-      const minY = 0;
-      const maxY = baseMax * 1.15;
+      const bounds = getVerticalBounds(params);
+      const minY = bounds.min;
+      const maxY = bounds.max;
 
       plotCtx.strokeStyle = '#ddd';
       plotCtx.lineWidth = 1;
@@ -525,7 +546,6 @@
         const simX = ((mouseX - margin) / innerW) * L;
         const uVal = uAt(simX, params);
         const py = margin + (1 - (uVal - minY) / (maxY - minY)) * innerH;
-
         plotCtx.setLineDash([5, 5]);
         plotCtx.strokeStyle = 'rgba(0,0,0,0.3)';
         plotCtx.beginPath();
@@ -533,12 +553,10 @@
         plotCtx.lineTo(mouseX, py);
         plotCtx.stroke();
         plotCtx.setLineDash([]);
-
         plotCtx.fillStyle = 'var(--hot)';
         plotCtx.beginPath();
         plotCtx.arc(mouseX, py, 5, 0, Math.PI * 2);
         plotCtx.fill();
-
         const text = `x: ${simX.toFixed(2)}, u: ${uVal.toFixed(2)}`;
         plotCtx.font = 'bold 12px Segoe UI';
         const textWidth = plotCtx.measureText(text).width;
@@ -553,22 +571,19 @@
     }
 
     function drawRod(params) {
-      const { L, TL, TR, A } = params;
+      const { L } = params;
       const w = rod.width;
       const h = rod.height;
       rodCtx.clearRect(0, 0, w, h);
-
-      ensureCoeffs(params);
-      const minY = 0;
-      const maxY = Math.max(0.1, A, TL, TR);
-
+      const bounds = getVerticalBounds(params);
+      const minY = bounds.min;
+      const maxY = bounds.max;
       for (let i = 0; i < w; i++) {
         const x = (i / (w - 1)) * L;
         const val = uAt(x, params);
         rodCtx.fillStyle = colorFor(val, minY, maxY);
         rodCtx.fillRect(i, 0, 1, h);
       }
-
       rodCtx.strokeStyle = '#000';
       rodCtx.lineWidth = 2;
       rodCtx.strokeRect(0, 0, w, h);
@@ -588,7 +603,6 @@
       if (!lastTs) lastTs = ts;
       const dt = (ts - lastTs) / 1000;
       lastTs = ts;
-
       const speed = parseFloat(speedSelect.value) || 1;
       const target = parseFloat(timeSlider.max) || 5;
       let t = parseFloat(timeSlider.value) + dt * speed;
@@ -622,20 +636,75 @@
       timeSlider.value = 0;
       playing = false;
       playBtn.textContent = 'Play';
+      if (profileSelect.value === 'manual') {
+        customProfile.fill(0);
+        manualDirty = true;
+      }
       render();
     }
+
+    plot.addEventListener('mousedown', (e) => {
+      if (profileSelect.value !== 'manual') return;
+      drawing = true;
+      playing = false;
+      playBtn.textContent = 'Play';
+      timeSlider.value = 0;
+      handleDraw(e);
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (drawing) {
+        drawing = false;
+        manualDirty = true;
+        if (bcSelect.value === 'dirichlet') {
+          customProfile[0] = parseFloat(tlInput.value) || 0;
+          customProfile[M_SIZE - 1] = parseFloat(trInput.value) || 0;
+        }
+        render();
+      }
+    });
 
     plot.addEventListener('mousemove', (e) => {
       const rect = plot.getBoundingClientRect();
       const scaleX = plot.width / rect.width;
       mouseX = (e.clientX - rect.left) * scaleX;
-      if (!playing) render();
+      if (drawing) handleDraw(e);
+      else if (!playing) render();
     });
 
     plot.addEventListener('mouseleave', () => {
       mouseX = null;
       if (!playing) render();
     });
+
+    function handleDraw(e) {
+      const rect = plot.getBoundingClientRect();
+      const margin = 40;
+      const innerW = (plot.width - margin * 2) * (rect.width / plot.width);
+      const innerH = (plot.height - margin * 2) * (rect.height / plot.height);
+      const xPx = e.clientX - rect.left - (margin * rect.width / plot.width);
+      const yPx = e.clientY - rect.top - (margin * rect.height / plot.height);
+      if (xPx < 0 || xPx > innerW) return;
+      const bounds = getVerticalBounds(getParams());
+      const pctX = xPx / innerW;
+      const pctY = 1 - (yPx / innerH);
+      const valY = Math.max(0, pctY * (bounds.max - bounds.min) + bounds.min);
+      const idx = Math.floor(pctX * M_SIZE);
+      customProfile[idx] = valY;
+      if (this.lastIdx !== undefined && Math.abs(this.lastIdx - idx) > 1) {
+        const start = Math.min(this.lastIdx, idx);
+        const end = Math.max(this.lastIdx, idx);
+        const vStart = customProfile[this.lastIdx];
+        const vEnd = customProfile[idx];
+        for (let i = start + 1; i < end; i++) {
+          const t = (i - start) / (end - start);
+          customProfile[i] = vStart + (vEnd - vStart) * t;
+        }
+      }
+      this.lastIdx = idx;
+      manualDirty = true;
+      render();
+    }
 
     [rodLengthInput, kappaInput, bcSelect, profileSelect, ampInput, centerInput, widthInput, tlInput, trInput, maxTimeInput, timeSlider, speedSelect].forEach(el => {
       el.addEventListener('input', () => {
