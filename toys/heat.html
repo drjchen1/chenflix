@@ -210,6 +210,14 @@
         <input type="number" id="width" min="0.5" step="0.5" value="3">
       </div>
       <div>
+        <label for="tl">Left Temp (T_L)</label>
+        <input type="number" id="tl" step="0.5" value="0">
+      </div>
+      <div>
+        <label for="tr">Right Temp (T_R)</label>
+        <input type="number" id="tr" step="0.5" value="0">
+      </div>
+      <div>
         <label for="maxTime">Max t</label>
         <input type="number" id="maxTime" min="0.1" step="0.5" value="5">
       </div>
@@ -268,6 +276,8 @@
     const ampInput = document.getElementById('amp');
     const centerInput = document.getElementById('center');
     const widthInput = document.getElementById('width');
+    const tlInput = document.getElementById('tl');
+    const trInput = document.getElementById('tr');
     const maxTimeInput = document.getElementById('maxTime');
     const timeSlider = document.getElementById('timeSlider');
     const speedSelect = document.getElementById('speed');
@@ -280,6 +290,7 @@
     let lastTs = null;
     let coeffKey = '';
     let coeffs = { bc: 'dirichlet', L: 10, N: 60, a0: 0, an: [], bn: [], minY: -1, maxY: 1 };
+    let mouseX = null;
 
     function clampCenterWidth(L) {
       centerInput.max = L;
@@ -288,12 +299,18 @@
       if (parseFloat(widthInput.value) > L) widthInput.value = L;
     }
 
-    function updateProfileControls() {
+    function updateControls() {
       const isFlat = profileSelect.value === 'flat';
       centerInput.disabled = isFlat;
       widthInput.disabled = isFlat;
       centerInput.parentElement.style.opacity = isFlat ? '0.6' : '1';
       widthInput.parentElement.style.opacity = isFlat ? '0.6' : '1';
+
+      const isDirichlet = bcSelect.value === 'dirichlet';
+      tlInput.disabled = !isDirichlet;
+      trInput.disabled = !isDirichlet;
+      tlInput.parentElement.style.opacity = isDirichlet ? '1' : '0.6';
+      trInput.parentElement.style.opacity = isDirichlet ? '1' : '0.6';
     }
 
     function syncTimeRange() {
@@ -314,9 +331,11 @@
       const A = Math.max(0, parseFloat(ampInput.value) || 0);
       const x0 = Math.min(L, Math.max(0, parseFloat(centerInput.value) || L / 2));
       const w = Math.min(L, Math.max(0.01, parseFloat(widthInput.value) || L / 3));
+      const TL = parseFloat(tlInput.value) || 0;
+      const TR = parseFloat(trInput.value) || 0;
       const N = 60;
       const t = parseFloat(timeSlider.value) || 0;
-      return { L, kappa, bc, profile, A, x0, w, N, t };
+      return { L, kappa, bc, profile, A, x0, w, TL, TR, N, t };
     }
 
     function setLabels() {
@@ -366,7 +385,7 @@
     }
 
     function computeCoeffs(params) {
-      const { L, N, bc } = params;
+      const { L, N, bc, TL, TR } = params;
       const M = 600;
       const dx = L / (M - 1);
       const an = new Array(N + 1).fill(0);
@@ -382,8 +401,11 @@
         maxY = Math.max(maxY, fx);
 
         if (bc === 'dirichlet') {
+          // Shift initial profile by steady state line: w(x,0) = f(x) - v(x)
+          const vx = TL + (TR - TL) * (x / L);
+          const wx = fx - vx;
           for (let n = 1; n <= N; n++) {
-            bn[n] += fx * Math.sin((n * Math.PI * x) / L);
+            bn[n] += wx * Math.sin((n * Math.PI * x) / L);
           }
         } else if (bc === 'neumann') {
           a0sum += fx;
@@ -415,16 +437,11 @@
         a0sum = (a0sum * dx) / L;
       }
 
-      if (!Number.isFinite(minY) || !Number.isFinite(maxY) || minY === maxY) {
-        minY = -1;
-        maxY = 1;
-      }
-
       coeffs = { bc, L, N, a0: a0sum, an, bn, minY, maxY };
     }
 
     function ensureCoeffs(params) {
-      const key = [params.bc, params.profile, params.L, params.N, params.A, params.x0, params.w].join('|');
+      const key = [params.bc, params.profile, params.L, params.N, params.A, params.x0, params.w, params.TL, params.TR].join('|');
       if (key !== coeffKey) {
         computeCoeffs(params);
         coeffKey = key;
@@ -433,7 +450,7 @@
 
     function uAt(x, params) {
       ensureCoeffs(params);
-      const { L, kappa, t } = params;
+      const { L, kappa, t, TL, TR } = params;
       const { bc, N, a0, an, bn } = coeffs;
       let sum = 0;
       if (bc === 'dirichlet') {
@@ -441,7 +458,9 @@
           const lambda = (n * Math.PI) / L;
           sum += bn[n] * Math.sin(lambda * x) * Math.exp(-lambda * lambda * kappa * t);
         }
-        return sum;
+        // Add steady state part back: u(x,t) = v(x) + w(x,t)
+        const vx = TL + (TR - TL) * (x / L);
+        return vx + sum;
       }
       if (bc === 'neumann') {
         sum = a0;
@@ -460,7 +479,7 @@
     }
 
     function drawPlot(params) {
-      const { L } = params;
+      const { L, TL, TR, A } = params;
       const w = plot.width;
       const h = plot.height;
       plotCtx.clearRect(0, 0, w, h);
@@ -470,7 +489,7 @@
       const innerH = h - margin * 2;
 
       ensureCoeffs(params);
-      const baseMax = Math.max(0.1, params.A);
+      const baseMax = Math.max(0.1, A, TL, TR);
       const minY = 0;
       const maxY = baseMax * 1.15;
 
@@ -501,17 +520,47 @@
         else plotCtx.lineTo(px, py);
       }
       plotCtx.stroke();
+
+      if (mouseX !== null && mouseX >= margin && mouseX <= w - margin) {
+        const simX = ((mouseX - margin) / innerW) * L;
+        const uVal = uAt(simX, params);
+        const py = margin + (1 - (uVal - minY) / (maxY - minY)) * innerH;
+
+        plotCtx.setLineDash([5, 5]);
+        plotCtx.strokeStyle = 'rgba(0,0,0,0.3)';
+        plotCtx.beginPath();
+        plotCtx.moveTo(mouseX, h - margin);
+        plotCtx.lineTo(mouseX, py);
+        plotCtx.stroke();
+        plotCtx.setLineDash([]);
+
+        plotCtx.fillStyle = 'var(--hot)';
+        plotCtx.beginPath();
+        plotCtx.arc(mouseX, py, 5, 0, Math.PI * 2);
+        plotCtx.fill();
+
+        const text = `x: ${simX.toFixed(2)}, u: ${uVal.toFixed(2)}`;
+        plotCtx.font = 'bold 12px Segoe UI';
+        const textWidth = plotCtx.measureText(text).width;
+        plotCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        plotCtx.fillRect(mouseX + 8, py - 25, textWidth + 10, 20);
+        plotCtx.strokeStyle = '#000';
+        plotCtx.lineWidth = 0.5;
+        plotCtx.strokeRect(mouseX + 8, py - 25, textWidth + 10, 20);
+        plotCtx.fillStyle = '#000';
+        plotCtx.fillText(text, mouseX + 13, py - 11);
+      }
     }
 
     function drawRod(params) {
-      const { L } = params;
+      const { L, TL, TR, A } = params;
       const w = rod.width;
       const h = rod.height;
       rodCtx.clearRect(0, 0, w, h);
 
       ensureCoeffs(params);
       const minY = 0;
-      const maxY = Math.max(0.1, params.A);
+      const maxY = Math.max(0.1, A, TL, TR);
 
       for (let i = 0; i < w; i++) {
         const x = (i / (w - 1)) * L;
@@ -528,7 +577,7 @@
     function render() {
       const params = getParams();
       clampCenterWidth(params.L);
-      updateProfileControls();
+      updateControls();
       setLabels();
       drawPlot(params);
       drawRod(params);
@@ -576,7 +625,19 @@
       render();
     }
 
-    [rodLengthInput, kappaInput, bcSelect, profileSelect, ampInput, centerInput, widthInput, maxTimeInput, timeSlider, speedSelect].forEach(el => {
+    plot.addEventListener('mousemove', (e) => {
+      const rect = plot.getBoundingClientRect();
+      const scaleX = plot.width / rect.width;
+      mouseX = (e.clientX - rect.left) * scaleX;
+      if (!playing) render();
+    });
+
+    plot.addEventListener('mouseleave', () => {
+      mouseX = null;
+      if (!playing) render();
+    });
+
+    [rodLengthInput, kappaInput, bcSelect, profileSelect, ampInput, centerInput, widthInput, tlInput, trInput, maxTimeInput, timeSlider, speedSelect].forEach(el => {
       el.addEventListener('input', () => {
         if (!playing) render();
         setLabels();
