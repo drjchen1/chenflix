@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1-D Wave Equation Lab</title>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <style>
+    :root {
+      --purdue-gold: #ceb888;
+      --purdue-black: #000000;
+      --bg-gray: #f2f2f2;
+      --link-blue: #005cb9;
+      --accent-light: #f5efe9;
+      --text-muted: #4b4f57;
+      --negative: #1d4ed8; 
+      --neutral: #facc15;  
+      --positive: #dc2626; 
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--purdue-black);
+      background-color: var(--bg-gray);
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 14px;
+    }
+
+    header {
+      background-color: var(--purdue-black);
+      color: var(--purdue-gold);
+      padding: 1.2rem 0.8rem;
+      border-bottom: 5px solid var(--purdue-gold);
+      margin-bottom: 1rem;
+      text-align: center;
+      border-radius: 8px;
+    }
+    header h1 { margin: 0; font-size: 1.5rem; }
+    header p { margin: 0.4rem 0 0; color: #f3f3f3; }
+
+    main {
+      background: #ffffff;
+      padding: 1.25rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(130px, 1fr));
+      grid-template-rows: auto auto auto auto;
+      gap: 10px;
+      background: var(--accent-light);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #e3dfd4;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .controls > div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: flex-end;
+      min-height: 2.3em;
+      line-height: 1.15;
+    }
+    input, select, button {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      min-height: 40px;
+      height: 40px;
+      font-size: 0.95rem;
+      width: 100%;
+    }
+
+    button {
+      background: var(--purdue-black);
+      color: var(--purdue-gold);
+      border: 2px solid var(--purdue-gold);
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button.alt {
+      background: var(--purdue-gold);
+      color: #000;
+      border: 2px solid var(--purdue-black);
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e3dfd4;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      margin-bottom: 10px;
+    }
+
+    .viz-title { font-weight: 600; margin: 0 0 6px; color: var(--text-muted); }
+    canvas { width: 100%; height: auto; display: block; }
+
+    .legend {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0 0;
+      font-weight: 600;
+    }
+
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+    .note { color: var(--text-muted); font-size: 0.82rem; margin-top: 4px; }
+
+    @media (max-width: 900px) { .controls { grid-template-columns: repeat(3, minmax(120px, 1fr)); } }
+    @media (max-width: 700px) { .controls { grid-template-columns: repeat(2, minmax(120px, 1fr)); } }
+  </style>
+</head>
+<body>
+  <header role="banner">
+    <h1>1-D Wave Equation Lab</h1>
+    <p>Simulating the vibration of a string: $y_{tt} = c^2 y_{xx}$ with zero initial velocity.</p>
+  </header>
+
+  <main id="main-content" role="main">
+    <section class="controls" aria-label="Simulation controls">
+      <div>
+        <label for="rodLength">String length (L)</label>
+        <input type="number" id="rodLength" min="0.5" step="0.5" value="10">
+      </div>
+      <div>
+        <label for="kappa">Wave Speed (c)</label>
+        <input type="number" id="kappa" min="0.1" max="5.0" step="0.1" value="2">
+      </div>
+      <div>
+        <label for="bc">Boundary condition</label>
+        <select id="bc">
+          <option value="dirichlet">Fixed Ends (Dirichlet)</option>
+          <option value="neumann">Free Ends (Neumann)</option>
+          <option value="periodic">Periodic (Ring)</option>
+        </select>
+      </div>
+      <div>
+        <label for="profile">Initial Pluck</label>
+        <select id="profile">
+          <option value="pluck">Instrument Pluck</option>
+          <option value="sinusoidal">Sinusoidal</option>
+          <option value="trapezoidal">Trapezoidal</option>
+          <option value="gaussian">Gaussian Peak</option>
+          <option value="triangle">Triangle (Local)</option>
+          <option value="square">Square Pulse</option>
+          <option value="manual" selected>Manual / Draw</option>
+        </select>
+      </div>
+      <div>
+        <label for="amp">Amplitude (A)</label>
+        <input type="number" id="amp" min="0" step="0.5" value="3">
+      </div>
+      <div>
+        <label for="center">Center (x₀)</label>
+        <input type="number" id="center" min="0" step="0.5" value="5">
+      </div>
+      <div>
+        <label for="width">Width / Mode (w)</label>
+        <input type="number" id="width" min="0.5" step="0.5" value="2">
+      </div>
+      <div>
+        <label for="tl">Left Bound (Y_L)</label>
+        <input type="number" id="tl" step="0.5" value="0">
+      </div>
+      <div>
+        <label for="tr">Right Bound (Y_R)</label>
+        <input type="number" id="tr" step="0.5" value="0">
+      </div>
+      <div>
+        <label for="maxTime">Max t</label>
+        <input type="number" id="maxTime" min="0.1" step="0.5" value="10">
+      </div>
+      <div>
+        <label for="timeSlider">Time (t): <span id="timeVal">0.00</span></label>
+        <input type="range" id="timeSlider" min="0" max="10" step="0.01" value="0">
+      </div>
+      <div>
+        <label for="speed">Play Speed</label>
+        <select id="speed">
+          <option value="0.25">0.25x</option>
+          <option value="0.5">0.5x</option>
+          <option value="1" selected>1.0x</option>
+          <option value="2">2.0x</option>
+          <option value="5">5.0x</option>
+        </select>
+      </div>
+      <div style="grid-column: span 4; @media (max-width: 900px) { grid-column: span 1; }"></div>
+      <div>
+        <label>&nbsp;</label>
+        <button id="playBtn" type="button">Play</button>
+      </div>
+      <div>
+        <label>&nbsp;</label>
+        <button id="resetBtn" type="button" class="alt">Reset</button>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="card">
+        <p class="viz-title">String Displacement $y(x,t)$</p>
+        <canvas id="plot" width="900" height="300" aria-label="Wave curve" role="img" style="cursor: crosshair;"></canvas>
+        <p class="note">When 'Manual' is selected, click and drag on the plot to define the initial string position.</p>
+      </div>
+      <div class="card">
+        <p class="viz-title">Vibrating Medium (displacement intensity)</p>
+        <canvas id="rod" width="900" height="56" aria-label="Displacement heat map" role="img"></canvas>
+        <div class="legend" aria-hidden="true">
+          <span><span class="dot" style="background: var(--negative)"></span>Negative</span>
+          <span><span class="dot" style="background: var(--neutral)"></span>Equilibrium</span>
+          <span><span class="dot" style="background: var(--positive)"></span>Positive</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const plot = document.getElementById('plot');
+    const rod = document.getElementById('rod');
+    const plotCtx = plot.getContext('2d');
+    const rodCtx = rod.getContext('2d');
+
+    const rodLengthInput = document.getElementById('rodLength');
+    const kappaInput = document.getElementById('kappa');
+    const bcSelect = document.getElementById('bc');
+    const profileSelect = document.getElementById('profile');
+    const ampInput = document.getElementById('amp');
+    const centerInput = document.getElementById('center');
+    const widthInput = document.getElementById('width');
+    const tlInput = document.getElementById('tl');
+    const trInput = document.getElementById('tr');
+    const maxTimeInput = document.getElementById('maxTime');
+    const timeSlider = document.getElementById('timeSlider');
+    const speedSelect = document.getElementById('speed');
+    const playBtn = document.getElementById('playBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const timeVal = document.getElementById('timeVal');
+
+    let playing = false;
+    let drawing = false;
+    let lastTs = null;
+    let coeffKey = '';
+    let manualDirty = false;
+    let coeffs = { bc: 'dirichlet', L: 10, N: 80, a0: 0, an: [], bn: [] };
+
+    const M_SIZE = 600;
+    let customProfile = new Array(M_SIZE).fill(0);
+
+    function getParams() {
+      const L = Math.max(0.5, parseFloat(rodLengthInput.value) || 10);
+      const c = parseFloat(kappaInput.value) || 2;
+      const bc = bcSelect.value;
+      const profile = profileSelect.value;
+      const A = parseFloat(ampInput.value) || 0;
+      const x0 = parseFloat(centerInput.value) || L / 2;
+      const w = parseFloat(widthInput.value) || 2;
+      const YL = parseFloat(tlInput.value) || 0;
+      const YR = parseFloat(trInput.value) || 0;
+      const t = parseFloat(timeSlider.value) || 0;
+      const speed = parseFloat(speedSelect.value) || 1;
+      return { L, c, bc, profile, A, x0, w, YL, YR, N: 80, t, speed };
+    }
+
+    function profileAt(x, params) {
+      const { profile, A, x0, w, bc, L } = params;
+      if (profile === 'manual') {
+        const idx = Math.min(M_SIZE - 1, Math.max(0, Math.floor((x / L) * M_SIZE)));
+        return customProfile[idx];
+      }
+      if (profile === 'pluck') {
+        const px = Math.max(0.01, Math.min(L - 0.01, x0));
+        if (x <= px) return (A / px) * x;
+        else return (A / (L - px)) * (L - x);
+      }
+      if (profile === 'sinusoidal') {
+        return A * Math.sin((Math.round(w) * Math.PI * x) / L);
+      }
+      if (profile === 'trapezoidal') {
+        const halfW = w / 2;
+        const xStart = Math.max(0, x0 - halfW);
+        const xEnd = Math.min(L, x0 + halfW);
+        if (x >= xStart && x <= xEnd) return A;
+        if (x < xStart) return (A / xStart) * x;
+        return (A / (L - xEnd)) * (L - x);
+      }
+      const dist = (bc === 'periodic') ? Math.min(Math.abs(x - x0), L - Math.abs(x - x0)) : Math.abs(x - x0);
+      if (profile === 'gaussian') return A * Math.exp(-(dist * dist) / (2 * (w/4)**2));
+      if (profile === 'triangle') return dist <= w/2 ? A * (1 - (2 * dist) / w) : 0;
+      if (profile === 'square') return dist <= w/2 ? A : 0;
+      return 0;
+    }
+
+    function computeCoeffs(p) {
+      const dx = p.L / (M_SIZE - 1);
+      const an = new Array(p.N + 1).fill(0);
+      const bn = new Array(p.N + 1).fill(0);
+      let a0sum = 0;
+
+      for (let i = 0; i < M_SIZE; i++) {
+        const x = i * dx;
+        const fx = profileAt(x, p);
+        if (p.bc === 'dirichlet') {
+          const vx = p.YL + (p.YR - p.YL) * (x / p.L);
+          const wx = fx - vx;
+          for (let n = 1; n <= p.N; n++) bn[n] += wx * Math.sin((n * Math.PI * x) / p.L);
+        } else if (p.bc === 'neumann') {
+          a0sum += fx;
+          for (let n = 1; n <= p.N; n++) an[n] += fx * Math.cos((n * Math.PI * x) / p.L);
+        } else {
+          a0sum += fx;
+          for (let n = 1; n <= p.N; n++) {
+            an[n] += fx * Math.cos((2 * Math.PI * n * x) / p.L);
+            bn[n] += fx * Math.sin((2 * Math.PI * n * x) / p.L);
+          }
+        }
+      }
+
+      const factor = (2 / p.L) * dx;
+      if (p.bc === 'dirichlet') { for (let n = 1; n <= p.N; n++) bn[n] *= factor; }
+      else if (p.bc === 'neumann') { for (let n = 1; n <= p.N; n++) an[n] *= factor; a0sum = (a0sum * dx) / p.L; }
+      else { for (let n = 1; n <= p.N; n++) { an[n] *= factor; bn[n] *= factor; } a0sum = (a0sum * dx) / p.L; }
+
+      coeffs = { bc: p.bc, L: p.L, N: p.N, a0: a0sum, an, bn };
+      manualDirty = false;
+    }
+
+    function yAt(x, p) {
+      const key = [p.bc, p.profile, p.L, p.A, p.x0, p.w, p.YL, p.YR].join('|');
+      if (key !== coeffKey || manualDirty) { computeCoeffs(p); coeffKey = key; }
+      
+      let sum = 0;
+      if (p.bc === 'dirichlet') {
+        const vx = p.YL + (p.YR - p.YL) * (x / p.L);
+        for (let n = 1; n <= p.N; n++) {
+          const lambda = (n * Math.PI) / p.L;
+          sum += coeffs.bn[n] * Math.sin(lambda * x) * Math.cos(lambda * p.c * p.t);
+        }
+        return vx + sum;
+      } else if (p.bc === 'neumann') {
+        sum = coeffs.a0;
+        for (let n = 1; n <= p.N; n++) {
+          const lambda = (n * Math.PI) / p.L;
+          sum += coeffs.an[n] * Math.cos(lambda * x) * Math.cos(lambda * p.c * p.t);
+        }
+        return sum;
+      } else {
+        sum = coeffs.a0;
+        for (let n = 1; n <= p.N; n++) {
+          const lambda = (2 * Math.PI * n) / p.L;
+          sum += (coeffs.an[n] * Math.cos(lambda * x) + coeffs.bn[n] * Math.sin(lambda * x)) * Math.cos(lambda * p.c * p.t);
+        }
+        return sum;
+      }
+    }
+
+    function colorFor(v, limit) {
+      const t = Math.max(-1, Math.min(1, v / limit));
+      if (t < 0) return mixColor([250, 204, 21], [29, 78, 216], -t); 
+      return mixColor([250, 204, 21], [220, 38, 38], t);  
+    }
+
+    function mixColor(a, b, t) {
+      return `rgb(${Math.round(a[0]+(b[0]-a[0])*t)},${Math.round(a[1]+(b[1]-a[1])*t)},${Math.round(a[2]+(b[2]-a[2])*t)})`;
+    }
+
+    function render() {
+      const p = getParams();
+      timeVal.textContent = p.t.toFixed(2);
+      timeSlider.max = maxTimeInput.value;
+
+      plotCtx.clearRect(0, 0, plot.width, plot.height);
+      const margin = 40;
+      const iW = plot.width - margin*2;
+      const iH = plot.height - margin*2;
+      const limit = Math.max(5, p.A * 1.5, Math.abs(p.YL), Math.abs(p.YR));
+
+      plotCtx.strokeStyle = '#eee';
+      plotCtx.beginPath();
+      plotCtx.moveTo(margin, margin + iH/2); plotCtx.lineTo(plot.width - margin, margin + iH/2);
+      plotCtx.stroke();
+
+      plotCtx.strokeStyle = 'black'; plotCtx.lineWidth = 2;
+      plotCtx.beginPath();
+      for (let i = 0; i <= iW; i++) {
+        const x = (i / iW) * p.L;
+        const val = yAt(x, p);
+        const px = margin + i;
+        const py = margin + (0.5 - val/(limit*2)) * iH;
+        if (i===0) plotCtx.moveTo(px, py); else plotCtx.lineTo(px, py);
+      }
+      plotCtx.stroke();
+
+      rodCtx.clearRect(0,0,rod.width,rod.height);
+      for(let i=0; i<rod.width; i++){
+        const x = (i/rod.width)*p.L;
+        rodCtx.fillStyle = colorFor(yAt(x, p), limit/1.5);
+        rodCtx.fillRect(i,0,1,rod.height);
+      }
+    }
+
+    function step(ts) {
+      if (!playing) return;
+      if (!lastTs) lastTs = ts;
+      const p = getParams();
+      const dt = ((ts - lastTs) / 1000) * p.speed;
+      lastTs = ts;
+      let t = parseFloat(timeSlider.value) + dt;
+      if (t >= parseFloat(timeSlider.max)) { t = 0; }
+      timeSlider.value = t;
+      render();
+      requestAnimationFrame(step);
+    }
+
+    plot.addEventListener('mousedown', (e) => {
+      if (profileSelect.value !== 'manual') return;
+      drawing = true; playing = false; playBtn.textContent = 'Play';
+      timeSlider.value = 0; handleDraw(e);
+    });
+
+    window.addEventListener('mouseup', () => { drawing = false; manualDirty = true; render(); });
+    plot.addEventListener('mousemove', (e) => { if (drawing) handleDraw(e); });
+
+    function handleDraw(e) {
+      const rect = plot.getBoundingClientRect();
+      const margin = 40;
+      const iW = (plot.width - margin*2) * (rect.width/plot.width);
+      const iH = (plot.height - margin*2) * (rect.height/plot.height);
+      const xPx = e.clientX - rect.left - (margin * rect.width/plot.width);
+      const yPx = e.clientY - rect.top - (margin * rect.height/plot.height);
+      if (xPx < 0 || xPx > iW) return;
+      const limit = Math.max(5, parseFloat(ampInput.value)*1.5);
+      const valY = (0.5 - yPx/iH) * (limit*2);
+      customProfile[Math.floor((xPx/iW)*M_SIZE)] = valY;
+      manualDirty = true; render();
+    }
+
+    playBtn.addEventListener('click', () => { 
+      playing = !playing; playBtn.textContent = playing ? 'Pause' : 'Play'; 
+      if(playing) { lastTs = null; requestAnimationFrame(step); }
+    });
+
+    resetBtn.addEventListener('click', () => { 
+      timeSlider.value = 0; playing = false; playBtn.textContent = 'Play'; 
+      if(profileSelect.value==='manual') customProfile.fill(0);
+      render(); 
+    });
+
+    [rodLengthInput, kappaInput, bcSelect, profileSelect, ampInput, centerInput, widthInput, tlInput, trInput, maxTimeInput, timeSlider, speedSelect].forEach(el => {
+      el.addEventListener('input', render);
+    });
+
+    window.addEventListener('resize', () => { plot.width = plot.clientWidth; rod.width = rod.clientWidth; render(); });
+    plot.width = plot.clientWidth; rod.width = rod.clientWidth;
+    render();
+  </script>
+</body>
+</html>
