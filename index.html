@@ -257,6 +257,14 @@
             color: #c28e0e;
             transform: scale(1.1);
         }
+      /* Ensure the video scales cleanly within the box */
+        .mascot-box video {
+            width: 100%;
+            max-width: 250px; /* Adjust this number to match your exact preferred layout width */
+            height: auto;
+            display: block;
+        margin: 0 auto;  /* Centers the video if the box is wider than the video */
+        }
     </style>
 </head>
 <body>
