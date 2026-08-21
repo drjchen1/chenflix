@@ -34,6 +34,23 @@
         header h1 { margin: 0; font-size: 1.8rem; }
         header span { display: block; }
         .course-title { font-size: 1.3rem; font-weight: 400; margin: 0.6rem 0; color: #fff; }
+        
+        /* Styled for small archive link in header */
+        .archive-link {
+            font-size: 0.85rem;
+            font-weight: 400;
+            margin-top: 0.5rem;
+            color: var(--purdue-gold);
+            text-decoration: underline;
+        }
+        .archive-link a {
+            color: var(--purdue-gold);
+            text-decoration: underline;
+        }
+        .archive-link a:hover {
+            color: #fff;
+        }
+
         main { background: white; padding: 2rem; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .lecture-list { list-style: none; padding: 0; }
         .lecture-item { padding: 1.2rem; border-bottom: 1px solid #eee; }
@@ -52,6 +69,9 @@
             <span>MA 36600</span>
             <span class="course-title">Ordinary Differential Equations</span>
             <span class="semester">Fall 2026</span>
+            <span class="Fall 2025 Archive">
+                <a href="https://drjchen1.github.io/chenflix/courses/ma-36600-f25.html">Fall 2025 Archive</a>
+            </span>
         </h1>
     </header>
 
@@ -59,12 +79,11 @@
         <ul class="lecture-list">
             <li class="lecture-item">
                 <span class="lecture-title"><span class="lec-highlight">Lecture 1</span> Introduction and 1.1 Basic Mathematical Models; Direction fields</span>
-                <!-- <div class="section-links">
-                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_9exf0iqd">Video</a> | 
-                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%201%20%281.1%29-acc.html">Notes</a>
-                </div> -->
+                <div class="section-links">
+                    <a href="https://mediaspace.itap.purdue.edu/media/Fall+2025+-+MA366+-+Chen+%287%3A28%29/1_9exf0iqd" style="display: none;">Video</a> | 
+                    <a href="https://www.math.purdue.edu/~chenjk/MA366F25/Lesson%201%20%281.1%29-acc.html" style="display: none;">Notes</a>
+                </div>
             </li>
-
         </ul>
     </main>
 </body>
